@@ -168,46 +168,45 @@
 </head>
 <body>
 
-    <div class="login-container">
-        <div class="logo-wrapper">
-            <img src="<?= base_url('public/assets/titulo.png') ?>" alt="RENTaCAR Logo" class="logo-img">
-        </div>
-
-        <?php if(session()->getFlashdata('msg')): ?>
-            <div class="alert-error">
-                <?= session()->getFlashdata('msg') ?>
-            </div>
-        <?php endif; ?>
-
-        <form action="<?= base_url('login/procesar') ?>" method="post">
-            <?= csrf_field() ?>
-
-            <div class="form-group">
-                <label for="email">Correo Electrónico</label>
-                <div class="input-wrapper">
-                    <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@correo.com" required autocomplete="email">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Contraseña</label>
-                <div class="input-wrapper">
-                    <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
-                </div>
-            </div>
-
-            <button type="submit" class="btn-submit">Iniciar Sesión</button>
-        </form>
-
-        <div class="form-footer">
-            <a href="#">¿Olvidó su contraseña?</a>
-            <a href="#" class="register">Registrarse</a>
-        </div>
-
-        <div class="copyright">
-            Copyright © RENTaCAR - Todos los derechos reservados.
-        </div>
+   <div class="login-container">
+    <div class="logo-wrapper">
+        <img src="<?= base_url('assets/titulo.png') ?>" alt="RENTaCAR Logo" class="logo-img">
     </div>
 
+    <?php if(session()->getFlashdata('error')): ?>
+        <div class="alert-error">
+            <?= session()->getFlashdata('error') ?>
+        </div>
+    <?php endif; ?>
+
+    <form action="<?= base_url('login/procesar') ?>" method="post">
+        <?= csrf_field() ?>
+
+        <div class="form-group">
+            <label for="email">Correo Electrónico</label>
+            <div class="input-wrapper">
+                <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@correo.com" required autocomplete="email">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <div class="input-wrapper">
+                <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Iniciar Sesión</button>
+    </form>
+
+    <div class="form-footer">
+        <a href="#">¿Olvidó su contraseña?</a>
+        <a href="#" class="register">Registrarse</a>
+    </div>
+
+    <div class="copyright">
+        Copyright © RENTaCAR - Todos los derechos reservados.
+    </div>
+</div>
 </body>
 </html>
