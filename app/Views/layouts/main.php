@@ -48,7 +48,7 @@
 
     <footer class="bg-dark text-white text-center py-3 fixed-bottom">
         <div class="container">
-            <small>© <?= date('Y') ?> MyCar Sistema de Alquileres. Todos los derechos reservados.</small>
+            <small>© <?= date('Y') ?> MyCar Sistema de Alquileres.</small>
         </div>
     </footer>
 
