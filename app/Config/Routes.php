@@ -15,7 +15,7 @@ $routes->get('logout', 'AuthController::logout');
 $routes->group('', ['filter' => 'authGuard'], function($routes) {
 
     // Rutas agrupadas para el panel de Administrador
-    $routes->group('admin', function($routes) {
+    $routes->group('admin',['filter' => 'authAdmin'], function($routes) {
         
         // Rutas de Clientes
         $routes->get('clientes', 'ClienteController::indexAdmin');

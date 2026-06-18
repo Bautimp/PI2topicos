@@ -8,6 +8,10 @@ class AuthController extends BaseController
 {
     public function login()
     {
+        // Si ya está logueado, redirigir al panel principal
+        if (session()->get('isLoggedIn')) {
+            return redirect()->to('/catalogo');
+        }
         // Muestra el formulario de login
         return view('login');
     }
