@@ -1,0 +1,22 @@
+# Archivos de entorno y seguridad (¡CRÍTICO!)
+.env
+phpunit.xml
+
+# Dependencias (Se instalan con composer install)
+/vendor/
+/node_modules/
+
+# Archivos generados por el sistema y temporales
+/writable/cache/
+/writable/debugbar/
+/writable/logs/
+/writable/session/
+
+# Subidas de usuarios (Imágenes de los vehículos)
+# Ignoramos los archivos físicos, pero mantenemos la carpeta vacía con .gitkeep
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
