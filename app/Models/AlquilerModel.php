@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class AlquilerModel extends Model
+{
+    protected $table            = 'alquileres';
+    protected $primaryKey       = 'id';
+    protected $returnType       = 'object';
+    
+    protected $allowedFields    = [
+        'fechaDesde', 
+        'fechaHasta', 
+        'montoTotal', 
+        'estado', 
+        'cliente_id', 
+        'vehiculo_id'
+    ];
+
+    
+    //REPORTE ADMIN: Dado un auto, mostrar los clientes que lo alquilaron
+    public function getHistorialPorVehiculo($id_vehiculo)
+    {
+        return $this->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono')
+                    ->join('clientes', 'clientes.id = alquileres.cliente_id')
+                    ->where('alquileres.vehiculo_id', $id_vehiculo)
+                    ->findAll();
+    }
+
+
+    //REPORTE ADMIN: Dado un cliente, ver qué autos alquiló
+    public function getHistorialPorCliente($id_cliente)
+    {
+        return $this->select('alquileres.*, vehiculos.marca, vehiculos.modelo, vehiculos.anio')
+                    ->join('vehiculos', 'vehiculos.id = alquileres.vehiculo_id')
+                    ->where('alquileres.cliente_id', $id_cliente)
+                    ->findAll();
+    }
+
+    
+    //REPORTE ADMIN: Autos que actualmente están en la calle (Estado APROBADO)
+    public function getAlquileresActivosConDatos()
+    {
+        return $this->select('alquileres.*, clientes.nombre, clientes.apellido, vehiculos.marca, vehiculos.modelo')
+                    ->join('clientes', 'clientes.id = alquileres.cliente_id')
+                    ->join('vehiculos', 'vehiculos.id = alquileres.vehiculo_id')
+                    ->where('alquileres.estado', 'APROBADO')
+                    ->findAll();
+    }
+}
