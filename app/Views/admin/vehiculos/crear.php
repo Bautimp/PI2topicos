@@ -9,7 +9,7 @@
                     <h4 class="mb-0">Registrar Nuevo Vehículo</h4>
                 </div>
                 <div class="card-body">
-                    <form action="<?= base_url('admin/vehiculos/guardar') ?>" method="POST">
+                    <form action="<?= base_url('admin/vehiculos/guardar') ?>" method="POST" enctype="multipart/form-data">
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label">Marca</label>
@@ -44,6 +44,14 @@
                             <div class="col-md-6">
                                 <label class="form-label">Precio de Alquiler por Día ($)</label>
                                 <input type="number" step="0.01" class="form-control" name="precio_dia" required placeholder="15000.00">
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Imágenes del Vehículo (Máximo 10)</label>
+                                <input type="file" class="form-control" name="imagenes[]" multiple accept="image/jpeg, image/png, image/jpg">
+                                <small class="text-muted">Formatos aceptados: JPG, PNG. Puedes seleccionar varios archivos a la vez manteniendo presionada la tecla Ctrl.</small>
                             </div>
                         </div>
 

@@ -40,7 +40,20 @@ class CreateRentacarDatabase extends Migration
         $this->forge->createTable('vehiculos');
 
         // --------------------------------------------------------
-        // 3. Tabla: clientes[cite: 4]
+        // Tabla: vehiculos_imagenes
+        // --------------------------------------------------------
+        $this->forge->addField([
+            'id'          => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
+            'vehiculo_id' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true],
+            'ruta_imagen' => ['type' => 'VARCHAR', 'constraint' => 255],
+        ]);
+        $this->forge->addKey('id', true);
+        // Clave foránea referenciando a la tabla vehiculos
+        $this->forge->addForeignKey('vehiculo_id', 'vehiculos', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('vehiculo_imagenes');
+        
+        // --------------------------------------------------------
+        // Tabla: clientes
         // --------------------------------------------------------
         $this->forge->addField([
             'id'         => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
@@ -58,7 +71,7 @@ class CreateRentacarDatabase extends Migration
         $this->forge->createTable('clientes');
 
         // --------------------------------------------------------
-        // 4. Tabla: alquileres[cite: 4]
+        // Tabla: alquileres
         // --------------------------------------------------------
         $this->forge->addField([
             'id'          => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
@@ -70,7 +83,7 @@ class CreateRentacarDatabase extends Migration
             'vehiculo_id' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true],
         ]);
         $this->forge->addKey('id', true);
-        // Claves Foráneas con actualización y eliminación en cascada[cite: 4]
+        // Claves Foráneas con actualización y eliminación en cascada
         $this->forge->addForeignKey('cliente_id', 'clientes', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('vehiculo_id', 'vehiculos', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('alquileres');
@@ -83,5 +96,6 @@ class CreateRentacarDatabase extends Migration
         $this->forge->dropTable('clientes', true);
         $this->forge->dropTable('vehiculos', true);
         $this->forge->dropTable('usuarios', true);
+        $this->forge->dropTable('vehiculos_imagenes');
     }
 }

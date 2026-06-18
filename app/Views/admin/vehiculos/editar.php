@@ -9,30 +9,31 @@
                     <h4 class="mb-0">Editar Datos del Vehículo (#<?= $vehiculo->id ?>)</h4>
                 </div>
                 <div class="card-body">
-                    <form action="<?= base_url('admin/vehiculos/actualizar/' . $vehiculo->id) ?>" method="POST">
+                    <form action="<?= base_url('admin/vehiculos/actualizar/' . $vehiculo->id) ?>" method="POST" enctype="multipart/form-data">
+                        
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label">Marca</label>
-                                <label type="text" class="form-control" name="marca"><?= esc($vehiculo->marca) ?></label>
+                                <input type="text" class="form-control bg-light" name="marca" value="<?= esc($vehiculo->marca) ?>" readonly>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Modelo</label>
-                                <label type="text" class="form-control" name="modelo"><?= esc($vehiculo->modelo) ?></label>
+                                <input type="text" class="form-control bg-light" name="modelo" value="<?= esc($vehiculo->modelo) ?>" readonly>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label class="form-label">Año</label>
-                                <label type="number" class="form-control" name="anio"><?= esc($vehiculo->anio) ?></label>
+                                <input type="number" class="form-control bg-light" name="anio" value="<?= esc($vehiculo->anio) ?>" readonly>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Asientos / Plazas</label>
-                                <label type="number" class="form-control" name="asientos"><?= esc($vehiculo->asientos) ?></label>
+                                <input type="number" class="form-control bg-light" name="asientos" value="<?= esc($vehiculo->asientos) ?>" readonly>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Motor</label>
-                                <label type="text" class="form-control" name="motor"><?= esc($vehiculo->motor) ?></label>
+                                <input type="text" class="form-control bg-light" name="motor" value="<?= esc($vehiculo->motor) ?>" readonly>
                             </div>
                         </div>
 
@@ -44,6 +45,14 @@
                             <div class="col-md-6">
                                 <label class="form-label">Precio de Alquiler por Día ($)</label>
                                 <input type="number" step="0.01" class="form-control" name="precio_dia" value="<?= esc($vehiculo->precio_dia) ?>" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Agregar Imágenes al Vehículo (Máximo 10)</label>
+                                <input type="file" class="form-control" name="imagenes[]" multiple accept="image/jpeg, image/png, image/jpg">
+                                <small class="text-muted">Formatos aceptados: JPG, PNG. Puedes seleccionar varios archivos a la vez manteniendo presionada la tecla Ctrl.</small>
                             </div>
                         </div>
 
