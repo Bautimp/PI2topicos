@@ -9,7 +9,7 @@ class AuthController extends BaseController
     public function login()
     {
         // Muestra el formulario de login
-        return view('auth/login');
+        return view('login');
     }
 
     public function procesarLogin()

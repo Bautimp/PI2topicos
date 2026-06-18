@@ -18,3 +18,8 @@ $routes->group('admin', function($routes) {
     $routes->get('clientes/baja/(:num)', 'ClienteController::bajaLogica/$1');
 
 });
+// Rutas Protegidas (Requieren Login)
+$routes->group('', ['filter' => 'authGuard'], function($routes) {
+    //$routes->get('dashboard', 'DashboardController::index'); 
+    // Añade aquí dentro todas las rutas que requieran que el usuario esté logueado
+});
