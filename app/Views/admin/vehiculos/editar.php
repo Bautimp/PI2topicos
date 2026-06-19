@@ -57,9 +57,18 @@
                                     <div class="carousel-inner rounded">
                                         <?php if(!empty($vehiculo->imagenes)): ?>
                                             <?php foreach($vehiculo->imagenes as $index => $img): ?>
-                                                <div class="carousel-item <?= ($index === 0) ? 'active' : '' ?>">
+                                                <div class="carousel-item <?= ($index === 0) ? 'active' : '' ?> position-relative">
+                                                    
+                                                    <a href="<?= base_url('admin/vehiculos/eliminar-imagen/' . $img->id . '/' . $vehiculo->id) ?>" 
+                                                    class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 shadow" 
+                                                    style="z-index: 10;"
+                                                    onclick="return confirm('¿Estás seguro de que deseas eliminar esta foto de forma permanente?');"
+                                                    title="Eliminar esta foto">
+                                                        Borrar
+                                                    </a>
+
                                                     <img src="<?= base_url('uploads/vehiculos/' . $img->ruta_imagen) ?>" 
-                                                         class="d-block w-100" style="height: 220px; object-fit: cover;" alt="Foto Vehículo">
+                                                        class="d-block w-100" style="height: 220px; object-fit: cover;" alt="Foto Vehículo">
                                                 </div>
                                             <?php endforeach; ?>
                                         <?php else: ?>

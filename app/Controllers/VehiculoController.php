@@ -214,6 +214,32 @@ class VehiculoController extends BaseController
         return redirect()->to('/admin/vehiculos')->with('mensaje', 'Vehículo dado de baja correctamente.');
     }
 
+    public function eliminarImagen($id_imagen, $id_vehiculo)
+    {
+        $imagenModel = new \App\Models\VehiculoImagenModel();
+        
+        // 1. Buscamos la imagen en la base de datos
+        $imagen = $imagenModel->find($id_imagen);
+
+        if ($imagen) {
+            // 2. Construimos la ruta física del archivo en el servidor
+            $rutaArchivo = FCPATH . 'uploads/vehiculos/' . $imagen->ruta_imagen;
+
+            // 3. Verificamos si el archivo existe físicamente y lo eliminamos (unlink)
+            if (file_exists($rutaArchivo)) {
+                unlink($rutaArchivo);
+            }
+
+            // 4. Eliminamos el registro de la base de datos
+            $imagenModel->delete($id_imagen);
+
+            return redirect()->to('/admin/vehiculos/editar/' . $id_vehiculo)->with('mensaje', 'Imagen eliminada correctamente.');
+        }
+
+        return redirect()->to('/admin/vehiculos/editar/' . $id_vehiculo)->with('error', 'No se pudo encontrar la imagen.');
+    }
+
+
     public function historialRapido($id)
     {
         // Instanciamos la conexión a la Base de Datos para hacer un Join directo

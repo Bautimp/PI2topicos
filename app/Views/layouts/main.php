@@ -23,7 +23,24 @@
                         <?php if(session()->get('esAdmin')): ?>
                             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/vehiculos') ?>">Autos</a></li>
                             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/clientes') ?>">Clientes</a></li>
-                            <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/alquileres') ?>">Reservas</a></li>
+                            
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarAlquileres" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Control de Alquileres
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark shadow" aria-labelledby="navbarAlquileres">
+                                    <li>
+                                        <a class="dropdown-item fw-bold text-warning" href="<?= base_url('admin/alquileres') ?>">
+                                            Solicitudes Pendientes
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item fw-bold text-primary" href="<?= base_url('admin/alquileres/activos') ?>">
+                                            Vehículos en Curso
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                         
                         <?php else: ?>
                             <li class="nav-item"><a class="nav-link" href="<?= base_url('catalogo') ?>">Catálogo</a></li>
