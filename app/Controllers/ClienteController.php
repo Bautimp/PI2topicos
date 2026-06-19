@@ -7,39 +7,73 @@ use App\Models\UsuarioModel;
 
 class ClienteController extends BaseController
 {
-    // === REGISTRO PÚBLICO ===
-    public function registro()
+    public function __construct()
     {
-        return view('auth/registro');
+        helper('form');
     }
 
-    public function guardarRegistro()
+    public function registrar()
     {
+        $validation = service('validation');
+
+        // 1. Reglas de validación combinadas para ambos modelos
+        $validation->setRules([
+            'nombre'    => 'required|alpha_space|min_length[3]',
+            'apellido'  => 'required|alpha_space|min_length[3]',
+            'direccion' => 'required|min_length[5]',
+            'telefono'  => 'required|numeric|min_length[8]',
+            'email'     => 'required|valid_email|is_unique[usuarios.email]',
+            'password'  => 'required|min_length[4]',
+        ], [
+            // Mensajes personalizados
+            'nombre'    => ['required' => 'El nombre es obligatorio.', 'alpha_space' => 'Solo letras y espacios.'],
+            'apellido'  => ['required' => 'El apellido es obligatorio.', 'alpha_space' => 'Solo letras y espacios.'],
+            'direccion' => ['required' => 'La dirección es obligatoria.'],
+            'telefono'  => ['required' => 'El teléfono es obligatorio.', 'numeric' => 'Solo números.'],
+            'email'     => [
+                'required'    => 'El correo es obligatorio.',
+                'valid_email' => 'Formato de email inválido.',
+                'is_unique'   => 'Este correo ya se encuentra registrado.'
+            ],
+            'password'  => ['required' => 'La contraseña es obligatoria.', 'min_length' => 'Mínimo 4 caracteres.']
+        ]);
+
+        // 2. Si la validación falla
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->back()
+                ->withInput()
+                ->with('errors_registro', $validation->getErrors())
+                ->with('open_modal', true); // Variable para avisarle a la vista que vuelva a abrir el modal
+        }
+
+        // 3. Procesar el registro si la validación pasa
         $usuarioModel = new UsuarioModel();
         $clienteModel = new ClienteModel();
+        
+        // Hasheamos la contraseña de forma segura
+        $passwordHasheado = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
 
-        // Creamos el Usuario para el login
-        $datosUsuario = [
+        // Insertar en la tabla Usuarios
+        $idUsuario = $usuarioModel->insert([
             'email'    => $this->request->getPost('email'),
-            'password' => password_hash($this->request->getPost('password'), PASSWORD_BCRYPT),
-            'esAdmin'  => 0 // Es cliente por defecto
-        ];
-        $usuario_id = $usuarioModel->insert($datosUsuario);
+            'password' => $passwordHasheado,
+            'esAdmin'  => 0 // Por defecto es cliente corriente
+        ]);
 
-        // Creamos el perfil del Cliente asociado a ese usuario
-        $datosCliente = [
+        // Insertar en la tabla Clientes asociando el usuario_id creado
+        $clienteModel->insert([
+            'usuario_id' => $idUsuario, // Clave foránea de enlace
             'nombre'     => $this->request->getPost('nombre'),
             'apellido'   => $this->request->getPost('apellido'),
             'direccion'  => $this->request->getPost('direccion'),
             'telefono'   => $this->request->getPost('telefono'),
-            'esActivo'   => 1,
-            'usuario_id' => $usuario_id
-        ];
-        $clienteModel->insert($datosCliente);
+        ]);
 
-        return redirect()->to('/login')->with('mensaje', 'Registro exitoso, ahora puedes iniciar sesión.');
+        // Si sale bien, redirigimos mandando un flashdata de éxito y el mail que se acaba de registrar
+        return redirect()->to('/login')
+            ->with('success_registro', '¡Registro completado con éxito! Ya podés iniciar sesión.')
+            ->with('registered_email', $this->request->getPost('email'));
     }
-
     // VISTA PRIVADA DEL ADMINISTRADOR
     public function indexAdmin()
     {
