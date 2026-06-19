@@ -240,38 +240,20 @@ class VehiculoController extends BaseController
     }
 
 
-    public function historialRapido($id)
-    {
-        // Instanciamos la conexión a la Base de Datos para hacer un Join directo
-        $alquileres= new AlquilerModel();
+   public function historialRapido($id)
+{
+    $alquileres = new AlquilerModel();
 
-        // Buscamos el historial haciendo join entre alquileres y clientes
-        $historial = $alquileres->table('alquileres') // Ajustá al nombre real de tu tabla alquileres
-            ->select('alquileres.*, clientes.nombre, clientes.apellido')
-            ->join('clientes', 'clientes.id = alquileres.cliente_id') // Ajustá las claves foráneas
-            ->where('alquileres.vehiculo_id', $id)
-            ->orderBy('alquileres.fechaDesde', 'DESC')
-            ->get()
-            ->getResult();
+    // Guardamos el resultado dentro de la clave 'historial' de un array $data
+    $data['historial'] = $alquileres->table('alquileres') 
+        ->select('alquileres.*, clientes.nombre, clientes.apellido')
+        ->join('clientes', 'clientes.id = alquileres.cliente_id') 
+        ->where('alquileres.vehiculo_id', $id)
+        ->orderBy('alquileres.fechaDesde', 'DESC')
+        ->get()
+        ->getResult();
 
-        // Si no hay registros de alquileres previos
-        if (empty($historial)) {
-            echo '<tr><td colspan="4" class="text-center text-muted py-3">Este vehículo no registra alquileres previos en el sistema.</td></tr>';
-            return;
-        }
-
-        // Si hay registros, armamos las filas HTML dinámicamente
-        foreach ($historial as $row) {
-            $fechaDesde = date('d/m/Y', strtotime($row->fechaDesde));
-            $fechaHasta = date('d/m/Y', strtotime($row->fechaHasta));
-            $monto = number_format($row->montoTotal, 2, ',', '.');
-            
-            echo "<tr>
-                    <td class='fw-bold'>#{$row->id}</td>
-                    <td>{$row->nombre} {$row->apellido}</td>
-                    <td class='text-center'>{$fechaDesde} al {$fechaHasta}</td>
-                    <td class='text-end fw-bold text-success'>\${$monto}</td>
-                  </tr>";
-        }
-    }
+    // Pasamos el array $data completo
+    return view('admin/vehiculos/tabla_historial', $data);
+}
 }

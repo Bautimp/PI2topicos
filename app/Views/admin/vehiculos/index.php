@@ -148,53 +148,37 @@
 </div>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Escuchamos el evento click en los botones con la clase 'btn-historial'
     const botonesHistorial = document.querySelectorAll('.btn-historial');
+    // Inicializamos el modal una sola vez aquí afuera
+    const modalElement = document.getElementById('modalHistorialRapido');
+    const miModal = new bootstrap.Modal(modalElement);
     
     botonesHistorial.forEach(boton => {
         boton.addEventListener('click', function() {
             const vehiculoId = this.getAttribute('data-id');
             const vehiculoNombre = this.getAttribute('data-name');
             
-            // Seteamos el título del modal con el nombre del auto
             document.getElementById('historialVehiculoNombre').innerText = vehiculoNombre;
             
-            // Reseteamos el cuerpo del modal mostrando el Spinner de carga
             const cuerpoModal = document.getElementById('historialModalBody');
             cuerpoModal.innerHTML = `
                 <div class="text-center py-4">
                     <div class="spinner-border text-primary" role="status"></div>
-                    <p class="mt-2 text-muted">Cargando historial...</p>
+                    <p class="mt-2 text-muted">Cargando...</p>
                 </div>`;
                 
-            // Instanciamos y abrimos el modal de Bootstrap de forma manual
-            const miModal = new bootstrap.Modal(document.getElementById('modalHistorialRapido'));
+            // Mostramos el modal
             miModal.show();
             
-            // Petición AJAX nativa (Fetch) hacia la ruta del controlador
-            fetch(`<?= base_url('admin/vehiculos/historial-rapido/') ?>/${vehiculoId}`)
+            // Petición al controlador (sin barra de más al final)
+            fetch(`<?= base_url('admin/vehiculos/historial-rapido') ?>/${vehiculoId}`)
                 .then(response => response.text())
-                .then(htmlRows => {
-                    // Inyectamos la estructura de la tabla con las filas devueltas
-                    cuerpoModal.innerHTML = `
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover align-middle mb-0">
-                                <thead class="table-secondary">
-                                    <tr>
-                                        <th>ID Alquiler</th>
-                                        <th>Cliente</th>
-                                        <th class="text-center">Período</th>
-                                        <th class="text-end">Monto Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${htmlRows}
-                                </tbody>
-                            </table>
-                        </div>`;
+                .then(htmlRenderizado => {
+                    cuerpoModal.innerHTML = htmlRenderizado;
                 })
                 .catch(error => {
-                    cuerpoModal.innerHTML = `<div class="alert alert-danger text-center mb-0">Error al conectar con el servidor. Intente de nuevo.</div>`;
+                    console.error(error);
+                    cuerpoModal.innerHTML = `<div class="alert alert-danger text-center mb-0">Error al cargar el historial.</div>`;
                 });
         });
     });
