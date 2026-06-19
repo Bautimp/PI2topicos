@@ -90,7 +90,6 @@
             <?php else: ?>
                 
                 <div class="text-center py-5 bg-white shadow-sm rounded">
-                    <div class="display-1 text-muted mb-3">🚗</div>
                     <h4 class="fw-bold">Aún no tienes reservas</h4>
                     <p class="text-muted">Visita nuestro catálogo y elige el vehículo perfecto para tu próximo viaje.</p>
                     <a href="<?= base_url('catalogo') ?>" class="btn btn-primary mt-2">Ir al Catálogo</a>
