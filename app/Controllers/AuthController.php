@@ -62,9 +62,17 @@ class AuthController extends BaseController
                 'isLoggedIn' => true
             ]);
 
+
+
             if ($usuario->esAdmin == 1) {
                 return redirect()->to('/admin/vehiculos');
             } else {
+                $clienteModel = new \App\Models\ClienteModel();
+
+                $cliente = $clienteModel->where('usuario_id', $usuario->id)->first();
+
+                session()->set(['cliente_id' => $cliente->id]);
+                
                 return redirect()->to('/catalogo');
             }
         } else {
