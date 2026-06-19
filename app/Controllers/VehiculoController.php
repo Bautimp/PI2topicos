@@ -10,9 +10,29 @@ class VehiculoController extends BaseController
     // VISTAS DEL CLIENTE (PÚBLICAS)
     public function catalogo()
     {
-        $vehiculoModel = new VehiculoModel();
-        $imagenModel = new VehiculoImagenModel();
+        $vehiculoModel = new \App\Models\VehiculoModel();
+        $imagenModel = new \App\Models\VehiculoImagenModel();
+        $alquilerModel = new \App\Models\AlquilerModel();
         
+        // actualización de autos alquilados
+        $fechaHoy = date('Y-m-d');
+        
+        // Buscamos alquileres que debían devolverse ayer o antes, y siguen figurando como APROBADOS
+        $alquileresVencidos = $alquilerModel->where('estado', 'APROBADO')
+                                            ->where('fechaHasta <', $fechaHoy)
+                                            ->findAll();
+
+        if (!empty($alquileresVencidos)) {
+            foreach ($alquileresVencidos as $alquiler) {
+                // Pasamos el alquiler al historial como finalizado
+                $alquilerModel->update($alquiler->id, ['estado' => 'FINALIZADO']);
+                
+                // Liberamos el vehículo para que vuelva a aparecer en el catálogo
+                $vehiculoModel->update($alquiler->vehiculo_id, ['disponibilidad' => 'DISPONIBLE']);
+            }
+        }
+
+        // Carga del catálogo
         $autos = $vehiculoModel->getDisponiblesParaAlquiler(); 
         
         // Adjuntarle a cada auto sus imágenes
