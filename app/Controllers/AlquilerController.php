@@ -90,4 +90,22 @@ class AlquilerController extends BaseController
 
         return redirect()->to('/admin/alquileres')->with('mensaje', 'Vehículo devuelto exitosamente.');
     }
+
+    // VISTA CLIENTE: PANEL DE MIS RESERVAS
+    public function misReservas()
+    {
+        // 1. Verificamos que sea un cliente logueado
+        $cliente_id = session()->get('cliente_id');
+        
+        if (!$cliente_id) {
+            return redirect()->to('/catalogo')->with('error', 'Debes tener un perfil de cliente para ver tus reservas.');
+        }
+
+        // 2. Traemos su historial de reservas
+        $alquilerModel = new \App\Models\AlquilerModel();
+        $datos['reservas'] = $alquilerModel->obtenerMisReservas($cliente_id);
+
+        // 3. Mostramos la vista
+        return view('cliente/mis_reservas', $datos);
+    }
 }

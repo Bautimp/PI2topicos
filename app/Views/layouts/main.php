@@ -27,6 +27,7 @@
                         
                         <?php else: ?>
                             <li class="nav-item"><a class="nav-link" href="<?= base_url('catalogo') ?>">Catálogo</a></li>
+                            <li class="nav-item"><a class="nav-link" href="<?= base_url('mis-reservas') ?>">Mis Reservas</a></li>
                         <?php endif; ?>
 
                         <li class="nav-item ms-3">

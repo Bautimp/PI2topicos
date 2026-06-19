@@ -49,4 +49,14 @@ class AlquilerModel extends Model
                     ->where('alquileres.estado', 'APROBADO')
                     ->findAll();
     }
+    
+    // Obtiene el historial completo de reservas de un cliente específico
+    public function obtenerMisReservas($cliente_id)
+    {
+        return $this->select('alquileres.*, vehiculos.marca, vehiculos.modelo')
+                    ->join('vehiculos', 'vehiculos.id = alquileres.vehiculo_id')
+                    ->where('alquileres.cliente_id', $cliente_id)
+                    ->orderBy('alquileres.id', 'DESC') // Mostramos las más recientes primero
+                    ->findAll();
+    }
 }
