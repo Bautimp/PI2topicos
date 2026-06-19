@@ -33,6 +33,7 @@ $routes->group('', ['filter' => 'authGuard'], function($routes) {
         $routes->get('vehiculos/crear', 'VehiculoController::crear');
         $routes->post('vehiculos/guardar', 'VehiculoController::guardar');
         $routes->get('vehiculos/editar/(:num)', 'VehiculoController::editar/$1');
+        $routes->get('vehiculos/eliminar-imagen/(:num)/(:num)', 'VehiculoController::eliminarImagen/$1/$2');
         $routes->post('vehiculos/actualizar/(:num)', 'VehiculoController::actualizar/$1');
         $routes->get('vehiculos/baja/(:num)', 'VehiculoController::bajaLogica/$1');
 
