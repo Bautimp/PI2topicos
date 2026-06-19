@@ -72,6 +72,16 @@
             text-align: left;
         }
 
+        /* Estilo para los errores específicos del PDF */
+        .error-field {
+            color: #ff6b6b;
+            font-size: 0.82rem;
+            margin-top: 6px;
+            display: block;
+            text-align: left;
+            font-weight: 500;
+        }
+
         /* Formularios e Inputs */
         .form-group {
             margin-bottom: 22px;
@@ -91,7 +101,7 @@
             position: relative;
             border-radius: 8px;
             background: linear-gradient(90deg, #0072ff, #ff7600);
-            padding: 1.5px; /* Crea el efecto de borde con degradado sutil */
+            padding: 1.5px;
         }
 
         .form-control {
@@ -168,7 +178,7 @@
 </head>
 <body>
 
-   <div class="login-container">
+<div class="login-container">
     <div class="logo-wrapper">
         <img src="<?= base_url('assets/titulo.png') ?>" alt="RENTaCAR Logo" class="logo-img">
     </div>
@@ -179,14 +189,18 @@
         </div>
     <?php endif; ?>
 
-    <form action="<?= base_url('login/procesar') ?>" method="post">
-        <?= csrf_field() ?>
+    <?= form_open('login/procesar') ?>
 
         <div class="form-group">
             <label for="email">Correo Electrónico</label>
             <div class="input-wrapper">
-                <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@correo.com" required autocomplete="email">
+                <input type="email" id="email" name="email" class="form-control" 
+                       placeholder="ejemplo@correo.com" required autocomplete="email"
+                       value="<?= old('email') ?>"> 
             </div>
+            <?php if(session('errors.email')): ?> 
+                <span class="error-field"><?= session('errors.email') ?></span> 
+            <?php endif; ?>
         </div>
 
         <div class="form-group">
@@ -194,10 +208,14 @@
             <div class="input-wrapper">
                 <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
             </div>
+            <?php if(session('errors.password')): ?> 
+                <span class="error-field"><?= session('errors.password') ?></span> 
+            <?php endif; ?>
         </div>
 
         <button type="submit" class="btn-submit">Iniciar Sesión</button>
-    </form>
+        
+    <?= form_close() ?> 
 
     <div class="form-footer">
         <a href="#">¿Olvidó su contraseña?</a>
