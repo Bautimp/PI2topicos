@@ -13,6 +13,7 @@ $routes->get('password/forgot', 'PasswordController::forgotPassword');
 $routes->post('password/send-reset', 'PasswordController::sendResetLink');
 $routes->get('password/reset/(:any)', 'PasswordController::resetPassword/$1');
 $routes->post('password/update', 'PasswordController::updatePassword');
+$routes->post('cliente/registrar', 'ClienteController::registrar');
 
 // Rutas Protegidas (Requieren Login)
 $routes->group('', ['filter' => 'authGuard'], function($routes) {
