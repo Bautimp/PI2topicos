@@ -35,6 +35,11 @@ $routes->group('', ['filter' => 'authGuard'], function($routes) {
         $routes->post('vehiculos/actualizar/(:num)', 'VehiculoController::actualizar/$1');
         $routes->get('vehiculos/baja/(:num)', 'VehiculoController::bajaLogica/$1');
 
+        // Rutas de Alquileres
+        $routes->get('alquileres', 'AlquilerController::listarPendientes');
+        $routes->get('alquileres/aprobar/(:num)/(:num)', 'AlquilerController::aprobarReserva/$1/$2');
+        $routes->get('alquileres/rechazar/(:num)', 'AlquilerController::rechazarReserva/$1');
+        
         // Rutas registro
 
     });

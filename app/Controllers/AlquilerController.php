@@ -40,10 +40,27 @@ class AlquilerController extends BaseController
     // === VISTAS ADMIN ===
     public function listarPendientes()
     {
-        $alquilerModel = new AlquilerModel();
-        $datos['reservas'] = $alquilerModel->where('estado', 'PENDIENTE')->findAll();
+        $alquilerModel = new \App\Models\AlquilerModel();
+        
+        // Agregamos todos los campos necesarios del cliente en el select
+        $datos['reservas'] = $alquilerModel->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono, clientes.direccion, clientes.fechaAlta, vehiculos.marca, vehiculos.modelo, vehiculos.precio_dia')
+                                        ->join('clientes', 'clientes.id = alquileres.cliente_id')
+                                        ->join('vehiculos', 'vehiculos.id = alquileres.vehiculo_id')
+                                        ->where('alquileres.estado', 'PENDIENTE')
+                                        ->orderBy('alquileres.fechaDesde', 'ASC')
+                                        ->findAll();
         
         return view('admin/alquileres/pendientes', $datos);
+    }
+
+    public function rechazarReserva($id_alquiler)
+    {
+        $alquilerModel = new \App\Models\AlquilerModel();
+
+        // Cambiamos el estado a RECHAZADO. El vehículo no cambia porque ya estaba DISPONIBLE.
+        $alquilerModel->update($id_alquiler, ['estado' => 'RECHAZADO']);
+
+        return redirect()->to('/admin/alquileres')->with('mensaje', 'La solicitud de reserva ha sido rechazada correctamente.');
     }
 
     public function aprobarReserva($id_alquiler, $id_vehiculo)

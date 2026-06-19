@@ -10,9 +10,29 @@ class VehiculoController extends BaseController
     // VISTAS DEL CLIENTE (PÚBLICAS)
     public function catalogo()
     {
-        $vehiculoModel = new VehiculoModel();
-        $imagenModel = new VehiculoImagenModel();
+        $vehiculoModel = new \App\Models\VehiculoModel();
+        $imagenModel = new \App\Models\VehiculoImagenModel();
+        $alquilerModel = new \App\Models\AlquilerModel();
         
+        // actualización de autos alquilados
+        $fechaHoy = date('Y-m-d');
+        
+        // Buscamos alquileres que debían devolverse ayer o antes, y siguen figurando como APROBADOS
+        $alquileresVencidos = $alquilerModel->where('estado', 'APROBADO')
+                                            ->where('fechaHasta <', $fechaHoy)
+                                            ->findAll();
+
+        if (!empty($alquileresVencidos)) {
+            foreach ($alquileresVencidos as $alquiler) {
+                // Pasamos el alquiler al historial como finalizado
+                $alquilerModel->update($alquiler->id, ['estado' => 'FINALIZADO']);
+                
+                // Liberamos el vehículo para que vuelva a aparecer en el catálogo
+                $vehiculoModel->update($alquiler->vehiculo_id, ['disponibilidad' => 'DISPONIBLE']);
+            }
+        }
+
+        // Carga del catálogo
         $autos = $vehiculoModel->getDisponiblesParaAlquiler(); 
         
         // Adjuntarle a cada auto sus imágenes
@@ -28,9 +48,25 @@ class VehiculoController extends BaseController
     // Listado total de vehículos (Admin)
     public function indexAdmin()
     {
-        $vehiculoModel = new VehiculoModel();
-        // Traemos todos los vehículos, activos e inactivos, ordenados por ID
-        $datos['vehiculos'] = $vehiculoModel->orderBy('id', 'DESC')->findAll();
+        $vehiculoModel = new \App\Models\VehiculoModel();
+        $alquilerModel = new \App\Models\AlquilerModel();
+
+        // Traemos todos los vehículos
+        $vehiculos = $vehiculoModel->orderBy('id', 'DESC')->findAll();
+
+        // Buscamos el alquiler activo para los que están alquilados
+        foreach ($vehiculos as $v) {
+            if ($v->disponibilidad === 'ALQUILADO' && $v->esActivo == 1) {
+                // Buscamos el alquiler APROBADO actual cruzando con el cliente
+                $v->alquiler_activo = $alquilerModel->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono')
+                                                    ->join('clientes', 'clientes.id = alquileres.cliente_id')
+                                                    ->where('alquileres.vehiculo_id', $v->id)
+                                                    ->where('alquileres.estado', 'APROBADO')
+                                                    ->first();
+            }
+        }
+
+        $datos['vehiculos'] = $vehiculos;
         
         return view('admin/vehiculos/index', $datos);
     }
