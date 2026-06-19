@@ -94,11 +94,18 @@ class VehiculoController extends BaseController
     public function editar($id)
     {
         $vehiculoModel = new VehiculoModel();
+        $imagenModel = new VehiculoImagenModel();
+
+
         $vehiculo = $vehiculoModel->find($id);
 
         if (!$vehiculo) {
             return redirect()->to('/admin/vehiculos')->with('error', 'El vehículo no existe.');
         }
+
+
+        $vehiculo->imagenes = $imagenModel->obtenerPorVehiculo($vehiculo->id);
+
 
         $datos['vehiculo'] = $vehiculo;
         return view('admin/vehiculos/editar', $datos);
