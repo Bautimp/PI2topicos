@@ -48,9 +48,25 @@ class VehiculoController extends BaseController
     // Listado total de vehículos (Admin)
     public function indexAdmin()
     {
-        $vehiculoModel = new VehiculoModel();
-        // Traemos todos los vehículos, activos e inactivos, ordenados por ID
-        $datos['vehiculos'] = $vehiculoModel->orderBy('id', 'DESC')->findAll();
+        $vehiculoModel = new \App\Models\VehiculoModel();
+        $alquilerModel = new \App\Models\AlquilerModel();
+
+        // Traemos todos los vehículos
+        $vehiculos = $vehiculoModel->orderBy('id', 'DESC')->findAll();
+
+        // Buscamos el alquiler activo para los que están alquilados
+        foreach ($vehiculos as $v) {
+            if ($v->disponibilidad === 'ALQUILADO' && $v->esActivo == 1) {
+                // Buscamos el alquiler APROBADO actual cruzando con el cliente
+                $v->alquiler_activo = $alquilerModel->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono')
+                                                    ->join('clientes', 'clientes.id = alquileres.cliente_id')
+                                                    ->where('alquileres.vehiculo_id', $v->id)
+                                                    ->where('alquileres.estado', 'APROBADO')
+                                                    ->first();
+            }
+        }
+
+        $datos['vehiculos'] = $vehiculos;
         
         return view('admin/vehiculos/index', $datos);
     }
