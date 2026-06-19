@@ -77,18 +77,35 @@ class AlquilerController extends BaseController
         return redirect()->to('/admin/alquileres')->with('mensaje', 'Alquiler aprobado.');
     }
 
+    public function listarActivos()
+    {
+        $alquilerModel = new \App\Models\AlquilerModel();
+        
+        // Sumamos dirección y fechaAlta del cliente para poder mostrarlos en el modal
+        $datos['reservas'] = $alquilerModel->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono, clientes.direccion, clientes.fechaAlta, vehiculos.marca, vehiculos.modelo, vehiculos.precio_dia')
+                                           ->join('clientes', 'clientes.id = alquileres.cliente_id')
+                                           ->join('vehiculos', 'vehiculos.id = alquileres.vehiculo_id')
+                                           ->where('alquileres.estado', 'APROBADO')
+                                           ->orderBy('alquileres.fechaHasta', 'ASC') // Ordena cronológicamente: Atrasados -> Hoy -> Futuro
+                                           ->findAll();
+        
+        return view('admin/alquileres/activos', $datos);
+    }
+
+
+    // Registra la devolución física del vehículo    
     public function registrarDevolucion($id_alquiler, $id_vehiculo)
     {
-        $alquilerModel = new AlquilerModel();
-        $vehiculoModel = new VehiculoModel();
+        $alquilerModel = new \App\Models\AlquilerModel();
+        $vehiculoModel = new \App\Models\VehiculoModel();
 
-        // 1. Finalizamos alquiler
+        // 1. Cerramos el contrato de alquiler
         $alquilerModel->update($id_alquiler, ['estado' => 'FINALIZADO']);
         
-        // 2. Liberamos vehículo
+        // 2. Volvemos a poner el auto disponible en el catálogo
         $vehiculoModel->update($id_vehiculo, ['disponibilidad' => 'DISPONIBLE']);
 
-        return redirect()->to('/admin/alquileres')->with('mensaje', 'Vehículo devuelto exitosamente.');
+        return redirect()->to('/admin/alquileres/activos')->with('mensaje', 'Devolución registrada exitosamente. El vehículo ya está disponible en el catálogo.');
     }
 
     // VISTA CLIENTE: PANEL DE MIS RESERVAS

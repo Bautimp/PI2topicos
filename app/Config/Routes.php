@@ -42,6 +42,8 @@ $routes->group('', ['filter' => 'authGuard'], function($routes) {
         $routes->get('alquileres/rechazar/(:num)', 'AlquilerController::rechazarReserva/$1');
         
         // Rutas registro
+        $routes->get('alquileres/activos', 'AlquilerController::listarActivos');
+        $routes->get('alquileres/devolucion/(:num)/(:num)', 'AlquilerController::registrarDevolucion/$1/$2');
 
     });
 
