@@ -10,19 +10,21 @@ class CreateRentacarDatabase extends Migration
     public function up()
     {
         // --------------------------------------------------------
-        // 1. Tabla: usuarios
+        // Tabla: usuarios
         // --------------------------------------------------------
         $this->forge->addField([
             'id'       => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'email'    => ['type' => 'VARCHAR', 'constraint' => 50, 'unique' => true],
             'password' => ['type' => 'VARCHAR', 'constraint' => 255],
             'esAdmin'  => ['type' => 'TINYINT', 'constraint' => 1],
+            'reset_token' => ['type'       => 'VARCHAR', 'constraint' => '255', 'null'       => true, 'default'    => null, 'after'      => 'password'],
+            'reset_expires_at' => ['type'    => 'DATETIME', 'null' => true, 'default' => null, 'after'   => 'reset_token'],
         ]);
         $this->forge->addKey('id', true);
         $this->forge->createTable('usuarios');
 
         // --------------------------------------------------------
-        // 2. Tabla: vehiculos[cite: 4]
+        // Tabla: vehiculos
         // --------------------------------------------------------
         $this->forge->addField([
             'id'             => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
@@ -91,7 +93,7 @@ class CreateRentacarDatabase extends Migration
 
     public function down()
     {
-        // Al revertir la migración, se deben eliminar en orden inverso para evitar errores de restricción de clave foránea[cite: 4].
+        // Al revertir la migración, se deben eliminar en orden inverso para evitar errores de restricción de clave foránea.
         $this->forge->dropTable('alquileres', true);
         $this->forge->dropTable('clientes', true);
         $this->forge->dropTable('vehiculos', true);
