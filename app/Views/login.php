@@ -218,7 +218,7 @@
     <?= form_close() ?> 
 
     <div class="form-footer">
-        <a href="#">¿Olvidó su contraseña?</a>
+        <a href="<?= base_url('password/forgot') ?>">¿Olvidó su contraseña?</a>
         <a href="#" class="register">Registrarse</a>
     </div>
 

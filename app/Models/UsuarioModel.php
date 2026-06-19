@@ -11,8 +11,6 @@ class UsuarioModel extends Model
     protected $returnType       = 'object';
     
     protected $allowedFields    = [
-        'email', 
-        'password', 
-        'esAdmin'
-    ];
+        'email', 'password', 'esAdmin','reset_token', 'reset_expires_at'
+    ]; 
 }

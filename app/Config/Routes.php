@@ -9,7 +9,10 @@ $routes->post('login/procesar', 'AuthController::procesarLogin');
 $routes->get('catalogo', 'VehiculoController::catalogo');
 $routes->post('alquileres/reservar/(:num)', 'AlquilerController::reservar/$1');
 $routes->get('logout', 'AuthController::logout');
-
+$routes->get('password/forgot', 'PasswordController::forgotPassword');
+$routes->post('password/send-reset', 'PasswordController::sendResetLink');
+$routes->get('password/reset/(:any)', 'PasswordController::resetPassword/$1');
+$routes->post('password/update', 'PasswordController::updatePassword');
 
 // Rutas Protegidas (Requieren Login)
 $routes->group('', ['filter' => 'authGuard'], function($routes) {
