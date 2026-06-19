@@ -55,17 +55,17 @@
                             <h6 class="card-subtitle mb-3 text-primary fw-bold">$<?= number_format($v->precio_dia, 2, ',', '.') ?> <small class="text-muted fw-normal">/ día</small></h6>
                             
                             <ul class="list-unstyled mb-4">
-                                <li>📅 <strong>Año:</strong> <?= esc($v->anio) ?></li>
-                                <li>👥 <strong>Asientos:</strong> <?= esc($v->asientos) ?></li>
-                                <li>⚙️ <strong>Motor:</strong> <?= esc($v->motor) ?></li>
-                                <li>🛣️ <strong>Kilometraje:</strong> <?= number_format($v->kilometraje, 0, ',', '.') ?> km</li>
+                                <li><strong>Año:</strong> <?= esc($v->anio) ?></li>
+                                <li><strong>Asientos:</strong> <?= esc($v->asientos) ?></li>
+                                <li><strong>Motor:</strong> <?= esc($v->motor) ?></li>
+                                <li><strong>Kilometraje:</strong> <?= number_format($v->kilometraje, 0, ',', '.') ?> km</li>
                             </ul>
 
                             <div class="mt-auto">
                                 <?php if(!session()->get('isLoggedIn')): ?>
                                     <a href="<?= base_url('login') ?>" class="btn btn-outline-primary w-100">Inicia Sesión para Reservar</a>
                                 <?php elseif(session()->get('esAdmin')): ?>
-                                    <button class="btn btn-secondary w-100" disabled>Vista de Administrador</button>
+                                    <a href="<?= base_url('admin/vehiculos/editar/' . $v->id) ?>" class="btn btn-outline-primary w-100">Editar vehículo como Administrador</a>
                                 <?php else: ?>
                                     <button type="button" class="btn btn-primary w-100 fw-bold" data-bs-toggle="modal" data-bs-target="#reservaModal<?= $v->id ?>">
                                         Reservar Ahora

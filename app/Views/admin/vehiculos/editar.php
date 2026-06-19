@@ -49,15 +49,56 @@
                         </div>
 
                         <div class="row mb-4">
-                            <div class="col-12">
-                                <label class="form-label fw-bold">Agregar Imágenes al Vehículo (Máximo 10)</label>
-                                <input type="file" class="form-control" name="imagenes[]" multiple accept="image/jpeg, image/png, image/jpg">
-                                <small class="text-muted">Formatos aceptados: JPG, PNG. Puedes seleccionar varios archivos a la vez manteniendo presionada la tecla Ctrl.</small>
+                            
+                            <div class="col-md-5 mb-3">
+                                <label class="form-label text-muted">Imágenes Actuales:</label>
+                                
+                                <div id="carouselAuto<?= $vehiculo->id ?>" class="carousel slide border rounded shadow-sm" data-bs-ride="carousel">
+                                    <div class="carousel-inner rounded">
+                                        <?php if(!empty($vehiculo->imagenes)): ?>
+                                            <?php foreach($vehiculo->imagenes as $index => $img): ?>
+                                                <div class="carousel-item <?= ($index === 0) ? 'active' : '' ?>">
+                                                    <img src="<?= base_url('uploads/vehiculos/' . $img->ruta_imagen) ?>" 
+                                                         class="d-block w-100" style="height: 220px; object-fit: cover;" alt="Foto Vehículo">
+                                                </div>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <div class="carousel-item active">
+                                                <div class="d-flex justify-content-center align-items-center bg-light text-muted" style="height: 220px;">
+                                                    <span>Sin imágenes cargadas</span>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    
+                                    <?php if(!empty($vehiculo->imagenes) && count($vehiculo->imagenes) > 1): ?>
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselAuto<?= $vehiculo->id ?>" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselAuto<?= $vehiculo->id ?>" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
                             </div>
+
+                            <div class="col-md-7 d-flex flex-column justify-content-center">
+                                <label class="form-label fw-bold">Agregar Nuevas Imágenes (Máximo 10 en total)</label>
+                                <input type="file" class="form-control mb-2" name="imagenes[]" multiple accept="image/jpeg, image/png, image/jpg">
+                                
+                                <div class="alert alert-warning py-2 mb-0" role="alert">
+                                    <small>
+                                        <strong>Atención:</strong> El vehículo actualmente tiene 
+                                        <strong><?= count($vehiculo->imagenes ?? []) ?></strong> imágenes cargadas. 
+                                        Solo puedes subir las restantes hasta llegar a 10.
+                                    </small>
+                                </div>
+                            </div>
+                            
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <a href="<?= base_url('admin/vehiculos') ?>" class="btn btn-secondary">Cancelar</a>
+                            <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
                             <button type="submit" class="btn btn-primary">Actualizar Cambios</button>
                         </div>
                     </form>

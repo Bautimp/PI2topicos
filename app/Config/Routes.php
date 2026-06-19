@@ -17,7 +17,7 @@ $routes->post('password/update', 'PasswordController::updatePassword');
 // Rutas Protegidas (Requieren Login)
 $routes->group('', ['filter' => 'authGuard'], function($routes) {
 
-    // Rutas agrupadas para el panel de Administrador
+    // Rutas agrupadas administrador (Requieren Login como administrador)
     $routes->group('admin',['filter' => 'authAdmin'], function($routes) {
         
         // Rutas de Clientes
@@ -34,8 +34,8 @@ $routes->group('', ['filter' => 'authGuard'], function($routes) {
         $routes->post('vehiculos/actualizar/(:num)', 'VehiculoController::actualizar/$1');
         $routes->get('vehiculos/baja/(:num)', 'VehiculoController::bajaLogica/$1');
 
+        // Rutas registro
+
     });
 
-    //$routes->get('dashboard', 'DashboardController::index'); 
-    // Añade aquí dentro todas las rutas que requieran que el usuario esté logueado
 });
