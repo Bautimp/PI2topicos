@@ -30,12 +30,12 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark shadow" aria-labelledby="navbarAlquileres">
                                     <li>
-                                        <a class="dropdown-item" href="<?= base_url('admin/alquileres') ?>">
+                                        <a class="dropdown-item fw-bold text-warning" href="<?= base_url('admin/alquileres') ?>">
                                             Solicitudes Pendientes
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item fw-bold text-warning" href="<?= base_url('admin/alquileres/activos') ?>">
+                                        <a class="dropdown-item fw-bold text-primary" href="<?= base_url('admin/alquileres/activos') ?>">
                                             Vehículos en Curso
                                         </a>
                                     </li>
