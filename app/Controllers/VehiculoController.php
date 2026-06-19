@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\VehiculoModel;
 use App\Models\VehiculoImagenModel;
+use App\Models\AlquilerModel;
 
 class VehiculoController extends BaseController
 {
@@ -211,5 +212,40 @@ class VehiculoController extends BaseController
         ]);
         
         return redirect()->to('/admin/vehiculos')->with('mensaje', 'Vehículo dado de baja correctamente.');
+    }
+
+    public function historialRapido($id)
+    {
+        // Instanciamos la conexión a la Base de Datos para hacer un Join directo
+        $alquileres= new AlquilerModel();
+
+        // Buscamos el historial haciendo join entre alquileres y clientes
+        $historial = $alquileres->table('alquileres') // Ajustá al nombre real de tu tabla alquileres
+            ->select('alquileres.*, clientes.nombre, clientes.apellido')
+            ->join('clientes', 'clientes.id = alquileres.cliente_id') // Ajustá las claves foráneas
+            ->where('alquileres.vehiculo_id', $id)
+            ->orderBy('alquileres.fechaDesde', 'DESC')
+            ->get()
+            ->getResult();
+
+        // Si no hay registros de alquileres previos
+        if (empty($historial)) {
+            echo '<tr><td colspan="4" class="text-center text-muted py-3">Este vehículo no registra alquileres previos en el sistema.</td></tr>';
+            return;
+        }
+
+        // Si hay registros, armamos las filas HTML dinámicamente
+        foreach ($historial as $row) {
+            $fechaDesde = date('d/m/Y', strtotime($row->fechaDesde));
+            $fechaHasta = date('d/m/Y', strtotime($row->fechaHasta));
+            $monto = number_format($row->montoTotal, 2, ',', '.');
+            
+            echo "<tr>
+                    <td class='fw-bold'>#{$row->id}</td>
+                    <td>{$row->nombre} {$row->apellido}</td>
+                    <td class='text-center'>{$fechaDesde} al {$fechaHasta}</td>
+                    <td class='text-end fw-bold text-success'>\${$monto}</td>
+                  </tr>";
+        }
     }
 }

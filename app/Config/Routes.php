@@ -42,7 +42,7 @@ $routes->group('', ['filter' => 'authGuard'], function($routes) {
         $routes->get('alquileres/rechazar/(:num)', 'AlquilerController::rechazarReserva/$1');
         
         // Rutas registro
-
+        $routes->get('vehiculos/historial-rapido/(:num)', 'VehiculoController::historialRapido/$1');
     });
 
 });
