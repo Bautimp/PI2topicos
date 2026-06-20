@@ -91,14 +91,23 @@
         }
         .form-control:focus { background-color: #15171a; color: var(--text-white); box-shadow: none; }
 
-        .btn-submit {
-            width: 100%; background: var(--gradient-primary); border: none;
-            color: var(--text-white); padding: 15px; font-size: 1.1rem;
-            font-weight: 600; border-radius: 30px; cursor: pointer; margin-top: 10px;
-            box-shadow: 0 5px 15px rgba(0, 114, 255, 0.3); transition: transform 0.2s;
-        }
-        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255, 118, 0, 0.4); }
+     .btn-submit {
+    width: 100%; 
+    background: #ff7600; /* El naranja de tu logo */
+    border: none;
+    color: #ffffff; 
+    padding: 15px; 
+    font-size: 1.1rem;
+    font-weight: 600; 
+    border-radius: 30px; /* Mantiene la forma de píldora original */
+    cursor: pointer; 
+    margin-top: 10px;
+    transition: filter 0.2s;
+}
 
+.btn-submit:hover { 
+    filter: brightness(0.9); /* Solo se oscurece un poco, sin cambiar de color */
+}
         .form-footer { margin-top: 30px; display: flex; justify-content: space-between; font-size: 0.85rem; }
         .form-footer a { color: #00c6ff; text-decoration: none; }
         .form-footer a.register { color: #ff7600; cursor: pointer; }
