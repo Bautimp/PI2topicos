@@ -14,7 +14,7 @@ phpunit.xml
 
 # Subidas de usuarios (Imágenes de los vehículos)
 # Ignoramos los archivos físicos, pero mantenemos la carpeta vacía con .gitkeep
-/public/uploads/*
+
 !/public/uploads/.gitkeep
 
 # Archivos del sistema operativo
