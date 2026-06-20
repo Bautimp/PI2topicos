@@ -207,7 +207,7 @@ class RentacarSeeder extends Seeder
 
         $this->db->table('alquileres')->insertBatch($alquileres);
 
-        $vehiculos_imagenes = [
+        $vehiculo_imagenes = [
             [
                 'vehiculo_id'          => '14',
                 'ruta_imagen'         => '1781925060_f9c265db447e89ef19ac.png'
@@ -265,7 +265,7 @@ class RentacarSeeder extends Seeder
                 'ruta_imagen'         => '1781925212_6e322e3ccd86d35d98ce.png'
             ],
         ];
-        $this->db->table('vehiculos_imagenes')->insertBatch($vehiculos_imagenes);
+        $this->db->table('vehiculo_imagenes')->insertBatch($vehiculo_imagenes);
 
 
 
