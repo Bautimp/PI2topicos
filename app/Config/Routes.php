@@ -46,6 +46,7 @@ $routes->group('', ['filter' => 'authGuard'], function($routes) {
         $routes->get('alquileres/activos', 'AlquilerController::listarActivos');
         $routes->get('alquileres/devolucion/(:num)/(:num)', 'AlquilerController::registrarDevolucion/$1/$2');
         $routes->get('vehiculos/historial-rapido/(:num)', 'VehiculoController::historialRapido/$1');
+        $routes->get('clientes/historialRapidoVehiculo/(:num)', 'AlquilerController::historialRapidoVehiculo/$1');
     });
 
 });

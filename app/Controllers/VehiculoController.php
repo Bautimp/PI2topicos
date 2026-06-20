@@ -256,4 +256,5 @@ class VehiculoController extends BaseController
     // Pasamos el array $data completo
     return view('admin/vehiculos/tabla_historial', $data);
 }
+ 
 }

@@ -125,4 +125,12 @@ class AlquilerController extends BaseController
         // 3. Mostramos la vista
         return view('cliente/mis_reservas', $datos);
     }
+
+      public function historialRapidoVehiculo($id){
+        $alquileres = new AlquilerModel();
+
+        // Guardamos el resultado dentro de la clave 'historial' de un array $data
+        $data['historial']= $alquileres->getHistorialPorCliente($id);
+        return view('admin/clientes/tabla_historial', $data);
+    }
 }

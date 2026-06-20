@@ -59,4 +59,8 @@ class AlquilerModel extends Model
                     ->orderBy('alquileres.id', 'DESC') // Mostramos las más recientes primero
                     ->findAll();
     }
+
+  
+    
+    
 }
