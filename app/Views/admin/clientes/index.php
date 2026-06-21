@@ -101,36 +101,73 @@ document.addEventListener("DOMContentLoaded", function() {
     const miModal = new bootstrap.Modal(modalElement);
     const cuerpoModal = document.getElementById('contenidoHistorial');
     
+    // CREAMOS UNA VARIABLE EN MEMORIA PARA EL CLIENTE ACTIVO
+    let clienteIdActual = null; 
+    
+    // 1. CARGAR HISTORIAL ORIGINAL (Desde la lista de clientes)
     botonesHistorial.forEach(boton => {
         boton.addEventListener('click', function() {
-            const clienteId = this.getAttribute('data-id');
+            // Guardamos el ID en la variable global de este bloque
+            clienteIdActual = this.getAttribute('data-id'); 
             
-            // Ponemos el spinner de carga
+            cargarHistorial(clienteIdActual);
+            miModal.show();
+        });
+    });
+
+    // Función aislada para cargar el historial
+    function cargarHistorial(clienteId) {
+        if (!clienteId) {
+            cuerpoModal.innerHTML = `<div class="alert alert-danger text-center">Error: No se detectó el ID del cliente.</div>`;
+            return;
+        }
+
+        cuerpoModal.innerHTML = `
+            <div class="text-center py-4">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-2 text-muted">Cargando historial...</p>
+            </div>`;
+
+        fetch('<?= base_url("admin/clientes/historialRapidoVehiculo") ?>/' + clienteId)
+            .then(res => res.text())
+            .then(html => { cuerpoModal.innerHTML = html; })
+            .catch(err => { cuerpoModal.innerHTML = `<div class="alert alert-danger text-center">Error al cargar historial.</div>`; });
+    }
+
+    // 2. ESCUCHAR CLICS INTERNOS DEL MODAL (Lupita y Volver)
+    cuerpoModal.addEventListener('click', function(e) {
+        
+        // CASO A: Se hizo clic en la LUPITA 🔍
+        const botonLupita = e.target.closest('.btn-ver-vehiculo');
+        if (botonLupita) {
+            const vehiculoId = botonLupita.getAttribute('data-vehiculo-id');
+
             cuerpoModal.innerHTML = `
                 <div class="text-center py-4">
-                    <div class="spinner-border text-primary" role="status"></div>
-                    <p class="mt-2 text-muted">Cargando...</p>
+                    <div class="spinner-border text-secondary" role="status"></div>
+                    <p class="mt-2 text-muted">Cargando datos del vehículo...</p>
                 </div>`;
-                
-            // Mostramos el modal
-            miModal.show();
-            
-            // Petición AJAX usando rutas relativas seguras
-            fetch(`clientes/historialRapidoVehiculo/${clienteId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error en la respuesta del servidor');
+
+            fetch('<?= base_url("admin/clientes/detalleVehiculoRapido") ?>/' + vehiculoId)
+                .then(res => res.text())
+                .then(html => { 
+                    cuerpoModal.innerHTML = html; 
+                    
+                    // Le inyectamos directamente el ID que tenemos guardado en memoria
+                    const btnVolver = cuerpoModal.querySelector('.btn-volver-historial');
+                    if(btnVolver && clienteIdActual) {
+                        btnVolver.setAttribute('data-cliente-id', clienteIdActual);
                     }
-                    return response.text();
                 })
-                .then(htmlRenderizado => {
-                    cuerpoModal.innerHTML = htmlRenderizado;
-                })
-                .catch(error => {
-                    console.error(error);
-                    cuerpoModal.innerHTML = `<div class="alert alert-danger text-center mb-0">Error al cargar el historial.</div>`;
-                });
-        });
+                .catch(err => { cuerpoModal.innerHTML = `<div class="alert alert-danger text-center">Error al cargar datos del vehículo.</div>`; });
+        }
+
+        // CASO B: Se hizo clic en VOLVER ←
+        const botonVolver = e.target.closest('.btn-volver-historial');
+        if (botonVolver) {
+            // Usamos nuestra variable segura de memoria
+            cargarHistorial(clienteIdActual); 
+        }
     });
 });
 </script>

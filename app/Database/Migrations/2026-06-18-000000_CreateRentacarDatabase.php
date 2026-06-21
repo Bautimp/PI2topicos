@@ -98,6 +98,6 @@ class CreateRentacarDatabase extends Migration
         $this->forge->dropTable('clientes', true);
         $this->forge->dropTable('vehiculos', true);
         $this->forge->dropTable('usuarios', true);
-        $this->forge->dropTable('vehiculos_imagenes');
+        $this->forge->dropTable('vehiculos_imagenes',true);
     }
 }

@@ -256,5 +256,16 @@ class VehiculoController extends BaseController
     // Pasamos el array $data completo
     return view('admin/vehiculos/tabla_historial', $data);
 }
+
+public function detalleVehiculoRapido($id_vehiculo) {
+    $vehiculoModel = new VehiculoModel(); 
+    
+    $data['vehiculo'] = $vehiculoModel->find($id_vehiculo);
+    
+    // Inicializamos cliente_id para evitar que PHP tire un error de "Undefined variable"
+    $data['cliente_id'] = ''; 
+    
+    return view('admin/clientes/detalle_vehiculo', $data);
+}
  
 }

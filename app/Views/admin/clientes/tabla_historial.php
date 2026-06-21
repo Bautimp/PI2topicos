@@ -13,7 +13,13 @@
                 <?php foreach ($historial as $row): ?>
                     <tr>
                         <td class="fw-bold">#<?= $row->id ?></td>
-                        <td><?= esc($row->marca . ' ' . $row->modelo) ?></td>
+                        <td>
+                            <?= esc($row->marca . ' ' . $row->modelo) ?>
+                            <button type="button" 
+                                    class="btn btn-sm btn-link p-0 ms-1 btn-ver-vehiculo shadow-none" 
+                                    data-vehiculo-id="<?= $row->id ?>"> 🔍
+                            </button>
+                        </td>
                         <td class="text-center">
                             <?= date('d/m/Y', strtotime($row->fechaDesde)) ?> al <?= date('d/m/Y', strtotime($row->fechaHasta)) ?>
                         </td>

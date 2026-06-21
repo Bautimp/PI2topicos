@@ -133,4 +133,6 @@ class AlquilerController extends BaseController
         $data['historial']= $alquileres->getHistorialPorCliente($id);
         return view('admin/clientes/tabla_historial', $data);
     }
+
+    
 }
