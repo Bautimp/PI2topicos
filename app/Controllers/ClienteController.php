@@ -79,7 +79,7 @@ class ClienteController extends BaseController
     {
         $clienteModel = new ClienteModel();
         // Usamos el método personalizado del modelo que filtra por esActivo = 1
-        $datos['clientes'] = $clienteModel->getClientesActivos();
+        $datos['clientes'] = $clienteModel->getTodosLosClientes();
         
         return view('admin/clientes/index', $datos);
     }
