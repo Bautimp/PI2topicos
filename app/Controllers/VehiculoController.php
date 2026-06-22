@@ -87,6 +87,16 @@ class VehiculoController extends BaseController
 
         // Buscamos el alquiler activo para los que están alquilados
         foreach ($vehiculos as $v) {
+
+            // 1. NUEVA CONSULTA: Verificar si tiene solicitudes PENDIENTES
+        // Cuenta cuántos alquileres pendientes tiene este vehículo específico
+        $pendientes = $alquilerModel->where('vehiculo_id', $v->id)
+                                    ->where('estado', 'PENDIENTE')
+                                    ->countAllResults(); // Devuelve un número (0, 1, 2...)
+
+        // Si es mayor a 0, guardamos true, de lo contrario false
+        $v->tiene_pendientes = ($pendientes > 0);
+
             if ($v->disponibilidad === 'ALQUILADO' && $v->esActivo == 1) {
                 // Buscamos el alquiler APROBADO actual cruzando con el cliente
                 $v->alquiler_activo = $alquilerModel->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono')

@@ -32,7 +32,18 @@
                         <?php foreach($vehiculos as $v): ?>
                             <tr class="<?= ($v->esActivo == 0) ? 'table-danger text-muted' : '' ?>">
                                 <td class="ps-3"><?= $v->id ?></td>
-                                <td><strong><?= esc($v->marca . ' ' . $v->modelo) ?></strong></td>
+                                <td>
+    <strong><?= esc($v->marca . ' ' . $v->modelo) ?></strong>
+    
+    <?php if (isset($v->tiene_pendientes) && $v->tiene_pendientes): ?>
+        <span class="badge bg-info text-dark ms-2 shadow-sm" title="Este vehículo tiene solicitudes de alquiler pendientes de revisión">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-bell-fill mb-1" viewBox="0 0 16 16">
+                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
+            </svg>
+            Pendiente
+        </span>
+    <?php endif; ?>
+</td>
                                 <td><?= esc($v->anio) ?></td>
                                 <td><?= number_format($v->kilometraje, 0, ',', '.') ?> km</td>
                                 <td>$<?= number_format($v->precio_dia, 2, ',', '.') ?></td>
