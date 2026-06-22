@@ -22,8 +22,8 @@ class ClienteModel extends Model
 
 
     //Obtiene solo los clientes que no han sido dados de baja (Baja Lógica)
-    public function getClientesActivos()
+    public function getTodosLosClientes()
     {
-        return $this->where('esActivo', 1)->findAll();
+        return $this->findAll();
     }
 }

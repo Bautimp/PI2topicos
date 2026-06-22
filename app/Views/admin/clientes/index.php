@@ -19,26 +19,31 @@
         </div>
     <?php endif; ?>
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <table class="table table-hover align-middle">
+    <div class="card shadow-sm border-0">
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover align-middle mb-0">
                 <thead class="table-dark">
                     <tr>
-                        <th>ID</th>
+                        <th class="ps-3">ID</th>
                         <th>Nombre Completo</th>
                         <th>Teléfono</th>
                         <th>Dirección</th>
                         <th>Fecha de Alta</th>
                         <th class="text-center">Historial</th>
-                        <th class="text-center">Acciones</th>
+                        <th class="text-center pe-3">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if(!empty($clientes)): ?>
                         <?php foreach($clientes as $cliente): ?>
-                            <tr>
-                                <td><?= $cliente->id ?></td>
-                                <td><?= esc($cliente->nombre . ' ' . $cliente->apellido) ?></td>
+                            <tr class="<?= ($cliente->esActivo == 0) ? 'table-danger text-muted' : '' ?>">
+                                <td class="ps-3"><?= $cliente->id ?></td>
+                                <td>
+                                    <strong><?= esc($cliente->nombre . ' ' . $cliente->apellido) ?></strong>
+                                    <?php if($cliente->esActivo == 0): ?>
+                                        <span class="badge bg-danger ms-2">INACTIVO</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td><?= esc($cliente->telefono) ?></td>
                                 <td><?= esc($cliente->direccion) ?></td>
                                 <td><?= date('d/m/Y', strtotime($cliente->fechaAlta)) ?></td>
@@ -51,21 +56,25 @@
                                     </svg>
                                 </button>
                                 </td>
-                                <td class="text-center">
-                                    <a href="<?= base_url('admin/clientes/editar/' . $cliente->id) ?>" class="btn btn-sm btn-primary">
+                                <td class="text-center pe-3">
+                                    <a href="<?= base_url('admin/clientes/editar/' . $cliente->id) ?>" 
+                                       class="btn btn-sm btn-primary <?= ($cliente->esActivo == 0) ? 'disabled' : '' ?>">
                                         Editar
                                     </a>
-                                    <a href="<?= base_url('admin/clientes/baja/' . $cliente->id) ?>" 
-                                       class="btn btn-sm btn-danger" 
-                                       onclick="return confirm('¿Estás seguro de dar de baja a este cliente? Perderá acceso para alquilar.');">
-                                        Dar de Baja
-                                    </a>
+                                    
+                                    <?php if($cliente->esActivo == 1): ?>
+                                        <a href="<?= base_url('admin/clientes/baja/' . $cliente->id) ?>" 
+                                           class="btn btn-sm btn-outline-danger" 
+                                           onclick="return confirm('¿Estás seguro de dar de baja a este cliente? Perderá acceso para alquilar.');">
+                                            Baja
+                                        </a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="6" class="text-center">No hay clientes activos registrados en el sistema.</td>
+                            <td colspan="7" class="text-center py-4">No hay clientes registrados en el sistema.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -73,9 +82,10 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="modalHistorial" tabindex="-1" aria-labelledby="modalHistorialLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content shadow-lg">
             <div class="modal-header bg-dark text-white">
                 <h5 class="modal-title" id="modalHistorialLabel">Historial de Alquileres del Cliente</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -88,12 +98,13 @@
                     <p class="mt-2 text-muted">Buscando historial...</p>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer bg-light">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const botonesHistorial = document.querySelectorAll('.btn-historial');
