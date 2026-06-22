@@ -245,12 +245,17 @@ class VehiculoController extends BaseController
     $alquileres = new AlquilerModel();
 
     // Guardamos el resultado dentro de la clave 'historial' de un array $data
-    $data['historial'] = $alquileres->getHistorialPorVehiculo($id);
+    $data['historial'] = $alquileres->table('alquileres') 
+        ->select('alquileres.*, clientes.nombre, clientes.apellido')
+        ->join('clientes', 'clientes.id = alquileres.cliente_id') 
+        ->where('alquileres.vehiculo_id', $id)
+        ->orderBy('alquileres.fechaDesde', 'DESC')
+        ->get()
+        ->getResult();
 
     // Pasamos el array $data completo
     return view('admin/vehiculos/tabla_historial', $data);
 }
-
 public function detalleVehiculoRapido($id_vehiculo) {
     $vehiculoModel = new VehiculoModel(); 
     
@@ -261,5 +266,6 @@ public function detalleVehiculoRapido($id_vehiculo) {
     
     return view('admin/clientes/detalle_vehiculo', $data);
 }
+ 
  
 }

@@ -17,7 +17,7 @@
                             <?= esc($row->marca . ' ' . $row->modelo) ?>
                             <button type="button" 
                                     class="btn btn-sm btn-link p-0 ms-1 btn-ver-vehiculo shadow-none" 
-                                    data-vehiculo-id="<?= $row->id ?>"> 🔍
+                                    data-vehiculo-id="<?= $row->vehiculo_id ?>"> 🔍
                             </button>
                         </td>
                         <td class="text-center">

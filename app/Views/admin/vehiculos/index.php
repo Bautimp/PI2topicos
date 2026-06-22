@@ -108,11 +108,7 @@
                                             <?php endif; ?>
 
                                         </div>
-                                        <div class="modal-footer bg-light">
-                                            <a href="<?= base_url('admin/reportes/vehiculo/' . $v->id) ?>" class="btn btn-outline-primary w-100 fw-bold">
-                                                Ver Historial Completo del Vehículo
-                                            </a>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
