@@ -8,7 +8,7 @@ class RentacarSeeder extends Seeder
 {
     public function run()
     {
-        // 1. Insertar Usuarios (Un Admin y un Cliente)[cite: 4]
+        // 1. Insertar Usuarios (Un Admin y un Cliente)
         $usuarios = [
             [
                 'email'    => 'admin@mycar.com',
@@ -23,7 +23,7 @@ class RentacarSeeder extends Seeder
         ];
         $this->db->table('usuarios')->insertBatch($usuarios);
 
-        // 2. Insertar Cliente (Asignado al usuario ID 2 que es el cliente)[cite: 4]
+        // 2. Insertar Cliente (Asignado al usuario ID 2 que es el cliente)
         $cliente = [
             'nombre'     => 'Juan',
             'apellido'   => 'Perez',
@@ -34,11 +34,12 @@ class RentacarSeeder extends Seeder
         ];
         $this->db->table('clientes')->insert($cliente);
 
-        // 3. Insertar Vehiculos[cite: 4]
+        // 3. Insertar Vehiculos con Categorías
         $vehiculos = [
             [
                 'marca'          => 'Toyota',
                 'modelo'         => 'Corolla',
+                'categoria'      => 'Sedán',
                 'anio'           => 2022,
                 'asientos'       => 5,
                 'motor'          => '1.8 Hibrido',
@@ -50,6 +51,7 @@ class RentacarSeeder extends Seeder
             [
                 'marca'          => 'Ford',
                 'modelo'         => 'Ranger',
+                'categoria'      => 'Pickup',
                 'anio'           => 2023,
                 'asientos'       => 5,
                 'motor'          => '3.2 Diesel',
@@ -61,6 +63,7 @@ class RentacarSeeder extends Seeder
             [
                 'marca'          => 'Fiat',
                 'modelo'         => 'Cronos',
+                'categoria'      => 'Sedán',
                 'anio'           => 2023,
                 'asientos'       => 5,
                 'motor'          => '1.3 GSE',
@@ -72,6 +75,7 @@ class RentacarSeeder extends Seeder
             [
                 'marca'          => 'Peugeot',
                 'modelo'         => '208',
+                'categoria'      => 'Hatchback',
                 'anio'           => 2024,
                 'asientos'       => 5,
                 'motor'          => '1.6 VTi',
@@ -83,6 +87,7 @@ class RentacarSeeder extends Seeder
             [
                 'marca'          => 'Toyota',
                 'modelo'         => 'Corolla',
+                'categoria'      => 'Sedán',
                 'anio'           => 2022,
                 'asientos'       => 5,
                 'motor'          => '1.8 Híbrido',
@@ -94,6 +99,7 @@ class RentacarSeeder extends Seeder
             [
                 'marca'          => 'Toyota',
                 'modelo'         => 'Hilux',
+                'categoria'      => 'Pickup',
                 'anio'           => 2023,
                 'asientos'       => 5,
                 'motor'          => '2.8 TDI',
@@ -105,6 +111,7 @@ class RentacarSeeder extends Seeder
             [
                 'marca'          => 'Volkswagen',
                 'modelo'         => 'Gol Trend',
+                'categoria'      => 'Hatchback',
                 'anio'           => 2021,
                 'asientos'       => 5,
                 'motor'          => '1.6 MSI',
@@ -116,6 +123,7 @@ class RentacarSeeder extends Seeder
             [
                 'marca'          => 'Volkswagen',
                 'modelo'         => 'Amarok',
+                'categoria'      => 'Pickup',
                 'anio'           => 2022,
                 'asientos'       => 5,
                 'motor'          => '2.0 TDI V6',
@@ -127,6 +135,7 @@ class RentacarSeeder extends Seeder
             [
                 'marca'          => 'Chevrolet',
                 'modelo'         => 'Onix',
+                'categoria'      => 'Hatchback',
                 'anio'           => 2023,
                 'asientos'       => 5,
                 'motor'          => '1.0 Turbo',
@@ -138,6 +147,7 @@ class RentacarSeeder extends Seeder
             [
                 'marca'          => 'Renault',
                 'modelo'         => 'Kangoo',
+                'categoria'      => 'Utilitario',
                 'anio'           => 2020,
                 'asientos'       => 5,
                 'motor'          => '1.6 SCe',
@@ -149,6 +159,7 @@ class RentacarSeeder extends Seeder
             [
                 'marca'          => 'Ford',
                 'modelo'         => 'Ecosport',
+                'categoria'      => 'SUV',
                 'anio'           => 2021,
                 'asientos'       => 5,
                 'motor'          => '1.5 Dragon',
@@ -160,6 +171,7 @@ class RentacarSeeder extends Seeder
             [
                 'marca'          => 'Jeep',
                 'modelo'         => 'Renegade',
+                'categoria'      => 'SUV',
                 'anio'           => 2023,
                 'asientos'       => 5,
                 'motor'          => '1.8 E.torQ',
@@ -171,6 +183,7 @@ class RentacarSeeder extends Seeder
             [
                 'marca'          => 'Nissan',
                 'modelo'         => 'Kicks',
+                'categoria'      => 'SUV',
                 'anio'           => 2022,
                 'asientos'       => 5,
                 'motor'          => '1.6',
@@ -182,6 +195,7 @@ class RentacarSeeder extends Seeder
             [
                 'marca'          => 'Honda',
                 'modelo'         => 'Civic',
+                'categoria'      => 'Sedán',
                 'anio'           => 2021,
                 'asientos'       => 5,
                 'motor'          => '2.0 i-VTEC',
@@ -193,7 +207,7 @@ class RentacarSeeder extends Seeder
         ];
         $this->db->table('vehiculos')->insertBatch($vehiculos);
 
-        // 4. Insertar Alquileres[cite: 4]
+        // 4. Insertar Alquileres
         $alquileres = [
             [
                 'fechaDesde'  => '2026-06-19',
@@ -209,65 +223,62 @@ class RentacarSeeder extends Seeder
 
         $vehiculo_imagenes = [
             [
-                'vehiculo_id'          => '14',
+                'vehiculo_id'         => '14',
                 'ruta_imagen'         => '1781925060_f9c265db447e89ef19ac.png'
             ],
             [
-                'vehiculo_id'          => '13',
+                'vehiculo_id'         => '13',
                 'ruta_imagen'         => '1781925070_b4dc555ffde0bd9b06aa.png'
             ],
             [
-                'vehiculo_id'          => '12',
+                'vehiculo_id'         => '12',
                 'ruta_imagen'         => '1781925081_ddc53aba1b1e2134fc40.png'
             ],
             [
-                'vehiculo_id'          => '11',
+                'vehiculo_id'         => '11',
                 'ruta_imagen'         => '1781925095_e798ff73557e31ed0ab2.png'
             ],
             [
-                'vehiculo_id'          => '10',
+                'vehiculo_id'         => '10',
                 'ruta_imagen'         => '1781925106_15c34179c90c804f1757.png'
             ],
             [
-                'vehiculo_id'          => '9',
+                'vehiculo_id'         => '9',
                 'ruta_imagen'         => '1781925123_a59931311656550345f2.png'
             ],
             [
-                'vehiculo_id'          => '8',
+                'vehiculo_id'         => '8',
                 'ruta_imagen'         => '1781925135_9ab2a3111b0924723f0b.png'
             ],
             [
-                'vehiculo_id'          => '7',
+                'vehiculo_id'         => '7',
                 'ruta_imagen'         => '1781925146_33e106f11461e9717ec3.png'
             ],
             [
-                'vehiculo_id'          => '6',
+                'vehiculo_id'         => '6',
                 'ruta_imagen'         => '1781925159_8f3491747c0dfff2ce75.png'
             ],
             [
-                'vehiculo_id'          => '5',
+                'vehiculo_id'         => '5',
                 'ruta_imagen'         => '1781925168_6546b744bc74d346f63b.png'
             ],
             [
-                'vehiculo_id'          => '4',
+                'vehiculo_id'         => '4',
                 'ruta_imagen'         => '1781925178_d2ab43e058a136be4476.png'
             ],
             [
-                'vehiculo_id'          => '3',
+                'vehiculo_id'         => '3',
                 'ruta_imagen'         => '1781925188_430747e1dc169d7bed11.png'
             ],
             [
-                'vehiculo_id'          => '2',
+                'vehiculo_id'         => '2',
                 'ruta_imagen'         => '1781925201_b80189aeb9d891a1156c.png'
             ],
             [
-                'vehiculo_id'          => '1',
+                'vehiculo_id'         => '1',
                 'ruta_imagen'         => '1781925212_6e322e3ccd86d35d98ce.png'
             ],
         ];
         $this->db->table('vehiculo_imagenes')->insertBatch($vehiculo_imagenes);
-
-
-
     }
 }

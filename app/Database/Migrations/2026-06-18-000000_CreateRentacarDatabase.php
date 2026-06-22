@@ -30,6 +30,7 @@ class CreateRentacarDatabase extends Migration
             'id'             => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'marca'          => ['type' => 'VARCHAR', 'constraint' => 50],
             'modelo'         => ['type' => 'VARCHAR', 'constraint' => 50],
+            'categoria'      => ['type' => 'VARCHAR', 'constraint' => 50, 'null' => true, 'after'      => 'modelo'],
             'anio'           => ['type' => 'SMALLINT', 'constraint' => 6],
             'asientos'       => ['type' => 'TINYINT', 'constraint' => 4],
             'motor'          => ['type' => 'VARCHAR', 'constraint' => 50],

@@ -13,6 +13,7 @@ class VehiculoModel extends Model
     protected $allowedFields    = [
         'marca', 
         'modelo', 
+        'categoria',
         'anio', 
         'asientos', 
         'motor', 
@@ -28,6 +29,15 @@ class VehiculoModel extends Model
     {
         return $this->where('esActivo', 1)
                     ->where('disponibilidad', 'DISPONIBLE')
+                    ->findAll();
+    }
+
+    public function obtenerCategoriasUnicas()
+    {
+        return $this->select('categoria')
+                    ->where('esActivo', 1)
+                    ->where('categoria !=', null)
+                    ->distinct()
                     ->findAll();
     }
 }

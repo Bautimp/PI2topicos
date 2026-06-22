@@ -23,6 +23,8 @@ class VehiculoController extends BaseController
                                             ->where('fechaHasta <', $fechaHoy)
                                             ->findAll();
 
+
+        
         if (!empty($alquileresVencidos)) {
             foreach ($alquileresVencidos as $alquiler) {
                 // Pasamos el alquiler al historial como finalizado
@@ -33,22 +35,45 @@ class VehiculoController extends BaseController
             }
         }
 
-        // 1. Mostrar TODOS los autos activos (ignoramos si la disponibilidad dice ALQUILADO)
-        // Solo filtramos los que estén inactivos o en el taller (NO_DISPONIBLE)
-        $autos = $vehiculoModel->where('esActivo', 1)
-                               ->where('disponibilidad !=', 'NO_DISPONIBLE')
-                               ->findAll(); 
+        // 1. Capturamos los filtros de la URL (si existen)
+        $busqueda = $this->request->getGet('busqueda');
+        $categoriaFiltro = $this->request->getGet('categoria');
+
+        // 2. Iniciamos la consulta base (Solo activos y que no estén en taller)
+        $vehiculoModel->where('esActivo', 1)->where('disponibilidad !=', 'NO_DISPONIBLE');
+
+        // 3. Aplicamos filtro de Categoría si el usuario eligió una
+        if (!empty($categoriaFiltro)) {
+            $vehiculoModel->where('categoria', $categoriaFiltro);
+        }
+
+        // 4. Aplicamos el buscador de texto (busca en marca o modelo)
+        if (!empty($busqueda)) {
+            // Usamos groupStart() para encapsular los OR y que no rompan las reglas de "esActivo"
+            $vehiculoModel->groupStart()
+                          ->like('marca', $busqueda)
+                          ->orLike('modelo', $busqueda)
+                          ->groupEnd();
+        }
+
+        $autos = $vehiculoModel->findAll(); 
         
-        // 2. Adjuntarle a cada auto sus imágenes y sus fechas ocupadas
+        // 5. Adjuntamos imágenes y fechas a cada auto
         foreach ($autos as $auto) {
             $auto->imagenes = $imagenModel->obtenerPorVehiculo($auto->id);
-            // Convertimos el array de fechas a JSON para que JavaScript pueda leerlo en la vista
             $auto->fechasOcupadas = json_encode($alquilerModel->obtenerFechasOcupadas($auto->id));
         }
         
         $datos['vehiculos'] = $autos;
+        
+        // 6. Enviamos a la vista la lista de categorías y los valores buscados para mantener el estado
+        $datos['categorias'] = $vehiculoModel->obtenerCategoriasUnicas();
+        $datos['busquedaActual'] = $busqueda;
+        $datos['categoriaActual'] = $categoriaFiltro;
+
         return view('cliente/catalogo', $datos);
     }
+
 
     // VISTAS DEL ADMINISTRADOR (CRUD VEHÍCULOS)
     // Listado total de vehículos (Admin)

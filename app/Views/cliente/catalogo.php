@@ -6,6 +6,41 @@
     <div class="text-center mb-5">
         <h1 class="fw-bold">Catálogo de Vehículos</h1>
         <p class="text-muted">Encuentra el auto ideal para tu próximo viaje</p>
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-10 col-lg-8">
+                <form action="<?= base_url('catalogo') ?>" method="GET" class="card shadow-sm border-0">
+                    <div class="card-body p-2 d-flex flex-column flex-md-row gap-2">
+                        
+                        <div class="flex-grow-1">
+                            <input type="text" name="busqueda" class="form-control form-control-lg border-0 shadow-none bg-light" 
+                                placeholder="Buscar por marca o modelo (ej. Toyota, Cronos...)" 
+                                value="<?= esc($busquedaActual ?? '') ?>">
+                        </div>
+                        
+                        <div class="">
+                            <select name="categoria" class="form-select form-select-lg border-0 shadow-none bg-light" style="min-width: 180px;">
+                                <option value="">Todas las Categorías</option>
+                                <?php if(!empty($categorias)): ?>
+                                    <?php foreach($categorias as $cat): ?>
+                                        <option value="<?= esc($cat->categoria) ?>" <?= ($categoriaActual == $cat->categoria) ? 'selected' : '' ?>>
+                                            <?= esc($cat->categoria) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </select>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg px-4 fw-bold">Buscar</button>
+                            <?php if(!empty($busquedaActual) || !empty($categoriaActual)): ?>
+                                <a href="<?= base_url('catalogo') ?>" class="btn btn-outline-secondary btn-lg" title="Limpiar Filtros">✖</a>
+                            <?php endif; ?>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <?php if(session()->getFlashdata('mensaje')): ?>
@@ -51,7 +86,12 @@
                         </div>
 
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title fw-bold"><?= esc($v->marca . ' ' . $v->modelo) ?></h5>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title fw-bold mb-0"><?= esc($v->marca . ' ' . $v->modelo) ?></h5>
+                                <?php if(!empty($v->categoria)): ?>
+                                    <span class="badge bg-secondary text-uppercase" style="font-size: 0.7rem;"><?= esc($v->categoria) ?></span>
+                                <?php endif; ?>
+                            </div>
                             <h6 class="card-subtitle mb-3 text-primary fw-bold">$<?= number_format($v->precio_dia, 2, ',', '.') ?> <small class="text-muted fw-normal">/ día</small></h6>
                             
                             <ul class="list-unstyled mb-4">
