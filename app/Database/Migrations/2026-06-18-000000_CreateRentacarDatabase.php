@@ -95,9 +95,10 @@ class CreateRentacarDatabase extends Migration
     {
         // Al revertir la migración, se deben eliminar en orden inverso para evitar errores de restricción de clave foránea.
         $this->forge->dropTable('alquileres', true);
+        $this->forge->dropTable('vehiculo_imagenes',true);
         $this->forge->dropTable('clientes', true);
         $this->forge->dropTable('vehiculos', true);
         $this->forge->dropTable('usuarios', true);
-        $this->forge->dropTable('vehiculos_imagenes',true);
+        $this->forge->dropTable('vehiculo_imagenes',true);
     }
 }
