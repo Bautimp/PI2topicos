@@ -64,7 +64,7 @@ class CreateRentacarDatabase extends Migration
             'direccion'  => ['type' => 'VARCHAR', 'constraint' => 150],
             'telefono'   => ['type' => 'DOUBLE'],
             'fechaAlta'  => ['type' => 'DATETIME', 'default' => new RawSql('CURRENT_TIMESTAMP')],
-            'esActivo'   => ['type' => 'TINYINT', 'constraint' => 1],
+            'esActivo'   => ['type' => 'TINYINT', 'constraint' => 1, 'default'    => 1],
             'usuario_id' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'comment' => 'Foreign key tabla usuarios'],
         ]);
         $this->forge->addKey('id', true);
