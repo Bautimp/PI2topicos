@@ -11,30 +11,55 @@ class AlquilerController extends BaseController
     // === VISTA CLIENTE ===
     public function reservar($vehiculo_id)
     {
-        // 1. Buscar cliente logueado (suponiendo que guardamos su ID de cliente en sesión)
-        $cliente_id = session()->get('cliente_id'); // Ajustar según cómo manejes la sesión
+        $rangoFechas = $this->request->getPost('rango_fechas');
         
-        // 2. Obtener precio del vehículo
-        $vehiculoModel = new VehiculoModel();
+        // Flatpickr separa las fechas con " a " o " to " dependiendo de la configuración. 
+        // Lo más seguro es separar por el string " a " (locale es) o " to "
+        $fechas = explode(' a ', $rangoFechas);
+        if (count($fechas) !== 2) {
+             $fechas = explode(' to ', $rangoFechas);
+        }
+
+        if (count($fechas) !== 2) {
+            return redirect()->back()->with('error', 'Debes seleccionar un rango de fechas válido (Inicio y Fin).');
+        }
+
+        $fechaDesde = $fechas[0];
+        $fechaHasta = $fechas[1];
+
+        // Calculamos la cantidad de días para el cobro
+        $dias = (strtotime($fechaHasta) - strtotime($fechaDesde)) / (60 * 60 * 24);
+        if ($dias == 0) $dias = 1; // Mínimo 1 día de alquiler
+
+        $vehiculoModel = new \App\Models\VehiculoModel();
         $vehiculo = $vehiculoModel->find($vehiculo_id);
         
-        // 3. Cálculos
-        $dias = $this->request->getPost('cantidad_dias');
         $montoTotal = $vehiculo->precio_dia * $dias;
-        $fechaDesde = $this->request->getPost('fechaDesde');
-        $fechaHasta = date('Y-m-d', strtotime($fechaDesde . ' + ' . $dias . ' days'));
 
-        $alquilerModel = new AlquilerModel();
-        $alquilerModel->insert([
+        // --- VERIFICACIÓN DE SEGURIDAD EN BACKEND ---
+        // Prevenir que un usuario malicioso salte el calendario JS y envíe fechas superpuestas
+        $alquilerModel = new \App\Models\AlquilerModel();
+        $superposicion = $alquilerModel->where('vehiculo_id', $vehiculo_id)
+                                       ->whereIn('estado', ['PENDIENTE', 'APROBADO'])
+                                       ->where('fechaDesde <=', $fechaHasta)
+                                       ->where('fechaHasta >=', $fechaDesde)
+                                       ->first();
+
+        if ($superposicion) {
+            return redirect()->back()->with('error', 'Las fechas seleccionadas ya no están disponibles. Alguien más reservó el auto recién.');
+        }
+
+        // Si todo está bien, guardamos la reserva
+        $alquilerModel->save([
             'fechaDesde'  => $fechaDesde,
             'fechaHasta'  => $fechaHasta,
             'montoTotal'  => $montoTotal,
             'estado'      => 'PENDIENTE',
-            'cliente_id'  => $cliente_id,
+            'cliente_id'  => session()->get('cliente_id'),
             'vehiculo_id' => $vehiculo_id
         ]);
 
-        return redirect()->to('/catalogo')->with('mensaje', 'Reserva enviada a la espera de aprobación.');
+        return redirect()->to('/mis-reservas')->with('mensaje', '¡Solicitud de reserva enviada con éxito!');
     }
 
     // === VISTAS ADMIN ===

@@ -28,7 +28,7 @@
                         <th class="ps-4">Contrato</th>
                         <th>Cliente</th>
                         <th>Vehículo</th>
-                        <th>Devolución Esperada</th>
+                        <th>Período de Alquiler</th>
                         <th class="text-center pe-4">Acción</th>
                     </tr>
                 </thead>
@@ -38,9 +38,11 @@
                             <?php 
                                 // Lógica de fechas
                                 $hoy = strtotime(date('Y-m-d'));
+                                $fechaRetiro = strtotime($reserva->fechaDesde);
                                 $fechaDevolucion = strtotime($reserva->fechaHasta);
                                 
-                                // Es true si la fecha de devolución es igual a hoy o ya se pasó
+                                // Evaluamos las condiciones de tiempo
+                                $noIniciado = ($hoy < $fechaRetiro);
                                 $requiereAtencion = ($hoy >= $fechaDevolucion);
                                 $estaAtrasado = ($hoy > $fechaDevolucion);
                             ?>
@@ -59,18 +61,32 @@
                                 </td>
                                 <td>
                                     <?php if($estaAtrasado): ?>
-                                        <span class="badge bg-danger mb-1">¡ATRASADO!</span><br>
-                                    <?php elseif($requiereAtencion): ?>
-                                        <span class="badge bg-warning text-dark mb-1">DEVUELVE HOY</span><br>
+                                        <span class="badge bg-danger mb-1">¡ATRASADO!</span>
+                                    <?php elseif($hoy == $fechaDevolucion): ?>
+                                        <span class="badge bg-warning text-dark mb-1">DEVUELVE HOY</span>
+                                    <?php elseif($noIniciado): ?>
+                                        <span class="badge bg-secondary mb-1">Aún no inicia el alquiler</span>
                                     <?php endif; ?>
-                                    <strong><?= date('d/m/Y', $fechaDevolucion) ?></strong>
+                                    
+                                    <div class="small text-muted mt-1">
+                                        Retiro: <?= date('d/m/Y', $fechaRetiro) ?>
+                                    </div>
+                                    <div class="text-dark">
+                                        Devolución: <strong><?= date('d/m/Y', $fechaDevolucion) ?></strong>
+                                    </div>
                                 </td>
                                 <td class="text-center pe-4">
-                                    <a href="<?= base_url('admin/alquileres/devolucion/' . $reserva->id . '/' . $reserva->vehiculo_id) ?>" 
-                                       class="btn btn-primary btn-sm fw-bold px-3 shadow-sm"
-                                       onclick="return confirm('¿El cliente ya entregó las llaves y verificaste el estado del vehículo?');">
-                                        Registrar Devolución
-                                    </a>
+                                    <?php if($noIniciado): ?>
+                                        <button type="button" class="btn btn-primary btn-sm fw-bold px-3 opacity-50" disabled title="El período de alquiler aún no ha comenzado">
+                                            Registrar Devolución
+                                        </button>
+                                    <?php else: ?>
+                                        <a href="<?= base_url('admin/alquileres/devolucion/' . $reserva->id . '/' . $reserva->vehiculo_id) ?>" 
+                                           class="btn btn-primary btn-sm fw-bold px-3 shadow-sm"
+                                           onclick="return confirm('¿El cliente ya entregó las llaves y verificaste el estado del vehículo?');">
+                                            Registrar Devolución
+                                        </a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
 
@@ -107,7 +123,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <?php endforeach; ?>
+                        <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
                             <td colspan="5" class="text-center py-5">

@@ -60,6 +60,26 @@ class AlquilerModel extends Model
                     ->findAll();
     }
 
+    public function obtenerFechasOcupadas($vehiculo_id)
+    {
+        // ÚNICO CAMBIO: Reemplazamos el whereIn por un where simple buscando solo 'APROBADO'
+        $reservas = $this->where('vehiculo_id', $vehiculo_id)
+                         ->where('estado', 'APROBADO') 
+                         ->where('fechaHasta >=', date('Y-m-d'))
+                         ->findAll();
+
+        $fechasBloqueadas = [];
+        
+        foreach ($reservas as $reserva) {
+            $fechasBloqueadas[] = [
+                'from' => $reserva->fechaDesde,
+                'to'   => $reserva->fechaHasta
+            ];
+        }
+
+        return $fechasBloqueadas;
+    }
+
   
     
     

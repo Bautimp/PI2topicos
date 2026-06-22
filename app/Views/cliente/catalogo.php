@@ -92,19 +92,18 @@
                                     </div>
 
                                     <form action="<?= base_url('alquileres/reservar/' . $v->id) ?>" method="POST">
-                                        
-                                        <div class="mb-3">
-                                            <label for="fechaDesde" class="form-label">Fecha de Retiro</label>
-                                            <input type="date" class="form-control" name="fechaDesde" min="<?= date('Y-m-d') ?>" required>
-                                        </div>
 
                                         <div class="mb-4">
-                                            <label for="cantidad_dias" class="form-label">Cantidad de Días a Alquilar</label>
-                                            <input type="number" class="form-control" name="cantidad_dias" min="1" max="30" required placeholder="Ej: 3">
+                                            <label class="form-label fw-bold">Selecciona el período de alquiler</label>
+                                            <input type="text" class="form-control bg-white input-rango-fechas" 
+                                                name="rango_fechas" 
+                                                data-ocupadas='<?= $v->fechasOcupadas ?>' 
+                                                required readonly placeholder="Haz clic para abrir el calendario">
+                                            <small class="text-muted">Los días en gris ya están reservados por otros clientes.</small>
                                         </div>
 
                                         <div class="d-grid gap-2">
-                                            <button type="submit" class="btn btn-success fw-bold">Confirmar Solicitud de Reserva</button>
+                                            <button type="submit" class="btn btn-success fw-bold">Confirmar Solicitud</button>
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                         </div>
 
@@ -124,4 +123,58 @@
         <?php endif; ?>
     </div>
 </div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<style>
+    /* FIX: Asegura que el calendario se abra POR ENCIMA del modal oscuro de Bootstrap */
+    .flatpickr-calendar {
+        z-index: 1060 !important;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // 1. INICIALIZAR EL CALENDARIO
+    const inputsFechas = document.querySelectorAll('.input-rango-fechas');
+
+    inputsFechas.forEach(input => {
+        const fechasBloqueadas = JSON.parse(input.getAttribute('data-ocupadas'));
+
+        flatpickr(input, {
+            mode: "range",              
+            minDate: "today",           
+            dateFormat: "Y-m-d",        
+            locale: "es",               
+            disable: fechasBloqueadas,  
+            showMonths: 1,
+            // FIX DE EXPERIENCIA: Si el usuario selecciona solo 1 fecha y hace clic afuera, se borra.
+            onClose: function(selectedDates, dateStr, instance) {
+                if (selectedDates.length === 1) {
+                    instance.clear();
+                }
+            }
+        });
+    });
+
+    // 2. FIX DE SEGURIDAD: PREVENIR EL ENVÍO DE FORMULARIO VACÍO O INCOMPLETO
+    const formsReserva = document.querySelectorAll('form[action*="alquileres/reservar"]');
+    
+    formsReserva.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            const inputFecha = form.querySelector('.input-rango-fechas');
+            
+            // Validamos que el input no esté vacío y que contenga la conjunción " a " (ej: 2026-06-25 a 2026-06-28)
+            if (!inputFecha.value || !inputFecha.value.includes(' a ')) {
+                e.preventDefault(); // Detenemos el envío al backend
+                alert("Por favor, selecciona un rango de fechas completo (Día de retiro y Día de devolución) en el calendario.");
+            }
+        });
+    });
+
+});
+</script>
+
 <?= $this->endSection() ?>

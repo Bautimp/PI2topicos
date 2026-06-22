@@ -33,12 +33,17 @@ class VehiculoController extends BaseController
             }
         }
 
-        // Carga del catálogo
-        $autos = $vehiculoModel->getDisponiblesParaAlquiler(); 
+        // 1. Mostrar TODOS los autos activos (ignoramos si la disponibilidad dice ALQUILADO)
+        // Solo filtramos los que estén inactivos o en el taller (NO_DISPONIBLE)
+        $autos = $vehiculoModel->where('esActivo', 1)
+                               ->where('disponibilidad !=', 'NO_DISPONIBLE')
+                               ->findAll(); 
         
-        // Adjuntarle a cada auto sus imágenes
+        // 2. Adjuntarle a cada auto sus imágenes y sus fechas ocupadas
         foreach ($autos as $auto) {
             $auto->imagenes = $imagenModel->obtenerPorVehiculo($auto->id);
+            // Convertimos el array de fechas a JSON para que JavaScript pueda leerlo en la vista
+            $auto->fechasOcupadas = json_encode($alquilerModel->obtenerFechasOcupadas($auto->id));
         }
         
         $datos['vehiculos'] = $autos;
