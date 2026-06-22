@@ -149,38 +149,77 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const botonesHistorial = document.querySelectorAll('.btn-historial');
-    // Inicializamos el modal una sola vez aquí afuera
     const modalElement = document.getElementById('modalHistorialRapido');
     const miModal = new bootstrap.Modal(modalElement);
+    const cuerpoModal = document.getElementById('historialModalBody');
     
+    // Caja de memoria para recordar qué vehículo estamos consultando
+    let vehiculoIdActual = null;
+
+    // 1. CARGAR HISTORIAL ORIGINAL (Desde la lista de vehículos)
     botonesHistorial.forEach(boton => {
         boton.addEventListener('click', function() {
-            const vehiculoId = this.getAttribute('data-id');
+            vehiculoIdActual = this.getAttribute('data-id');
             const vehiculoNombre = this.getAttribute('data-name');
             
             document.getElementById('historialVehiculoNombre').innerText = vehiculoNombre;
             
-            const cuerpoModal = document.getElementById('historialModalBody');
+            cargarHistorialVehiculo(vehiculoIdActual);
+            miModal.show();
+        });
+    });
+
+    // Función aislada para pedir la tabla de historial al servidor
+    function cargarHistorialVehiculo(vehiculoId) {
+        cuerpoModal.innerHTML = `
+            <div class="text-center py-4">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-2 text-muted">Cargando historial...</p>
+            </div>`;
+            
+        fetch(`<?= base_url('admin/vehiculos/historial-rapido') ?>/${vehiculoId}`)
+            .then(response => response.text())
+            .then(htmlRenderizado => {
+                cuerpoModal.innerHTML = htmlRenderizado;
+            })
+            .catch(error => {
+                console.error(error);
+                cuerpoModal.innerHTML = `<div class="alert alert-danger text-center mb-0">Error al cargar el historial.</div>`;
+            });
+    }
+
+    // 2. ESCUCHAR CLICS INTERNOS DEL MODAL (Lupita del Cliente y Volver)
+    cuerpoModal.addEventListener('click', function(e) {
+        
+        // CASO A: Se hizo clic en la LUPITA del cliente 🔍
+        const botonCliente = e.target.closest('.btn-ver-cliente');
+        if (botonCliente) {
+            const clienteId = botonCliente.getAttribute('data-cliente-id');
+
             cuerpoModal.innerHTML = `
                 <div class="text-center py-4">
-                    <div class="spinner-border text-primary" role="status"></div>
-                    <p class="mt-2 text-muted">Cargando...</p>
+                    <div class="spinner-border text-secondary" role="status"></div>
+                    <p class="mt-2 text-muted">Cargando ficha del cliente...</p>
                 </div>`;
-                
-            // Mostramos el modal
-            miModal.show();
-            
-            // Petición al controlador (sin barra de más al final)
-            fetch(`<?= base_url('admin/vehiculos/historial-rapido') ?>/${vehiculoId}`)
-                .then(response => response.text())
-                .then(htmlRenderizado => {
-                    cuerpoModal.innerHTML = htmlRenderizado;
+
+            // AQUÍ: Llama a la ruta de tu controlador que devuelva el fragmento HTML del cliente
+            fetch(`<?= base_url('admin/clientes/detalleClienteRapido') ?>/${clienteId}`)
+                .then(res => res.text())
+                .then(html => { 
+                    cuerpoModal.innerHTML = html; 
                 })
-                .catch(error => {
-                    console.error(error);
-                    cuerpoModal.innerHTML = `<div class="alert alert-danger text-center mb-0">Error al cargar el historial.</div>`;
+                .catch(err => { 
+                    cuerpoModal.innerHTML = `<div class="alert alert-danger text-center">Error al cargar datos del cliente.</div>`; 
                 });
-        });
+        }
+
+        // CASO B: Se hizo clic en el botón VOLVER AL HISTORIAL ←
+        const botonVolver = e.target.closest('.btn-volver-historial');
+        if (botonVolver) {
+            if (vehiculoIdActual) {
+                cargarHistorialVehiculo(vehiculoIdActual);
+            }
+        }
     });
 });
 </script>
