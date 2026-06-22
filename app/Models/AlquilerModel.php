@@ -26,6 +26,7 @@ class AlquilerModel extends Model
         return $this->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono')
                     ->join('clientes', 'clientes.id = alquileres.cliente_id')
                     ->where('alquileres.vehiculo_id', $id_vehiculo)
+                    ->where('alquileres.estado !=', 'PENDIENTE')
                     ->findAll();
     }
 
@@ -36,6 +37,7 @@ class AlquilerModel extends Model
         return $this->select('alquileres.*, vehiculos.marca, vehiculos.modelo, vehiculos.anio')
                     ->join('vehiculos', 'vehiculos.id = alquileres.vehiculo_id')
                     ->where('alquileres.cliente_id', $id_cliente)
+                    ->where('alquileres.estado !=', 'PENDIENTE')
                     ->findAll();
     }
 

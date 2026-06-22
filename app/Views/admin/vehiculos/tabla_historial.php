@@ -13,7 +13,13 @@
                 <?php foreach ($historial as $row): ?>
                     <tr>
                         <td class="fw-bold">#<?= $row->id ?></td>
-                        <td><?= esc($row->nombre . ' ' . $row->apellido) ?></td>
+                        <td>
+                            <?= esc($row->nombre . ' ' . $row->apellido) ?>
+                            <button type="button" 
+                                    class="btn btn-sm btn-link p-0 ms-1 btn-ver-cliente shadow-none" 
+                                    data-cliente-id="<?= $row->usuario_id ?? $row->cliente_id ?? $row->id ?>"> 🔍
+                            </button>
+                        </td> 
                         <td class="text-center">
                             <?= date('d/m/Y', strtotime($row->fechaDesde)) ?> al <?= date('d/m/Y', strtotime($row->fechaHasta)) ?>
                         </td>

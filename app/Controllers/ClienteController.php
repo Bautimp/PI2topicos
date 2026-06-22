@@ -129,4 +129,13 @@ class ClienteController extends BaseController
 
         return redirect()->to('/admin/clientes')->with('mensaje', 'El cliente ha sido dado de baja del sistema.');
     }
+
+    public function detallecliente($id) {
+    $clienteModel = new ClienteModel(); 
+    
+    $data['cliente'] = $clienteModel->find($id);
+    
+   
+    return view('admin/vehiculos/detalle_cliente', $data);
+}
 }
