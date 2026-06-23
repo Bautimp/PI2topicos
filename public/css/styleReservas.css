@@ -1,45 +1,75 @@
-/* VARIABLES COMPARTIDAS CON TU MARCA */
+/* ==========================================================================
+   VARIABLES DE IDENTIDAD DE LA APLICACIÓN (SOPORTE DUAL RESERVAS)
+   ========================================================================== */
 :root {
-    --card-bg: #1e2125;
+    /* --- CONFIGURACIÓN MODO OSCURO ORIGINAL --- */
+    --bg-main: #141619;
+    --bg-card: #1e2125;
+    
+    --text-principal: #f8f9fa;
+    --text-mutado: #a0aab2;
+    --border-sutil: rgba(255, 255, 255, 0.08);
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --shadow-hover-color: rgba(0, 0, 0, 0.5);
+
+    /* Colores estáticos de marca y estados */
     --brand-orange: #ff7600;
     --brand-orange-hover: #e06800;
     --brand-blue-subtle: #00c6ff;
 }
 
+[data-theme="light"] {
+    /* --- CONFIGURACIÓN MODO CLARO COHERENTE --- */
+    --bg-main: #f4f6f9;
+    --bg-card: #ffffff;
+    
+    --text-principal: #1f2937; /* Gris oscuro para lectura óptima */
+    --text-mutado: #6c757d;
+    --border-sutil: rgba(0, 0, 0, 0.08);
+    --shadow-color: rgba(0, 0, 0, 0.06);
+    --shadow-hover-color: rgba(0, 0, 0, 0.12);
+
+    /* Ajuste fino de contraste en modo claro */
+    --brand-blue-subtle: #0284c7; /* Azul con mejor contraste sobre blanco */
+}
+
 /* Título de la sección */
 .section-title {
-    color: #f8f9fa;
+    color: var(--text-principal);
     font-weight: 800;
 }
 
-/* Tarjetas de Reservas en Modo Oscuro */
+/* ==========================================================================
+   TARJETAS DE RESERVAS (ADAPTATIVAS)
+   ========================================================================== */
 .reserve-card {
-    background-color: var(--card-bg) !important;
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-sutil) !important; /* Añadido borde suave para delimitar en modo claro */
     border-radius: 12px !important;
     overflow: hidden;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 6px 20px var(--shadow-color) !important;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .reserve-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 10px 25px var(--shadow-hover-color) !important;
 }
 
-/* Modificadores de bordes según estados (para que no sean tan chillones) */
+/* Modificadores de bordes según estados */
 .reserve-card.border-warning { border-left: 5px solid #ffc107 !important; }
 .reserve-card.border-success { border-left: 5px solid #198754 !important; }
 .reserve-card.border-danger  { border-left: 5px solid #dc3545 !important; }
 .reserve-card.border-secondary { border-left: 5px solid #6c757d !important; }
 
-/* Separadores internos legibles sobre fondo oscuro */
+/* Separadores internos legibles sobre ambos fondos */
 .border-custom-x {
-    border-color: rgba(255, 255, 255, 0.08) !important;
+    border-color: var(--border-sutil) !important;
 }
 
 /* Textos destacados */
 .vehicle-name {
-    color: #f8f9fa !important;
+    color: var(--text-principal) !important;
 }
 
 .date-highlight {
@@ -49,6 +79,10 @@
 .monto-highlight {
     color: var(--brand-orange) !important;
 }
+
+/* ==========================================================================
+   BOTONES DE MARCA Y ACCIONES
+   ========================================================================== */
 
 /* Botón "Alquilar otro vehículo" adaptado al estilo naranja */
 .btn-brand-orange-outline {
@@ -63,13 +97,6 @@
     color: white !important;
 }
 
-/* Contenedor para cuando no hay reservas cargadas */
-.empty-state-card {
-    background-color: var(--card-bg) !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
-}
-
 /* Botón sólido naranja */
 .btn-brand-orange {
     background-color: var(--brand-orange) !important;
@@ -81,4 +108,18 @@
 .btn-brand-orange:hover {
     background-color: var(--brand-orange-hover) !important;
     color: white !important;
+}
+
+/* ==========================================================================
+   VISTA DE ESTADO VACÍO (SIN RESERVAS)
+   ========================================================================== */
+.empty-state-card {
+    background-color: var(--bg-card) !important;
+    border: 1px dashed var(--border-sutil) !important; /* Cambiado a dashed sutil para mejor UX de vacío */
+    box-shadow: var(--shadow-color) !important;
+}
+
+/* Asegurar que textos secundarios dentro del empty state muten correctamente */
+.empty-state-card .text-muted {
+    color: var(--text-mutado) !important;
 }

@@ -1,22 +1,80 @@
 /* ==========================================================================
-   PANEL: VEHÍCULOS EN CURSO (MODO OSCURO COHERENTE)
+   VARIABLES DE IDENTIDAD DE LA APLICACIÓN (SOPORTE DUAL VEHÍCULOS EN CURSO)
    ========================================================================== */
+:root {
+    /* --- CONFIGURACIÓN MODO OSCURO ORIGINAL --- */
+    --bg-main: #141619;
+    --bg-card: #1e222b;
+    --bg-thead: #161920;
+    
+    --text-principal: #ffffff;
+    --text-mutado: #9aa5b1;
+    --text-datos: #dee2e6;
+    --border-sutil: rgba(255, 255, 255, 0.06);
+    --table-border-inner: rgba(255, 255, 255, 0.04);
+    --table-border-thead: rgba(255, 255, 255, 0.08);
+    --table-hover: #242934;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+
+    /* Colores estáticos de marca y estados */
+    --brand-orange: #ff7600;
+    --brand-orange-hover: #e06700;
+    --brand-blue-subtle: #38bdf8;
+    --status-danger: #dc3545;
+    
+    /* Dinámicos de componentes */
+    --alert-success-bg: #1c322a;
+    --alert-success-border: rgba(117, 183, 152, 0.2);
+    --alert-success-text: #75b798;
+    --btn-disabled-bg: rgba(255, 255, 255, 0.04);
+    --btn-disabled-border: rgba(255, 255, 255, 0.06);
+    --btn-disabled-text: #4e5764;
+    --btn-close-footer-bg: rgba(255, 255, 255, 0.06);
+    --btn-close-footer-border: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] {
+    /* --- CONFIGURACIÓN MODO CLARO COHERENTE --- */
+    --bg-main: #f4f6f9;
+    --bg-card: #ffffff;
+    --bg-thead: #e9ecef;
+    
+    --text-principal: #1f2937;
+    --text-mutado: #6c757d;
+    --text-datos: #374151;
+    --border-sutil: rgba(0, 0, 0, 0.08);
+    --table-border-inner: rgba(0, 0, 0, 0.05);
+    --table-border-thead: rgba(0, 0, 0, 0.1);
+    --table-hover: #f3f4f6;
+    --shadow-color: rgba(0, 0, 0, 0.06);
+
+    /* Dinámicos de componentes ajustados a claro */
+    --alert-success-bg: rgba(25, 135, 84, 0.1);
+    --alert-success-border: rgba(25, 135, 84, 0.2);
+    --alert-success-text: #198754;
+    --btn-disabled-bg: #e5e7eb;
+    --btn-disabled-border: #d1d5db;
+    --btn-disabled-text: #9ca3af;
+    --btn-close-footer-bg: rgba(0, 0, 0, 0.05);
+    --btn-close-footer-border: rgba(0, 0, 0, 0.1);
+    --brand-blue-subtle: #0284c7; /* Más contraste */
+}
 
 /* Títulos y Subtítulos principales */
 h2.fw-bold.text-dark {
-    color: #ffffff !important;
+    color: var(--text-principal) !important;
     font-size: 1.6rem;
     letter-spacing: -0.5px;
 }
 
 .text-muted {
-    color: #9aa5b1 !important;
+    color: var(--text-mutado) !important;
 }
 
-/* Counter superior (X en la calle) - Estilo Píldora de tu marca */
+/* Counter superior (X en la calle) - Estilo Píldora */
 .badge.bg-primary {
     background-color: rgba(56, 189, 248, 0.1) !important;
-    color: #38bdf8 !important;
+    color: var(--brand-blue-subtle) !important;
     border: 1px solid rgba(56, 189, 248, 0.25) !important;
     font-size: 0.85rem !important;
     font-weight: 600 !important;
@@ -25,9 +83,9 @@ h2.fw-bold.text-dark {
 
 /* Alertas de Mensajes del Sistema */
 .alert-success {
-    background-color: #1c322a !important;
-    border: 1px solid rgba(117, 183, 152, 0.2) !important;
-    color: #75b798 !important;
+    background-color: var(--alert-success-bg) !important;
+    border: 1px solid var(--alert-success-border) !important;
+    color: var(--alert-success-text) !important;
     border-radius: 8px;
 }
 
@@ -35,79 +93,82 @@ h2.fw-bold.text-dark {
    ESTRUCTURA DE LA TABLA DE CONTROL
    ========================================================================== */
 
-/* Tarjeta contenedora de la tabla */
 .card {
-    background-color: #1e222b !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-sutil) !important;
     border-radius: 12px !important;
     overflow: hidden;
+    box-shadow: 0 8px 32px var(--shadow-color) !important;
 }
 
-/* Forzar estilos sobre la tabla */
 .table {
     margin-bottom: 0 !important;
-    background-color: #1e222b !important;
-    color: #dee2e6 !important;
+    background-color: var(--bg-card) !important;
+    color: var(--text-datos) !important;
 }
 
-/* Encabezados de columnas (thead) */
+/* Encabezados de columnas (thead) - CORRECCIÓN DE VISIBILIDAD DE TEXTO */
 .table thead.table-dark th {
-    background-color: #161920 !important;
-    color: #9aa5b1 !important;
+    background-color: var(--bg-thead) !important;
+    color: var(--text-mutado) !important;
     font-size: 0.75rem;
     font-weight: 600;
     text-uppercase: uppercase;
     letter-spacing: 0.8px;
     padding: 14px 16px !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-bottom: 1px solid var(--table-border-thead) !important;
+}
+/* Forzamos que si Bootstrap inyecta estilos nativos de tabla oscura, el modo claro los sobreescriba */
+[data-theme="light"] .table thead.table-dark th {
+    color: var(--text-mutado) !important;
 }
 
 /* Filas comunes de la tabla */
 .table tbody tr td {
     padding: 16px !important;
-    background-color: #1e222b !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
-    color: #dee2e6 !important;
+    background-color: var(--bg-card) !important;
+    border-bottom: 1px solid var(--table-border-inner) !important;
+    color: var(--text-datos) !important;
 }
 
 /* Hover de las filas estándar */
 .table-hover tbody tr:hover td {
-    background-color: #242934 !important;
+    background-color: var(--table-hover) !important;
 }
 
 /* --- FILA CRÍTICA: REQUIERE ATENCIÓN / ATRASADO --- */
-/* Un tinte rojizo integrado a la oscuridad, sin romper la estética */
 .table tbody tr.table-danger td {
-    background-color: rgba(220, 53, 69, 0.06) !important;
+    background-color: rgba(220, 53, 69, 0.05) !important;
     border-bottom: 1px solid rgba(220, 53, 69, 0.15) !important;
 }
 
 .table-hover tbody tr.table-danger:hover td {
-    background-color: rgba(220, 53, 69, 0.1) !important;
+    background-color: rgba(220, 53, 69, 0.08) !important;
 }
 
 /* Links internos (Ver perfil completo) */
 .btn-link {
-    color: #38bdf8 !important;
+    color: var(--brand-blue-subtle) !important;
     font-weight: 500;
     font-size: 0.85rem;
     transition: color 0.15s ease;
+    text-decoration: none;
 }
 
 .btn-link:hover {
-    color: #ffffff !important;
+    color: var(--text-principal) !important;
     text-decoration: underline !important;
 }
 
 /* Títulos internos de celdas */
 .table tbody tr td .fw-bold {
-    color: #ffffff !important;
+    color: var(--text-principal) !important;
 }
 
 /* Corrección de textos oscuros heredados en las fechas */
 .table tr td .text-dark, 
 .table tr td .text-dark strong {
-    color: #ffffff !important;
+    color: var(--text-principal) !important;
 }
 
 /* ==========================================================================
@@ -116,37 +177,42 @@ h2.fw-bold.text-dark {
 
 /* ¡Atrasado! */
 .badge.bg-danger {
-    background-color: rgba(220, 53, 69, 0.15) !important;
-    color: #ff6b76 !important;
-    border: 1px solid rgba(220, 53, 69, 0.3) !important;
+    background-color: rgba(220, 53, 69, 0.12) !important;
+    color: #dc3545 !important;
+    border: 1px solid rgba(220, 53, 69, 0.25) !important;
     font-weight: 600;
     border-radius: 6px;
+}
+[data-theme="dark"] .badge.bg-danger {
+    color: #ff6b76 !important;
 }
 
 /* Devuelve Hoy */
 .badge.bg-warning {
     background-color: rgba(255, 193, 7, 0.12) !important;
-    color: #ffda6a !important;
-    border: 1px solid rgba(255, 193, 7, 0.25) !important;
+    color: #b45309 !important; /* Más oscuro en claro para accesibilidad */
+    border: 1px solid rgba(255, 193, 7, 0.3) !important;
     font-weight: 600;
     border-radius: 6px;
+}
+[data-theme="dark"] .badge.bg-warning {
+    color: #ffda6a !important;
 }
 
 /* Aún no inicia */
 .badge.bg-secondary {
-    background-color: rgba(255, 255, 255, 0.05) !important;
-    color: #9aa5b1 !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background-color: var(--border-sutil) !important;
+    color: var(--text-mutado) !important;
+    border: 1px solid var(--table-border-inner) !important;
     border-radius: 6px;
 }
 
 /* ==========================================================================
    BOTÓN DE ACCIÓN: REGISTRAR DEVOLUCIÓN
    ========================================================================== */
-
 .btn-primary {
-    background-color: #ff7600 !important; /* Tu naranja distintivo */
-    border-color: #ff7600 !important;
+    background-color: var(--brand-orange) !important;
+    border-color: var(--brand-orange) !important;
     color: #ffffff !important;
     font-weight: 600 !important;
     font-size: 0.85rem;
@@ -156,17 +222,17 @@ h2.fw-bold.text-dark {
 }
 
 .btn-primary:hover:not(:disabled) {
-    background-color: #e06700 !important;
-    border-color: #e06700 !important;
+    background-color: var(--brand-orange-hover) !important;
+    border-color: var(--brand-orange-hover) !important;
     box-shadow: 0 4px 12px rgba(255, 118, 0, 0.3) !important;
 }
 
-/* Botón deshabilitado (No iniciado todavía) */
+/* Botón deshabilitado */
 .btn-primary:disabled, 
 .btn-primary.opacity-50 {
-    background-color: rgba(255, 255, 255, 0.04) !important;
-    border-color: rgba(255, 255, 255, 0.06) !important;
-    color: #4e5764 !important;
+    background-color: var(--btn-disabled-bg) !important;
+    border-color: var(--btn-disabled-border) !important;
+    color: var(--btn-disabled-text) !important;
     opacity: 1 !important;
     cursor: not-allowed;
     box-shadow: none !important;
@@ -175,54 +241,56 @@ h2.fw-bold.text-dark {
 /* ==========================================================================
    MODAL DE FICHA DE CLIENTE
    ========================================================================== */
-
 .modal-content {
-    background-color: #1e222b !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-sutil) !important;
     border-radius: 12px !important;
+    color: var(--text-principal) !important;
 }
 
 .modal-header.bg-dark {
-    background-color: #161920 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    background-color: var(--bg-thead) !important;
+    border-bottom: 1px solid var(--border-sutil) !important;
 }
 
-.modal-header .modal-title {
-    color: #ffffff !important;
-    font-weight: 600;
-}
-
+.modal-header .modal-title,
 .modal-body h4 {
-    color: #ffffff !important;
+    color: var(--text-principal) !important;
+    font-weight: 600;
 }
 
 /* Listas internas del modal */
 .list-group-item {
     background-color: transparent !important;
-    color: #dee2e6 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-datos) !important;
+    border-bottom: 1px solid var(--table-border-inner) !important;
     padding: 12px 4px !important;
 }
 
 .list-group-item strong {
-    color: #9aa5b1 !important;
+    color: var(--text-mutado) !important;
     font-weight: 500;
 }
 
 /* Botón de cierre inferior */
 .modal-footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-top: 1px solid var(--table-border-inner) !important;
 }
 
 .modal-footer .btn-secondary {
-    background-color: rgba(255, 255, 255, 0.06) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    color: #dee2e6 !important;
+    background-color: var(--btn-close-footer-bg) !important;
+    border: 1px solid var(--btn-close-footer-border) !important;
+    color: var(--text-datos) !important;
     font-weight: 500;
     border-radius: 6px;
 }
 
 .modal-footer .btn-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.12) !important;
-    color: #ffffff !important;
+    background-color: var(--table-hover) !important;
+    color: var(--text-principal) !important;
+}
+
+/* Control de la cruz de cierre en modo oscuro */
+[data-theme="dark"] .modal-header .btn-close {
+    filter: invert(1) grayscale(1) brightness(2);
 }

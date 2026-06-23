@@ -1,39 +1,72 @@
-/* VARIABLES DE IDENTIDAD DE LA APLICACIÓN */
+/* ==========================================================================
+   VARIABLES DE IDENTIDAD DE LA APLICACIÓN (SOPORTE DUAL ALTA VEHÍCULOS)
+   ========================================================================== */
 :root {
+    /* --- CONFIGURACIÓN MODO OSCURO ORIGINAL --- */
     --bg-main: #141619;
-    --card-bg: #1e2125;
-    --input-bg: #2b3035;
+    --bg-card: #1e2125;
+    --bg-header: #121416;
+    --bg-input: #2b3035;
+    
+    --text-principal: #ffffff;
+    --text-labels: #f8f9fa; /* Blanco nube brillante */
+    --text-mutado: #a0aab2;
+    --text-placeholder: #6c757d;
+    
+    --border-sutil: rgba(255, 255, 255, 0.08);
+    --border-input: rgba(255, 255, 255, 0.15);
+    --border-header: rgba(255, 255, 255, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.5);
+
+    /* Colores estáticos de marca y estados */
     --brand-orange: #ff7600;
     --brand-orange-hover: #e06800;
     --status-success: #198754;
     --status-success-hover: #157347;
-    --text-muted-dark: #a0aab2;
+}
+
+[data-theme="light"] {
+    /* --- CONFIGURACIÓN MODO CLARO COHERENTE --- */
+    --bg-main: #f4f6f9;
+    --bg-card: #ffffff;
+    --bg-header: #f8f9fa;
+    --bg-input: #ffffff;
+    
+    --text-principal: #1f2937;
+    --text-labels: #1f2937; /* Gris oscuro con peso visual */
+    --text-mutado: #6b7280;
+    --text-placeholder: #9ca3af;
+    
+    --border-sutil: rgba(0, 0, 0, 0.08);
+    --border-input: #d1d5db;
+    --border-header: rgba(0, 0, 0, 0.08);
+    --shadow-color: rgba(0, 0, 0, 0.06);
 }
 
 /* Contenedor principal de la tarjeta */
 .card {
-    background-color: var(--card-bg) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-sutil) !important;
     border-radius: 14px !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 8px 32px var(--shadow-color) !important;
     overflow: hidden;
 }
 
-/* Cabecera de la tarjeta (Quitamos el bg-dark por un negro integrado) */
+/* Cabecera de la tarjeta */
 .card-header.bg-dark {
-    background-color: #121416 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background-color: var(--bg-header) !important;
+    border-bottom: 1px solid var(--border-header) !important;
     padding: 18px 24px !important;
 }
 
 .card-header h4 {
-    color: #ffffff !important;
+    color: var(--text-principal) !important;
     font-weight: 700;
 }
 
 /* Cuerpo del formulario */
 .card-body {
-    background-color: var(--card-bg) !important;
+    background-color: var(--bg-card) !important;
     padding: 30px !important;
 }
 
@@ -41,55 +74,37 @@
    ESTILOS DE FORMULARIOS (INPUTS Y LABELS)
    ========================================================================== */
 
-/* Etiquetas de los inputs */
-.form-label {
-    color: #dee2e6 !important; /* Blanco legible sobre fondo oscuro */
-    font-size: 0.9rem;
-    margin-bottom: 6px;
-}
-
-/* Forzar que las subclases de texto aclaratorio se lean bien */
-.form-label.fw-bold {
-    font-weight: 600 !important;
-}
-
 /* Inputs de texto, número y file */
-.form-control {
-    background-color: var(--input-bg) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    color: #ffffff !important;
+.form-control,
+.form-select {
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--border-input) !important;
+    color: var(--text-principal) !important;
     border-radius: 8px !important;
     padding: 10px 14px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Estilo para el texto de los Placeholders (Ej: Toyota, Corolla...) */
+/* Estilo para el texto de los Placeholders */
 .form-control::placeholder {
-    color: #6c757d !important;
+    color: var(--text-placeholder) !important;
     opacity: 1;
 }
 
 /* Efecto Focus: Iluminación con tu naranja de marca */
-.form-control:focus {
+.form-control:focus,
+.form-select:focus {
     border-color: var(--brand-orange) !important;
     box-shadow: 0 0 8px rgba(255, 118, 0, 0.25) !important;
-    background-color: var(--input-bg) !important;
-    color: #ffffff !important;
-}
-
-/* Texto de ayuda inferior (small) */
-small.text-muted {
-    color: var(--text-muted-dark) !important;
-    font-size: 0.82rem;
-    display: inline-block;
-    margin-top: 6px;
+    background-color: var(--bg-input) !important;
+    color: var(--text-principal) !important;
 }
 
 /* ==========================================================================
    BOTONES DE ACCIÓN
    ========================================================================== */
 
-/* Botón Guardar Vehículo (Verde Éxito adaptado) */
+/* Botón Guardar Vehículo (Verde Éxito) */
 .btn-success {
     background-color: var(--status-success) !important;
     border-color: var(--status-success) !important;
@@ -106,38 +121,44 @@ small.text-muted {
     box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
 }
 
-/* Botón Cancelar */
+/* Botón Cancelar adaptativo */
 .btn-secondary {
-    background-color: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #dee2e6 !important;
+    background-color: var(--bg-main) !important;
+    border: 1px solid var(--border-input) !important;
+    color: var(--text-principal) !important;
     padding: 10px 24px;
     border-radius: 8px;
+    font-weight: 500;
     transition: all 0.2s ease;
 }
 
 .btn-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.15) !important;
-    color: #ffffff !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
+    background-color: var(--border-input) !important;
+    color: var(--text-principal) !important;
 }
+
 /* ==========================================================================
-   FIX: FORZAR VISIBILIDAD DE LABELS
+   FIX: FORZAR VISIBILIDAD DE LABELS Y TEXTOS ACARATORIOS
    ========================================================================== */
 
 /* Forzar que CUALQUIER label dentro de la tarjeta sea perfectamente visible */
 .card-body label,
 .form-label {
-    color: #f8f9fa !important; /* Blanco nube brillante */
+    color: var(--text-labels) !important;
     font-weight: 600 !important; /* Un poco más grueso para que resalte */
     font-size: 0.92rem !important;
     margin-bottom: 8px !important;
     display: inline-block !important;
 }
 
-/* El texto aclaratorio (small) que va abajo de las imágenes */
+/* Forzar que la subclase fw-bold herede el color dinámico correctamente */
+.form-label.fw-bold {
+    font-weight: 700 !important;
+}
+
+/* El texto aclaratorio (small) que va abajo de las imágenes o campos */
 small.text-muted {
-    color: #a0aab2 !important; /* Gris claro legible */
+    color: var(--text-mutado) !important;
     font-size: 0.82rem !important;
     display: inline-block !important;
     margin-top: 6px !important;

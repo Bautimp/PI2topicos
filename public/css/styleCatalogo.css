@@ -1,31 +1,81 @@
-/* VARIABLES LOCALES ACTUALIZADAS */
+/* ==========================================================================
+   VARIABLES DE IDENTIDAD DE LA APLICACIÓN (SOPORTE DUAL CATÁLOGO)
+   ========================================================================== */
 :root {
+    /* --- CONFIGURACIÓN MODO OSCURO ORIGINAL --- */
+    --bg-main: #141619;
     --card-bg: #1e2125;
     --input-bg: #2b3035;
-    --brand-orange: #ff7600;       /* Tu naranja protagonista */
-    --brand-orange-hover: #e06800; /* Naranja un toque más oscuro para el hover */
-    --brand-blue-subtle: #00c6ff;  /* Azul solo para detalles e información */
+    --modal-header-bg: #141619;
+    
+    --text-principal: #f8f9fa;
+    --text-mutado: #adb5bd;
+    --text-placeholder: #9ca3af;
+    
+    --border-sutil: rgba(255, 255, 255, 0.05);
+    --border-search: rgba(255, 255, 255, 0.08);
+    --border-input: rgba(255, 255, 255, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --shadow-hover: rgba(0, 0, 0, 0.6);
+
+    /* Calendario Flatpickr Modo Oscuro */
+    --fp-bg: #1e2125;
+    --fp-border: #343a40;
+    --fp-disabled: #495057;
+
+    /* Identidad estática de marca */
+    --brand-orange: #ff7600;
+    --brand-orange-hover: #e06800;
+    --brand-blue-subtle: #00c6ff;  /* Azul para resaltar los precios */
+}
+
+[data-theme="light"] {
+    /* --- CONFIGURACIÓN MODO CLARO COHERENTE --- */
+    --bg-main: #f4f6f9;
+    --card-bg: #ffffff;
+    --input-bg: #ffffff;
+    --modal-header-bg: #f8f9fa;
+    
+    --text-principal: #1f2937;
+    --text-mutado: #4b5563;
+    --text-placeholder: #6b7280;
+    
+    --border-sutil: rgba(0, 0, 0, 0.08);
+    --border-search: rgba(0, 0, 0, 0.08);
+    --border-input: #d1d5db;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --shadow-hover: rgba(0, 0, 0, 0.12);
+
+    /* Calendario Flatpickr Modo Claro */
+    --fp-bg: #ffffff;
+    --fp-border: #e5e7eb;
+    --fp-disabled: #cbd5e1;
+    
+    --brand-blue-subtle: #0284c7; /* Ajuste sutil de azul para legibilidad en fondos blancos */
 }
 
 /* Título principal del catálogo */
 .catalog-title {
-    color: #f8f9fa;
+    color: var(--text-principal);
     font-weight: 800;
     letter-spacing: 0.5px;
 }
 
-/* Buscador Avanzado */
+/* ==========================================================================
+   BUSCADOR AVANZADO
+   ========================================================================== */
 .search-card {
     background-color: var(--card-bg) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid var(--border-search) !important;
     border-radius: 16px !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 8px 32px var(--shadow-color) !important;
 }
 
-.search-input-custom {
+.search-input-custom,
+.form-select.search-input-custom {
     background-color: var(--input-bg) !important;
-    color: #f8f9fa !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: var(--text-principal) !important;
+    border: 1px solid var(--border-input) !important;
     border-radius: 8px;
 }
 
@@ -35,49 +85,64 @@
     box-shadow: 0 0 0 3px rgba(255, 118, 0, 0.25) !important;
 }
 
-/* Tarjetas de los Vehículos */
+/* ==========================================================================
+   TARJETAS DE LOS VEHÍCULOS
+   ========================================================================== */
 .vehicle-card {
     background-color: var(--card-bg) !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid var(--border-sutil) !important;
     border-radius: 14px;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-/* El hover de la tarjeta ahora acompaña al naranja */
+/* El hover de la tarjeta acompaña al naranja */
 .vehicle-card:hover {
     transform: translateY(-5px);
     border-color: rgba(255, 118, 0, 0.3) !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6) !important;
+    box-shadow: 0 12px 30px var(--shadow-hover) !important;
 }
 
 /* Especificaciones técnicas del auto */
 .spec-list li {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--border-sutil);
     padding: 6px 0;
-    color: #adb5bd;
+    color: var(--text-mutado);
 }
 .spec-list li strong {
-    color: #f8f9fa;
+    color: var(--text-principal);
 }
 
-/* Modales en modo oscuro */
-.modal-content-dark {
-    background-color: var(--card-bg) !important;
-    color: #f8f9fa;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+/* El precio del vehículo destacado */
+.card-price {
+    color: var(--text-principal);
+    font-size: 1.3rem;
 }
-.modal-header-dark {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    background: #141619;
+.card-price-number {
+    color: var(--brand-blue-subtle);
+    font-weight: 700;
 }
 
 /* ==========================================================================
-   BOTONES Y ELEMENTOS DE ACCIÓN (CON LA NUEVA IDENTIDAD NARANJA)
+   MODALES DE RESERVA / INFORMACIÓN
+   ========================================================================== */
+.modal-content-dark {
+    background-color: var(--card-bg) !important;
+    color: var(--text-principal) !important;
+    border: 1px solid var(--border-input) !important;
+    border-radius: 16px;
+}
+.modal-header-dark {
+    border-bottom: 1px solid var(--border-sutil) !important;
+    background-color: var(--modal-header-bg) !important;
+    color: var(--text-principal) !important;
+}
+
+/* ==========================================================================
+   BOTONES Y ELEMENTOS DE ACCIÓN
    ========================================================================== */
 
-/* Botón Principal Naranja Solido */
+/* Botón Principal Naranja Sólido */
 .btn-brand-orange {
     background-color: var(--brand-orange) !important;
     border: none;
@@ -88,12 +153,13 @@
 .btn-brand-orange:hover {
     background-color: var(--brand-orange-hover) !important;
     color: white !important;
+    box-shadow: 0 4px 12px rgba(255, 118, 0, 0.25);
 }
 .btn-brand-orange:active {
     transform: scale(0.98);
 }
 
-/* Botón Secundario (Outline) para cuando no inició sesión */
+/* Botón Secundario (Outline) */
 .btn-outline-brand-blue {
     border: 1.5px solid var(--brand-orange) !important;
     color: var(--brand-orange) !important;
@@ -106,33 +172,24 @@
     color: white !important;
 }
 
-/* El precio del vehículo pasa a un tono blanco/gris destacado o azul sutil */
-.card-price {
-    color: #f8f9fa; /* Evitamos meter otro color que compita con el naranja */
-    font-size: 1.3rem;
-}
-.card-price-number {
-    color: var(--brand-blue-subtle); /* El azul queda excelente y fino solo para números */
-}
-
 /* ==========================================================================
-   CALENDARIO FLATPICKR ADAPTADO AL NARANJA
+   CALENDARIO FLATPICKR ADAPTATIVO
    ========================================================================== */
 .flatpickr-calendar {
     z-index: 1060 !important;
-    background: #1e2125 !important;
-    border: 1px solid #343a40 !important;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important;
+    background: var(--fp-bg) !important;
+    border: 1px solid var(--fp-border) !important;
+    box-shadow: 0 10px 25px var(--shadow-color) !important;
 }
 .flatpickr-calendar, .flatpickr-months .flatpickr-month, .flatpickr-weekday, .flatpickr-day {
-    color: #f8f9fa !important;
-    fill: #f8f9fa !important;
+    color: var(--text-principal) !important;
+    fill: var(--text-principal) !important;
 }
 .flatpickr-day.disabled, .flatpickr-day.disabled:hover {
-    color: #495057 !important;
+    color: var(--fp-disabled) !important;
     background: transparent !important;
 }
-/* Rangos seleccionados ahora son puramente naranjas */
+/* Rangos seleccionados puramente naranjas */
 .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, 
 .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, 
 .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, 
@@ -146,24 +203,19 @@
     background: rgba(255, 118, 0, 0.15) !important;
     box-shadow: none !important;
 }
+
 /* ==========================================================================
-   FIX: Visibilidad de los Placeholders en Modo Oscuro
+   PLACEHOLDERS ADAPTATIVOS
    ========================================================================== */
-
-/* Para navegadores modernos (Chrome, Safari, Edge, Opera) */
 .search-input-custom::placeholder {
-    color: #9ca3af !important; /* Un gris claro con buen contraste */
-    opacity: 1 !important;     /* Evita que el navegador le aplique transparencia de más */
-}
-
-/* Para Firefox */
-.search-input-custom::-moz-placeholder {
-    color: #9ca3af !important;
+    color: var(--text-placeholder) !important;
     opacity: 1 !important;
 }
-
-/* Para Internet Explorer / Edge antiguo */
+.search-input-custom::-moz-placeholder {
+    color: var(--text-placeholder) !important;
+    opacity: 1 !important;
+}
 .search-input-custom:-ms-input-placeholder {
-    color: #9ca3af !important;
+    color: var(--text-placeholder) !important;
     opacity: 1 !important;
 }

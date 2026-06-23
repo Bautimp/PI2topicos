@@ -1,110 +1,156 @@
-/* VARIABLES DE IDENTIDAD DE LA APLICACIÓN */
+/* ==========================================================================
+   VARIABLES DE IDENTIDAD DE LA APLICACIÓN (SOPORTE DUAL MODO OSCURO Y CLARO)
+   ========================================================================== */
 :root {
+    /* --- CONFIGURACIÓN MODO OSCURO ORIGINAL --- */
     --bg-main: #141619;
-    --card-bg: #1e2125;
+    --bg-card: #1e2125;
+    --bg-thead: #121416;
     --input-bg: #2b3035;
+    --input-focus-bg: #32383e;
+    
+    --text-principal: #ffffff;
+    --text-mutado: #a0aab2;
+    --border-sutil: rgba(255, 255, 255, 0.08);
+    --table-border: rgba(255, 255, 255, 0.05);
+    --table-hover: rgba(255, 255, 255, 0.03);
+    --shadow-color: rgba(0, 0, 0, 0.4);
+
+    /* Colores estáticos de marca y estados */
     --brand-orange: #ff7600;
     --brand-blue-subtle: #38bdf8;
     --status-success: #198754;
     --status-danger: #dc3545;
-    --text-muted-dark: #a0aab2;
+}
+
+[data-theme="light"] {
+    /* --- CONFIGURACIÓN MODO CLARO COHERENTE --- */
+    --bg-main: #f4f6f9;
+    --bg-card: #ffffff;
+    --bg-thead: #e9ecef;
+    --input-bg: #ffffff;
+    --input-focus-bg: #ffffff;
+    
+    --text-principal: #1f2937;
+    --text-mutado: #6c757d;
+    --border-sutil: rgba(0, 0, 0, 0.08);
+    --table-border: rgba(0, 0, 0, 0.06);
+    --table-hover: #f3f4f6;
+    --shadow-color: rgba(0, 0, 0, 0.06);
 }
 
 /* ==========================================================================
    ESTILOS GENERALES Y CABECERA
    ========================================================================== */
 h2 {
-    color: #ffffff !important;
+    color: var(--text-principal) !important;
     font-weight: 700 !important;
     letter-spacing: -0.5px;
 }
 
-/* Alertas de Flashdata Custom */
+/* Alertas de Flashdata Custom (Adaptativas) */
 .alert-success {
     background-color: rgba(25, 135, 84, 0.1) !important;
     border: 1px solid rgba(25, 135, 84, 0.3) !important;
-    color: #75b798 !important;
+    color: #198754 !important;
     border-radius: 8px;
+}
+[data-theme="dark"] .alert-success {
+    color: #75b798 !important;
 }
 
 .alert-danger {
     background-color: rgba(220, 53, 69, 0.1) !important;
     border: 1px solid rgba(220, 53, 69, 0.3) !important;
-    color: #ea868f !important;
+    color: #dc3545 !important;
     border-radius: 8px;
+}
+[data-theme="dark"] .alert-danger {
+    color: #ea868f !important;
 }
 
 /* ==========================================================================
    TARJETA Y TABLA PRINCIPAL DE CLIENTES
    ========================================================================== */
-
-/* Contenedor de la tabla */
 .card {
-    background-color: var(--card-bg) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-sutil) !important;
     border-radius: 14px !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 8px 32px var(--shadow-color) !important;
     overflow: hidden;
 }
 
 .table {
-    background-color: transparent !important;
-    color: #dee2e6 !important;
-    border-color: rgba(255, 255, 255, 0.05) !important;
+    background-color: var(--bg-card) !important;
+    color: var(--text-principal) !important;
+    border-color: var(--table-border) !important;
+    margin-bottom: 0 !important;
 }
 
 /* Cabecera de la tabla */
 .table thead.table-dark th {
-    background-color: #121416 !important;
-    color: #adb5bd !important;
+    background-color: var(--bg-thead) !important;
+    color: var(--text-mutado) !important;
     font-weight: 600;
     font-size: 0.85rem;
     text-uppercase: uppercase;
     letter-spacing: 0.5px;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
+    border-bottom: 2px solid var(--border-sutil) !important;
     padding: 14px 12px !important;
 }
 
 /* Celdas del cuerpo */
 .table tbody td {
-    background-color: transparent !important;
-    color: #dee2e6 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    background-color: var(--bg-card) !important;
+    color: var(--text-principal) !important;
+    border-bottom: 1px solid var(--table-border) !important;
     padding: 14px 12px !important;
 }
 
 /* Hover en filas activas */
 .table-hover tbody tr:not(.table-danger):hover td {
-    background-color: rgba(255, 255, 255, 0.03) !important;
+    background-color: var(--table-hover) !important;
+    color: var(--text-principal) !important;
 }
 
 /* Destacar textos importantes */
 .table td strong {
-    color: #ffffff !important;
+    color: var(--text-principal) !important;
 }
 
 .table .text-muted {
-    color: var(--text-muted-dark) !important;
+    color: var(--text-mutado) !important;
 }
 
-/* FIX: Estilo para Clientes Inactivos (Fila Desactivada) */
+/* ==========================================================================
+   FIX: ESTILO PARA CLIENTES INACTIVOS (FILA DESACTIVADA - ADAPTATIVO)
+   ========================================================================== */
 .table tbody tr.table-danger td {
-    background-color: rgba(220, 53, 69, 0.04) !important; /* Rojo ultra sutil de fondo */
-    color: #727a82 !important; /* Texto apagado */
+    background-color: rgba(220, 53, 69, 0.05) !important; 
+    color: var(--text-mutado) !important;
+    border-bottom: 1px solid rgba(220, 53, 69, 0.12) !important;
+}
+
+.table tbody tr.table-danger:hover td {
+    background-color: rgba(220, 53, 69, 0.08) !important;
 }
 
 .table tbody tr.table-danger td strong {
-    color: #8a949d !important; /* Nombre apagado */
+    color: var(--text-mutado) !important;
+    text-decoration: line-through;       
 }
 
 /* Badge Inactivo custom */
 .badge.bg-danger {
-    background-color: rgba(220, 53, 69, 0.15) !important;
-    color: #ff6b76 !important;
-    border: 1px solid rgba(220, 53, 69, 0.3);
+    background-color: rgba(220, 53, 69, 0.12) !important;
+    color: #dc3545 !important;
+    border: 1px solid rgba(220, 53, 69, 0.25);
     font-weight: 700;
     font-size: 0.7rem;
     letter-spacing: 0.5px;
+}
+[data-theme="dark"] .badge.bg-danger {
+    color: #ff6b76 !important;
 }
 
 /* ==========================================================================
@@ -118,12 +164,21 @@ h2 {
     background-color: rgba(56, 189, 248, 0.05) !important;
     transition: all 0.2s ease-in-out;
 }
+[data-theme="light"] .btn-historial {
+    color: #0284c7 !important; /* Azul ligeramente más intenso para contraste en blanco */
+    background-color: rgba(2, 132, 199, 0.04) !important;
+    border-color: rgba(2, 132, 199, 0.2) !important;
+}
 
 .btn-historial:hover {
     color: #ffffff !important;
     background-color: var(--brand-blue-subtle) !important;
     border-color: var(--brand-blue-subtle) !important;
     box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+[data-theme="light"] .btn-historial:hover {
+    background-color: #0284c7 !important;
+    border-color: #0284c7 !important;
 }
 
 /* Botón Editar */
@@ -142,21 +197,25 @@ h2 {
 .btn-outline-danger {
     background-color: rgba(220, 53, 69, 0.05) !important;
     border: 1px solid rgba(220, 53, 69, 0.3) !important;
-    color: #ea868f !important;
+    color: #dc3545 !important;
     font-weight: 500;
 }
+[data-theme="dark"] .btn-outline-danger {
+    color: #ea868f !important;
+}
+
 .btn-outline-danger:hover {
     background-color: var(--status-danger) !important;
     border-color: var(--status-danger) !important;
     color: #ffffff !important;
 }
 
-/* Evitar que los botones deshabilitados muestren cosas raras */
+/* Botones deshabilitados */
 .btn.disabled, .btn:disabled {
     opacity: 0.4 !important;
-    background-color: #2b3035 !important;
-    border-color: rgba(255, 255, 255, 0.05) !important;
-    color: #6c757d !important;
+    background-color: var(--border-sutil) !important;
+    border-color: var(--table-border) !important;
+    color: var(--text-mutado) !important;
     cursor: not-allowed;
 }
 
@@ -164,108 +223,110 @@ h2 {
    MODAL DE HISTORIAL DEL CLIENTE
    ========================================================================== */
 #modalHistorial .modal-content {
-    background-color: var(--card-bg) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-sutil) !important;
     border-radius: 14px !important;
+    box-shadow: 0 16px 48px var(--shadow-color) !important;
 }
 
 #modalHistorial .modal-header {
-    background-color: #121416 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background-color: var(--bg-thead) !important;
+    border-bottom: 1px solid var(--border-sutil) !important;
     padding: 16px 20px !important;
 }
 
 #modalHistorial .modal-title {
-    color: #ffffff !important;
+    color: var(--text-principal) !important;
     font-weight: 700 !important;
 }
 
-/* Cruz de cierre blanca */
-#modalHistorial .btn-close-white {
-    filter: invert(1) grayscale(1) brightness(2);
-    opacity: 0.7;
+/* Cruz de cierre adaptativa */
+#modalHistorial .btn-close {
+    opacity: 0.6;
+    transition: opacity 0.15s ease;
 }
-#modalHistorial .btn-close-white:hover {
+[data-theme="dark"] #modalHistorial .btn-close {
+    filter: invert(1) grayscale(1) brightness(2);
+}
+#modalHistorial .btn-close:hover {
     opacity: 1;
 }
 
 #modalHistorial .modal-body {
-    background-color: var(--card-bg) !important;
-    color: #dee2e6 !important;
+    background-color: var(--bg-card) !important;
+    color: var(--text-principal) !important;
     padding: 24px !important;
 }
 
 #modalHistorial .modal-footer {
-    background-color: #121416 !important; /* Quitamos bg-light para integrarlo a la noche */
-    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background-color: var(--bg-thead) !important; 
+    border-top: 1px solid var(--border-sutil) !important;
     padding: 14px 20px !important;
 }
 
 /* Botón cerrar del footer */
 #modalHistorial .modal-footer .btn-secondary {
-    background-color: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #dee2e6 !important;
+    background-color: var(--border-sutil) !important;
+    border: 1px solid var(--table-border) !important;
+    color: var(--text-principal) !important;
     padding: 8px 20px;
 }
 #modalHistorial .modal-footer .btn-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.15) !important;
-    color: #ffffff !important;
+    background-color: var(--table-hover) !important;
 }
 
 /* Ajustes del Spinner de carga dinámica */
 #modalHistorial .spinner-border.text-primary {
-    color: var(--brand-orange) !important; /* Spinner color naranja de marca */
+    color: var(--brand-orange) !important; 
 }
+
 /* ==========================================================================
    TABLA INTERNA DE HISTORIAL (DENTRO DEL MODAL)
    ========================================================================== */
-
-/* Tabla del modal */
 #tabla-modal-historial {
     background-color: transparent !important;
-    color: #dee2e6 !important;
-    border-color: rgba(255, 255, 255, 0.06) !important;
+    color: var(--text-principal) !important;
+    border-color: var(--table-border) !important;
 }
 
 /* Cabecera de la tabla de historial */
 #tabla-modal-historial thead th {
-    background-color: #121416 !important;
-    color: #a0aab2 !important;
+    background-color: var(--bg-thead) !important;
+    color: var(--text-mutado) !important;
     font-weight: 600;
     font-size: 0.8rem;
     text-uppercase: uppercase;
     letter-spacing: 0.5px;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
+    border-bottom: 2px solid var(--border-sutil) !important;
     padding: 12px 10px !important;
 }
 
 /* Celdas del historial */
 #tabla-modal-historial tbody td {
     background-color: transparent !important;
-    color: #dee2e6 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-principal) !important;
+    border-bottom: 1px solid var(--table-border) !important;
     padding: 12px 10px !important;
 }
 
 /* Hover de las filas del historial */
 #tabla-modal-historial tbody tr:hover td {
-    background-color: rgba(255, 255, 255, 0.03) !important;
+    background-color: var(--table-hover) !important;
 }
 
 /* Detalles específicos de las columnas */
 #tabla-modal-historial .id-codigo {
-    color: var(--brand-orange) !important; /* El ID resalta con tu naranja */
+    color: var(--brand-orange) !important; 
     font-size: 0.9rem;
 }
 
 #tabla-modal-historial .nombre-vehiculo {
-    color: #ffffff !important;
+    color: var(--text-principal) !important;
     font-weight: 500;
 }
 
 #tabla-modal-historial .texto-periodo {
-    color: #dee2e6 !important;
+    color: var(--text-mutado) !important;
     font-size: 0.88rem;
 }
 
@@ -276,28 +337,34 @@ h2 {
     transition: transform 0.2s ease, color 0.2s ease;
     display: inline-block;
 }
+[data-theme="light"] #tabla-modal-historial .btn-ver-vehiculo {
+    color: #0284c7 !important;
+}
 
 #tabla-modal-historial .btn-ver-vehiculo:hover {
-    color: #ffffff !important;
+    color: var(--text-principal) !important;
     transform: scale(1.15);
 }
 
-/* Monto de dinero (Verde menta brillante para fondos oscuros) */
+/* Monto de dinero (Adaptativo) */
 #tabla-modal-historial .monto-total {
-    color: #75b798 !important; 
+    color: #157347 !important; 
     font-size: 0.95rem;
+    font-weight: 600;
+}
+[data-theme="dark"] #tabla-modal-historial .monto-total {
+    color: #75b798 !important; 
 }
 
 /* Vista sin historial anterior */
 .sin-historial {
-    color: #727a82 !important;
+    color: var(--text-mutado) !important;
     font-size: 0.95rem;
 }
+
 /* ==========================================================================
    FICHA DE DETALLE DEL VEHÍCULO (DENTRO DEL MODAL)
    ========================================================================== */
-
-/* Contenedor transparente dentro del cuerpo del modal */
 .card-detalle-vehiculo {
     background-color: transparent !important;
     border: none !important;
@@ -314,6 +381,11 @@ h2 {
     border-radius: 6px !important;
     transition: all 0.2s ease-in-out;
 }
+[data-theme="light"] .btn-volver-historial {
+    color: #0284c7 !important;
+    border-color: rgba(2, 132, 199, 0.2) !important;
+    background-color: rgba(2, 132, 199, 0.04) !important;
+}
 
 .btn-volver-historial:hover {
     color: #ffffff !important;
@@ -321,74 +393,89 @@ h2 {
     border-color: var(--brand-blue-subtle) !important;
     box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
 }
+[data-theme="light"] .btn-volver-historial:hover {
+    background-color: #0284c7 !important;
+    border-color: #0284c7 !important;
+}
 
-/* Etiquetas de los campos (Ej: MARCA Y MODELO) */
+/* Etiquetas de los campos */
 .card-detalle-vehiculo .titulo-campo {
-    color: #a0aab2 !important; /* Gris claro suave */
+    color: var(--text-mutado) !important; 
     font-size: 0.75rem !important;
     letter-spacing: 0.8px;
 }
 
 /* Valores de los campos texto e ID */
 .card-detalle-vehiculo .valor-campo {
-    color: #ffffff !important;
+    color: var(--text-principal) !important;
     font-weight: 600;
     font-size: 1.1rem;
 }
 
-/* Destacar el precio (Manejamos el éxito en modo oscuro) */
+/* Destacar el precio (Adaptativo) */
 .card-detalle-vehiculo .valor-precio {
-    color: #75b798 !important; /* Verde menta nítido */
+    color: #157347 !important; 
     font-weight: 700;
     font-size: 1.1rem;
 }
+[data-theme="dark"] .card-detalle-vehiculo .valor-precio {
+    color: #75b798 !important; 
+}
 
 /* ==========================================================================
-   BADGES DE ESTADO PERSONALIZADOS
+   BADGES DE ESTADO PERSONALIZADOS (ADAPTATIVOS)
    ========================================================================== */
 
 /* Estado: Inactivo / Baja */
 .badge-estado-baja {
-    background-color: rgba(220, 53, 69, 0.15) !important;
-    color: #ff6b76 !important;
-    border: 1px solid rgba(220, 53, 69, 0.3) !important;
+    background-color: rgba(220, 53, 69, 0.12) !important;
+    color: #dc3545 !important;
+    border: 1px solid rgba(220, 53, 69, 0.25) !important;
     font-weight: 600;
     letter-spacing: 0.5px;
     border-radius: 6px;
+}
+[data-theme="dark"] .badge-estado-baja {
+    color: #ff6b76 !important;
 }
 
 /* Estado: Disponible */
 .badge-estado-disponible {
-    background-color: rgba(25, 135, 84, 0.15) !important;
-    color: #75b798 !important;
-    border: 1px solid rgba(25, 135, 84, 0.3) !important;
+    background-color: rgba(25, 135, 84, 0.12) !important;
+    color: #198754 !important;
+    border: 1px solid rgba(25, 135, 84, 0.25) !important;
     font-weight: 600;
     letter-spacing: 0.5px;
     border-radius: 6px;
 }
+[data-theme="dark"] .badge-estado-disponible {
+    color: #75b798 !important;
+}
 
-/* Estado: Alquilado (Reemplaza al amarillo chillón molesto) */
+/* Estado: Alquilado */
 .badge-estado-alquilado {
     background-color: rgba(255, 193, 7, 0.12) !important;
-    color: #ffda6a !important; /* Amarillo pastel suave legible */
+    color: #b45309 !important; /* Café/Amarillo oscuro para legibilidad sobre blanco */
     border: 1px solid rgba(255, 193, 7, 0.3) !important;
     font-weight: 600;
     letter-spacing: 0.5px;
     border-radius: 6px;
 }
-/* ==========================================================================
-   FORMULARIO DE EDICIÓN DE CLIENTE (MODO OSCURO)
-   ========================================================================== */
+[data-theme="dark"] .badge-estado-alquilado {
+    color: #ffda6a !important; 
+}
 
-/* Cabecera de la tarjeta del formulario */
+/* ==========================================================================
+   FORMULARIO DE EDICIÓN DE CLIENTE (ADAPTATIVO)
+   ========================================================================== */
 .card-header.bg-dark {
-    background-color: #121416 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background-color: var(--bg-thead) !important;
+    border-bottom: 1px solid var(--border-sutil) !important;
     padding: 16px 20px !important;
 }
 
 .card-header h4 {
-    color: #ffffff !important;
+    color: var(--text-principal) !important;
     font-weight: 700 !important;
     font-size: 1.15rem;
     letter-spacing: -0.3px;
@@ -396,7 +483,7 @@ h2 {
 
 /* Etiquetas del formulario */
 .form-label {
-    color: #a0aab2 !important; /* Gris claro suave */
+    color: var(--text-mutado) !important; 
     font-size: 0.85rem !important;
     font-weight: 600 !important;
     text-uppercase: uppercase;
@@ -404,17 +491,32 @@ h2 {
     margin-bottom: 6px;
 }
 
-/* Cajas de texto e inputs (Sobreescribe el blanco nativo de Bootstrap) */
+/* Cajas de texto e inputs */
 .form-control {
-    background-color: var(--input-bg, #2b3035) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #ffffff !important;
+    background-color: var(--input-bg) !important;
+    border: 1px solid var(--border-sutil) !important;
+    color: var(--text-principal) !important;
     border-radius: 8px !important;
     padding: 10px 14px !important;
     transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-/* Quitar las flechas nativas del input de tipo number (Teléfono) */
+/* Estado de Foco (Clickeado) en los inputs */
+.form-control:focus {
+    background-color: var(--input-focus-bg) !important;
+    border-color: var(--brand-orange) !important; 
+    box-shadow: 0 0 0 3px rgba(255, 118, 0, 0.2) !important;
+    color: var(--text-principal) !important;
+}
+
+/* Campos deshabilitados */
+.form-control:disabled {
+    background-color: var(--table-hover) !important;
+    color: var(--text-mutado) !important;
+    border-color: var(--table-border) !important;
+}
+
+/* Quitar flechas nativas de inputs numéricos */
 .form-control::-webkit-outer-spin-button,
 .form-control::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -424,26 +526,9 @@ h2 {
     -moz-appearance: textfield;
 }
 
-/* Estado de Foco (Clickeado) en los inputs */
-.form-control:focus {
-    background-color: #32383e !important;
-    border-color: var(--brand-orange, #ff7600) !important; /* Brillo con tu naranja de marca */
-    box-shadow: 0 0 0 3px rgba(255, 118, 0, 0.2) !important;
-    color: #ffffff !important;
-}
-
-/* Campos requeridos o deshabilitados */
-.form-control:disabled {
-    background-color: #1e2125 !important;
-    color: #6c757d !important;
-    border-color: rgba(255, 255, 255, 0.05) !important;
-}
-
 /* ==========================================================================
    BOTONES DEL FORMULARIO
    ========================================================================== */
-
-/* Botón Guardar Cambios (Verde sólido refinado) */
 .btn-success {
     background-color: #198754 !important;
     border-color: #198754 !important;
@@ -460,11 +545,10 @@ h2 {
     box-shadow: 0 4px 12px rgba(25, 135, 84, 0.25) !important;
 }
 
-/* Botón Cancelar (Gris integrado a la noche) */
 .btn-secondary {
-    background-color: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #dee2e6 !important;
+    background-color: var(--border-sutil) !important;
+    border: 1px solid var(--table-border) !important;
+    color: var(--text-principal) !important;
     font-weight: 500 !important;
     padding: 10px 20px !important;
     border-radius: 8px !important;
@@ -472,6 +556,6 @@ h2 {
 }
 
 .btn-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.15) !important;
-    color: #ffffff !important;
+    background-color: var(--table-hover) !important;
+    color: var(--text-principal) !important;
 }

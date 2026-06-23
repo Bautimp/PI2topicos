@@ -1,0 +1,43 @@
+:root {
+    /* --- MODO OSCURO POR DEFECTO --- */
+    --bg-main: #161920;
+    --bg-card: #1e222b;
+    --bg-thead: #121416;
+    --text-principal: #ffffff;
+    --text-mutado: #9aa5b1;
+    --border-sutil: rgba(255, 255, 255, 0.06);
+    --input-bg: #2b3035;
+    
+    /* Colores de marca que no cambian */
+    --brand-orange: #ff7600;
+    --brand-blue-subtle: #38bdf8;
+    --bg-card: #1e222b;
+    --bg-thead: #161920;
+    --text-principal: #ffffff;
+    --text-mutado: #9aa5b1;
+    --border-sutil: rgba(255, 255, 255, 0.06);
+
+    /* NUEVAS VARIABLES PARA DETALLES DE TABLAS */
+    --table-border: rgba(255, 255, 255, 0.05); /* Borde sutil oscuro */
+    --table-hover: #242934;
+}
+
+[data-theme="light"] {
+    /* --- MODO CLARO (Los mismos nombres, distintos colores) --- */
+    --bg-main: #f8f9fa;       /* Gris muy claro o blanco */
+    --bg-card: #ffffff;       /* Tarjetas blancas */
+    --bg-thead: #e9ecef;      /* Cabecera de tabla gris clara */
+    --text-principal: #212529; /* Texto oscuro */
+    --text-mutado: #6c757d;   /* Gris intermedio */
+    --border-sutil: rgba(0, 0, 0, 0.08);
+    --input-bg: #ffffff;
+    --bg-card: #ffffff;
+    --bg-thead: #f1f3f5;
+    --text-principal: #212529; /* Gris oscuro/negro para que se lea perfecto */
+    --text-mutado: #6c757d;    /* Gris intermedio */
+    --border-sutil: rgba(0, 0, 0, 0.08);
+
+    /* NUEVAS VARIABLES PARA DETALLES DE TABLAS */
+    --table-border: rgba(0, 0, 0, 0.08);       /* Borde sutil claro */
+    --table-hover: #f8f9fa;
+}
