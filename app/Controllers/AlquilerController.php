@@ -31,6 +31,10 @@ class AlquilerController extends BaseController
         $dias = (strtotime($fechaHasta) - strtotime($fechaDesde)) / (60 * 60 * 24);
         if ($dias == 0) $dias = 1; // Mínimo 1 día de alquiler
 
+        if ($dias > 31) {
+            return redirect()->back()->with('error', 'Por políticas de la empresa, no puedes alquilar un vehículo por más de 31 días continuos.');
+        }
+
         $vehiculoModel = new \App\Models\VehiculoModel();
         $vehiculo = $vehiculoModel->find($vehiculo_id);
         
