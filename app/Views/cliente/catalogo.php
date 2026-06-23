@@ -90,11 +90,11 @@
                             <?php endif; ?>
                         </div>
 
-                        <div class="card-body d-flex flex-column text-white">
+                        <div class="card-body d-flex flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h5 class="card-title fw-bold mb-0 text-white"><?= esc($v->marca . ' ' . $v->modelo) ?></h5>
+                                <h5 class="card-title fw-bold mb-0 card-title-custom"><?= esc($v->marca . ' ' . $v->modelo) ?></h5>
                                 <?php if(!empty($v->categoria)): ?>
-                                    <span class="badge bg-dark text-info border border-info text-uppercase" style="font-size: 0.7rem;"><?= esc($v->categoria) ?></span>
+                                    <span class="badge badge-category text-uppercase" style="font-size: 0.7rem;"><?= esc($v->categoria) ?></span>
                                 <?php endif; ?>
                             </div>
                             
@@ -136,19 +136,19 @@
                                 </div>
                                 <div class="modal-body p-4">
                                     
-                                    <div class="alert bg-dark text-white border border-secondary mb-4 d-flex justify-content-between align-items-center">
-                                        <span class="text-muted">Precio diario del vehículo:</span>
-                                        <strong style="color: var(--brand-blue); font-size: 1.15rem;">$<?= number_format($v->precio_dia, 2, ',', '.') ?></strong>
+                                    <div class="alert modal-price-box mb-4 d-flex justify-content-between align-items-center">
+                                        <span class="text-muted-custom">Precio diario del vehículo:</span>
+                                        <strong style="color: var(--brand-orange); font-size: 1.15rem;">$<?= number_format($v->precio_dia, 2, ',', '.') ?></strong>
                                     </div>
 
                                     <form action="<?= base_url('alquileres/reservar/' . $v->id) ?>" method="POST">
 
                                         <div class="mb-4">
-                                            <label class="form-label fw-bold text-white mb-2">Selecciona el período de alquiler</label>
+                                            <label class="form-label fw-bold mb-2">Selecciona el período de alquiler</label>
                                             <input type="text" class="form-control form-control-lg search-input-custom input-rango-fechas" 
-                                                   name="rango_fechas" 
-                                                   data-ocupadas='<?= $v->fechasOcupadas ?>' 
-                                                   required readonly placeholder="Haz clic aquí para abrir el calendario">
+                                                name="rango_fechas" 
+                                                data-ocupadas='<?= $v->fechasOcupadas ?>' 
+                                                required readonly placeholder="Haz clic aquí para abrir el calendario">
                                             <div class="form-text text-muted mt-2">Los días oscurecidos o grises ya se encuentran reservados por otro conductor.</div>
                                         </div>
 

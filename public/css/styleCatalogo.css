@@ -219,3 +219,38 @@
     color: var(--text-placeholder) !important;
     opacity: 1 !important;
 }
+/* ==========================================================================
+   CORRECCIONES MODO CLARO COHERENTE (PARCHE DUAL)
+   ========================================================================== */
+
+/* 1. Asegurar que los textos internos de la card sigan al tema */
+.vehicle-card .card-body {
+    color: var(--text-principal) !important;
+}
+
+/* 2. Forzar que el título de la tarjeta mute correctamente */
+.vehicle-card .card-title-custom {
+    color: var(--text-principal) !important;
+}
+
+/* 3. El contenedor de la categoría cambia dinámicamente */
+.badge-category {
+    background-color: var(--input-bg) !important;
+    color: var(--brand-orange) !important;
+    border: 1px solid var(--border-input) !important;
+}
+
+/* 4. El contenedor del monto/precio diario dentro del modal */
+.modal-price-box {
+    background-color: var(--input-bg) !important;
+    color: var(--text-principal) !important;
+    border: 1px solid var(--border-input) !important;
+}
+.modal-price-box .text-muted-custom {
+    color: var(--text-mutated, var(--text-mutado)) !important;
+}
+
+/* 5. Asegurar que las etiquetas de texto del modal cambien */
+.modal-content-dark .form-label {
+    color: var(--text-principal) !important;
+}

@@ -559,3 +559,10 @@ h2 {
     background-color: var(--table-hover) !important;
     color: var(--text-principal) !important;
 }
+/* Corrección forzada para títulos invisibles en Modo Claro */
+[data-theme="light"] .table thead.table-dark th,
+[data-theme="light"] .table-responsive .table thead th,
+[data-theme="light"] #tabla-modal-historial thead th,
+[data-theme="light"] #contenedor-pendientes .table thead th {
+    color: var(--text-mutado) !important;
+}
