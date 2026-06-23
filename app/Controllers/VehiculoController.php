@@ -307,5 +307,20 @@ public function detalleVehiculoRapido($id_vehiculo) {
     return view('admin/clientes/detalle_vehiculo', $data);
 }
  
+public function pendientesRapido($vehiculoId)
+{
+    $alquilerModel = new \App\Models\AlquilerModel();
+
+    // Buscamos las solicitudes pendientes de este vehículo con los datos del cliente
+    $data['pendientes'] = $alquilerModel->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono')
+                                        ->join('clientes', 'clientes.id = alquileres.cliente_id')
+                                        ->where('alquileres.vehiculo_id', $vehiculoId)
+                                        ->where('alquileres.estado', 'PENDIENTE')
+                                        ->orderBy('alquileres.id', 'ASC')
+                                        ->findAll();
+
+    // Retornamos una vista simple (crearemos este archivo a continuación)
+    return view('admin/vehiculos/pendientes_modal', $data);
+}
  
 }

@@ -87,6 +87,44 @@ class AlquilerController extends BaseController
 
         return redirect()->to('/admin/alquileres')->with('mensaje', 'La solicitud de reserva ha sido rechazada correctamente.');
     }
+        public function rechazarReservaModal($id_alquiler)
+        {
+            $alquilerModel = new \App\Models\AlquilerModel();
+
+            // Cambiamos el estado a RECHAZADO
+            $actualizado = $alquilerModel->update($id_alquiler, ['estado' => 'RECHAZADO']);
+
+            if ($actualizado) {
+                return $this->response->setJSON([
+                    'status'  => 'success',
+                    'title'   => '¡Rechazado!',
+                    'mensaje' => 'La solicitud de reserva ha sido rechazada correctamente.'
+                ]);
+            }
+
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'mensaje' => 'No se pudo rechazar la reserva.'
+            ]);
+        }
+
+        public function aprobarReservaModal($id_alquiler, $id_vehiculo)
+        {
+            $alquilerModel = new \App\Models\AlquilerModel();
+            $vehiculoModel = new \App\Models\VehiculoModel();
+
+            // 1. Cambiamos estado de la reserva a APROBADO
+            $alquilerModel->update($id_alquiler, ['estado' => 'APROBADO']);
+            
+            // 2. Cambiamos estado del vehículo a ALQUILADO
+            $vehiculoModel->update($id_vehiculo, ['disponibilidad' => 'ALQUILADO']);
+
+            return $this->response->setJSON([
+                'status'  => 'success',
+                'title'   => '¡Aprobado!',
+                'mensaje' => 'El alquiler ha sido aprobado con éxito.'
+            ]);
+        }
 
     public function aprobarReserva($id_alquiler, $id_vehiculo)
     {
