@@ -23,11 +23,11 @@
                         </div>
                         
                         <div>
-                            <select name="categoria" class="form-select form-select-lg search-input-custom" style="min-width: 180px;">
+                            <select name="categoria" class="form-select form-select-lg search-input-custom" style="min-width: 180px; cursor: pointer;" onchange="this.form.submit()">
                                 <option value="">Todas las Categorías</option>
                                 <?php if(!empty($categorias)): ?>
                                     <?php foreach($categorias as $cat): ?>
-                                        <option value="<?= esc($cat->categoria) ?>" <?= ($categoriaActual == $cat->categoria) ? 'selected' : '' ?>>
+                                        <option value="<?= esc($cat->categoria) ?>" <?= ($categoriaActual === $cat->categoria) ? 'selected' : '' ?>>
                                             <?= esc($cat->categoria) ?>
                                         </option>
                                     <?php endforeach; ?>
