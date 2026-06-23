@@ -52,8 +52,7 @@ class AuthController extends BaseController
         $email = $this->request->getPost('email'); 
         $password = $this->request->getPost('password'); 
 
-        $usuario = $usuarioModel->where('email', $email)->first();
-        
+        $usuario = $usuarioModel->obtenerPorEmail($email);
 
         if ($usuario && password_verify($password, $usuario->password)) {
             session()->set([
@@ -61,18 +60,14 @@ class AuthController extends BaseController
                 'esAdmin'    => $usuario->esAdmin,
                 'isLoggedIn' => true
             ]);
-
-
-
             if ($usuario->esAdmin == 1) {
                 return redirect()->to('/admin/vehiculos');
             } else {
                 $clienteModel = new \App\Models\ClienteModel();
 
-                $cliente = $clienteModel->where('usuario_id', $usuario->id)->first();
-
-                session()->set(['cliente_id' => $cliente->id]);
+                $cliente = $clienteModel->obtenerPorUsuarioId($usuario->id);
                 
+                session()->set(['cliente_id' => $cliente->id]);
                 return redirect()->to('/catalogo');
             }
         } else {

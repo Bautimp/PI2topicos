@@ -82,6 +82,74 @@ class AlquilerModel extends Model
         return $fechasBloqueadas;
     }
 
+    // Verifica si existen superposiciones de fechas para un vehículo
+    public function verificarSuperposicion($vehiculo_id, $fechaDesde, $fechaHasta)
+    {
+        return $this->where('vehiculo_id', $vehiculo_id)
+                    ->where('estado', 'APROBADO')
+                    ->where('fechaDesde <=', $fechaHasta)
+                    ->where('fechaHasta >=', $fechaDesde)
+                    ->first();
+    }
+
+    // Busca alquileres que ya pasaron su fecha de devolución
+    public function getAlquileresVencidos($fechaHoy)
+    {
+        return $this->where('estado', 'APROBADO')
+                    ->where('fechaHasta <', $fechaHoy)
+                    ->findAll();
+    }
+
+    // Lista vehículos que están actualmente alquilados (con datos del cliente y auto)
+    public function listarActivosConClienteYVehiculo()
+    {
+        return $this->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono, clientes.direccion, clientes.fechaAlta, vehiculos.marca, vehiculos.modelo, vehiculos.precio_dia')
+                    ->join('clientes', 'clientes.id = alquileres.cliente_id')
+                    ->join('vehiculos', 'vehiculos.id = alquileres.vehiculo_id')
+                    ->where('alquileres.estado', 'APROBADO')
+                    ->orderBy('alquileres.fechaHasta', 'ASC')
+                    ->findAll();
+    }
+
+    // Cuenta las solicitudes pendientes de un vehículo
+    public function contarPendientesPorVehiculo($vehiculo_id)
+    {
+        return $this->where('vehiculo_id', $vehiculo_id)
+                    ->where('estado', 'PENDIENTE')
+                    ->countAllResults();
+    }
+
+    // Trae el alquiler APROBADO en curso para un vehículo
+    public function getAlquilerActivoPorVehiculo($vehiculo_id)
+    {
+        return $this->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono')
+                    ->join('clientes', 'clientes.id = alquileres.cliente_id')
+                    ->where('alquileres.vehiculo_id', $vehiculo_id)
+                    ->where('alquileres.estado', 'APROBADO')
+                    ->first();
+    }
+
+    // Trae el historial rápido para el modal de administración
+    public function getHistorialRapidoPorVehiculo($vehiculo_id)
+    {
+        return $this->select('alquileres.*, clientes.nombre, clientes.apellido')
+                    ->join('clientes', 'clientes.id = alquileres.cliente_id')
+                    ->where('alquileres.vehiculo_id', $vehiculo_id)
+                    ->orderBy('alquileres.fechaDesde', 'DESC')
+                    ->findAll();
+    }
+
+    // Trae las reservas pendientes de un vehículo junto a los datos del cliente
+    public function getPendientesConClientePorVehiculo($vehiculo_id)
+    {
+        return $this->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono')
+                    ->join('clientes', 'clientes.id = alquileres.cliente_id')
+                    ->where('alquileres.vehiculo_id', $vehiculo_id)
+                    ->where('alquileres.estado', 'PENDIENTE')
+                    ->orderBy('alquileres.id', 'ASC')
+                    ->findAll();
+    }
+
   
     
     

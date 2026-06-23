@@ -26,4 +26,9 @@ class ClienteModel extends Model
     {
         return $this->findAll();
     }
+    
+    public function obtenerPorUsuarioId($usuario_id)
+    {
+        return $this->where('usuario_id', $usuario_id)->first();
+    }
 }

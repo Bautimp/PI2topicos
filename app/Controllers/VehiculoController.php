@@ -24,32 +24,16 @@ class VehiculoController extends BaseController
                                             ->findAll();
 
 
-        
-        if (!empty($alquileresVencidos)) {
-            foreach ($alquileresVencidos as $alquiler) {
-                // Pasamos el alquiler al historial como finalizado
-                $alquilerModel->update($alquiler->id, ['estado' => 'FINALIZADO']);
-                
-                // Liberamos el vehículo para que vuelva a aparecer en el catálogo
-                $vehiculoModel->update($alquiler->vehiculo_id, ['disponibilidad' => 'DISPONIBLE']);
-            }
-        }
 
-        // 1. Capturamos los filtros de la URL (si existen)
+        $fechaHoy = date('Y-m-d');
+        $alquileresVencidos = $alquilerModel->getAlquileresVencidos($fechaHoy);
+
         $busqueda = $this->request->getGet('busqueda');
         $categoriaFiltro = $this->request->getGet('categoria');
 
-        // 2. Iniciamos la consulta base (Solo activos y que no estén en taller)
-        $vehiculoModel->where('esActivo', 1)->where('disponibilidad !=', 'NO_DISPONIBLE');
+        $autos = $vehiculoModel->getVehiculosCatalogo($busqueda, $categoriaFiltro);
 
-        // 3. Aplicamos filtro de Categoría si el usuario eligió una
-        if (!empty($categoriaFiltro)) {
-            $vehiculoModel->where('categoria', $categoriaFiltro);
-        }
-
-        // 4. Aplicamos el buscador de texto (busca en marca o modelo)
         if (!empty($busqueda)) {
-            // Usamos groupStart() para encapsular los OR y que no rompan las reglas de "esActivo"
             $vehiculoModel->groupStart()
                           ->like('marca', $busqueda)
                           ->orLike('modelo', $busqueda)
@@ -82,33 +66,17 @@ class VehiculoController extends BaseController
         $vehiculoModel = new \App\Models\VehiculoModel();
         $alquilerModel = new \App\Models\AlquilerModel();
 
-        // Traemos todos los vehículos
-        $vehiculos = $vehiculoModel->orderBy('id', 'DESC')->findAll();
+        $vehiculos = $vehiculoModel->getTodosLosVehiculosAdmin();
 
-        // Buscamos el alquiler activo para los que están alquilados
         foreach ($vehiculos as $v) {
-
-            // 1. NUEVA CONSULTA: Verificar si tiene solicitudes PENDIENTES
-        // Cuenta cuántos alquileres pendientes tiene este vehículo específico
-        $pendientes = $alquilerModel->where('vehiculo_id', $v->id)
-                                    ->where('estado', 'PENDIENTE')
-                                    ->countAllResults(); // Devuelve un número (0, 1, 2...)
-
-        // Si es mayor a 0, guardamos true, de lo contrario false
-        $v->tiene_pendientes = ($pendientes > 0);
+            $v->tiene_pendientes = ($alquilerModel->contarPendientesPorVehiculo($v->id) > 0);
 
             if ($v->disponibilidad === 'ALQUILADO' && $v->esActivo == 1) {
-                // Buscamos el alquiler APROBADO actual cruzando con el cliente
-                $v->alquiler_activo = $alquilerModel->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono')
-                                                    ->join('clientes', 'clientes.id = alquileres.cliente_id')
-                                                    ->where('alquileres.vehiculo_id', $v->id)
-                                                    ->where('alquileres.estado', 'APROBADO')
-                                                    ->first();
+                $v->alquiler_activo = $alquilerModel->getAlquilerActivoPorVehiculo($v->id);
             }
         }
 
         $datos['vehiculos'] = $vehiculos;
-        
         return view('admin/vehiculos/index', $datos);
     }
 
@@ -280,22 +248,13 @@ class VehiculoController extends BaseController
     }
 
 
-   public function historialRapido($id)
-{
-    $alquileres = new AlquilerModel();
+    public function historialRapido($id)
+    {
+        $alquileres = new AlquilerModel();
+        $data['historial'] = $alquileres->getHistorialRapidoPorVehiculo($id);
+        return view('admin/vehiculos/tabla_historial', $data);
+    }
 
-    // Guardamos el resultado dentro de la clave 'historial' de un array $data
-    $data['historial'] = $alquileres->table('alquileres') 
-        ->select('alquileres.*, clientes.nombre, clientes.apellido')
-        ->join('clientes', 'clientes.id = alquileres.cliente_id') 
-        ->where('alquileres.vehiculo_id', $id)
-        ->orderBy('alquileres.fechaDesde', 'DESC')
-        ->get()
-        ->getResult();
-
-    // Pasamos el array $data completo
-    return view('admin/vehiculos/tabla_historial', $data);
-}
 public function detalleVehiculoRapido($id_vehiculo) {
     $vehiculoModel = new VehiculoModel(); 
     
@@ -308,19 +267,10 @@ public function detalleVehiculoRapido($id_vehiculo) {
 }
  
 public function pendientesRapido($vehiculoId)
-{
-    $alquilerModel = new \App\Models\AlquilerModel();
-
-    // Buscamos las solicitudes pendientes de este vehículo con los datos del cliente
-    $data['pendientes'] = $alquilerModel->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono')
-                                        ->join('clientes', 'clientes.id = alquileres.cliente_id')
-                                        ->where('alquileres.vehiculo_id', $vehiculoId)
-                                        ->where('alquileres.estado', 'PENDIENTE')
-                                        ->orderBy('alquileres.id', 'ASC')
-                                        ->findAll();
-
-    // Retornamos una vista simple (crearemos este archivo a continuación)
-    return view('admin/vehiculos/pendientes_modal', $data);
-}
+    {
+        $alquilerModel = new \App\Models\AlquilerModel();
+        $data['pendientes'] = $alquilerModel->getPendientesConClientePorVehiculo($vehiculoId);
+        return view('admin/vehiculos/pendientes_modal', $data);
+    }
  
 }
