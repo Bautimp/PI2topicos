@@ -31,6 +31,10 @@ class AlquilerController extends BaseController
         $dias = (strtotime($fechaHasta) - strtotime($fechaDesde)) / (60 * 60 * 24);
         if ($dias == 0) $dias = 1; // Mínimo 1 día de alquiler
 
+        if ($dias > 31) {
+            return redirect()->back()->with('error', 'Por políticas de la empresa, no puedes alquilar un vehículo por más de 31 días continuos.');
+        }
+
         $vehiculoModel = new \App\Models\VehiculoModel();
         $vehiculo = $vehiculoModel->find($vehiculo_id);
         
@@ -39,15 +43,7 @@ class AlquilerController extends BaseController
         // --- VERIFICACIÓN DE SEGURIDAD EN BACKEND ---
         // Prevenir que un usuario malicioso salte el calendario JS y envíe fechas superpuestas
         $alquilerModel = new \App\Models\AlquilerModel();
-        $superposicion = $alquilerModel->where('vehiculo_id', $vehiculo_id)
-                                       ->whereIn('estado', ['PENDIENTE', 'APROBADO'])
-                                       ->where('fechaDesde <=', $fechaHasta)
-                                       ->where('fechaHasta >=', $fechaDesde)
-                                       ->first();
-
-        if ($superposicion) {
-            return redirect()->back()->with('error', 'Las fechas seleccionadas ya no están disponibles. Alguien más reservó el auto recién.');
-        }
+        $superposicion = $alquilerModel->verificarSuperposicion($vehiculo_id, $fechaDesde, $fechaHasta);
 
         // Si todo está bien, guardamos la reserva
         $alquilerModel->save([
@@ -129,14 +125,7 @@ class AlquilerController extends BaseController
     public function listarActivos()
     {
         $alquilerModel = new \App\Models\AlquilerModel();
-        
-        // Sumamos dirección y fechaAlta del cliente para poder mostrarlos en el modal
-        $datos['reservas'] = $alquilerModel->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono, clientes.direccion, clientes.fechaAlta, vehiculos.marca, vehiculos.modelo, vehiculos.precio_dia')
-                                           ->join('clientes', 'clientes.id = alquileres.cliente_id')
-                                           ->join('vehiculos', 'vehiculos.id = alquileres.vehiculo_id')
-                                           ->where('alquileres.estado', 'APROBADO')
-                                           ->orderBy('alquileres.fechaHasta', 'ASC') // Ordena cronológicamente: Atrasados -> Hoy -> Futuro
-                                           ->findAll();
+        $datos['reservas'] = $alquilerModel->listarActivosConClienteYVehiculo();
         
         return view('admin/alquileres/activos', $datos);
     }

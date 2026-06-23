@@ -31,7 +31,7 @@ class PasswordController extends BaseController
 
         $email = $this->request->getPost('email');
         $usuarioModel = new UsuarioModel();
-        $usuario = $usuarioModel->where('email', $email)->first();
+        $usuario = $usuarioModel->obtenerPorEmail($email);
 
         if ($usuario) {
             // Generar un token seguro y único usando random_bytes
@@ -71,9 +71,7 @@ class PasswordController extends BaseController
         }
 
         $usuarioModel = new UsuarioModel();
-        $usuario = $usuarioModel->where('reset_token', $token)
-                               ->where('reset_expires_at >=', Time::now()->toDateTimeString())
-                               ->first();
+        $usuario = $usuarioModel->verificarTokenRecuperacion($token, Time::now()->toDateTimeString());
 
         if (!$usuario) {
             return redirect()->to('/login')->with('error', 'El enlace ha expirado o es inválido.');
@@ -89,7 +87,7 @@ class PasswordController extends BaseController
         $password = $this->request->getPost('password');
 
         $usuarioModel = new UsuarioModel();
-        $usuario = $usuarioModel->where('reset_token', $token)->first();
+        $usuario = $usuarioModel->obtenerPorToken($token);
 
         if (!$usuario) {
             return redirect()->to('/login')->with('error', 'Operación inválida.');
