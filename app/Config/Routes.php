@@ -39,7 +39,6 @@ $routes->group('', ['filter' => 'authGuard'], function($routes) {
         $routes->get('vehiculos/pendientes-rapido/(:num)', 'VehiculoController::pendientesRapido/$1');
 
         // Rutas de Alquileres
-        $routes->get('alquileres', 'AlquilerController::listarPendientes');
         $routes->get('alquileres/aprobar/(:num)/(:num)', 'AlquilerController::aprobarReserva/$1/$2');
         $routes->get('alquileres/rechazar/(:num)', 'AlquilerController::rechazarReserva/$1');
         $routes->get('alquileres/aprobarModal/(:num)/(:num)', 'AlquilerController::aprobarReservaModal/$1/$2');

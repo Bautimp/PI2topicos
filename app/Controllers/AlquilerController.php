@@ -63,20 +63,6 @@ class AlquilerController extends BaseController
     }
 
     // === VISTAS ADMIN ===
-    public function listarPendientes()
-    {
-        $alquilerModel = new \App\Models\AlquilerModel();
-        
-        // Agregamos todos los campos necesarios del cliente en el select
-        $datos['reservas'] = $alquilerModel->select('alquileres.*, clientes.nombre, clientes.apellido, clientes.telefono, clientes.direccion, clientes.fechaAlta, vehiculos.marca, vehiculos.modelo, vehiculos.precio_dia')
-                                        ->join('clientes', 'clientes.id = alquileres.cliente_id')
-                                        ->join('vehiculos', 'vehiculos.id = alquileres.vehiculo_id')
-                                        ->where('alquileres.estado', 'PENDIENTE')
-                                        ->orderBy('alquileres.fechaDesde', 'ASC')
-                                        ->findAll();
-        
-        return view('admin/alquileres/pendientes', $datos);
-    }
 
     public function rechazarReserva($id_alquiler)
     {
@@ -154,7 +140,6 @@ class AlquilerController extends BaseController
         
         return view('admin/alquileres/activos', $datos);
     }
-
 
     // Registra la devolución física del vehículo    
     public function registrarDevolucion($id_alquiler, $id_vehiculo)
