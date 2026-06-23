@@ -23,15 +23,6 @@ class VehiculoModel extends Model
         'esActivo'
     ];
 
-    
-    //Trae el catálogo de autos aptos para ser mostrados a los clientes
-    public function getDisponiblesParaAlquiler()
-    {
-        return $this->where('esActivo', 1)
-                    ->where('disponibilidad', 'DISPONIBLE')
-                    ->findAll();
-    }
-
     public function obtenerCategoriasUnicas()
     {
         return $this->select('categoria')
