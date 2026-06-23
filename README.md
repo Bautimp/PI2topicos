@@ -52,19 +52,3 @@ Plataforma web desarrollada en **CodeIgniter 4** para la administración integra
     Administrador: admin@mycar.com | Clave: admin123
 
     Cliente: cliente@gmail.com | Clave: cliente123
-
-Desarrollado como proyecto de integración.
-
-
----
-
-### 2. Análisis de Errores y Código sin uso
-
-Revisando minuciosamente los extractos que enviaste (Migración, Seeder, Modelos, Rutas y Controladores base), he encontrado algunos detalles arquitectónicos y funcionales que debes ajustar:
-
-#### ❌ 1. Ruta de Reservas Pendientes faltante (`Routes.php`)
-En tu archivo de rutas, has definido los métodos para aprobar, rechazar y listar los vehículos activos en la calle, pero **falta la ruta principal para ver las solicitudes pendientes**.
-* **El problema:** El administrador no tiene cómo llegar a la lista para aprobar los autos por primera vez.
-* **Solución:** Agrega esta línea dentro del grupo `admin` en `Routes.php`:
-  ```php
-  $routes->get('alquileres', 'AlquilerController::listarPendientes');
