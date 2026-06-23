@@ -1,5 +1,9 @@
 <?= $this->extend('layouts/main') ?>
 
+<?= $this->section('styles') ?>
+    <link rel="stylesheet" href="<?= base_url('css/styleEditarVehiculo.css') ?>">
+<?= $this->endSection() ?>
+
 <?= $this->section('content') ?>
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -14,14 +18,14 @@
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label class="form-label text-muted">Marca</label>
-                                <input type="text" class="form-control bg-light" name="marca" value="<?= esc($vehiculo->marca) ?>" readonly>
+                                <input type="text" class="form-control" name="marca" value="<?= esc($vehiculo->marca) ?>" readonly>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label text-muted">Modelo</label>
-                                <input type="text" class="form-control bg-light" name="modelo" value="<?= esc($vehiculo->modelo) ?>" readonly>
+                                <input type="text" class="form-control" name="modelo" value="<?= esc($vehiculo->modelo) ?>" readonly>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label fw-bold text-dark">Categoría</label>
+                                <label class="form-label fw-bold">Categoría</label>
                                 <input type="text" class="form-control" name="categoria" value="<?= esc($vehiculo->categoria ?? '') ?>" placeholder="Ej: SUV, Sedán, Pickup" required>
                             </div>
                         </div>
@@ -29,15 +33,15 @@
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label class="form-label text-muted">Año</label>
-                                <input type="number" class="form-control bg-light" name="anio" value="<?= esc($vehiculo->anio) ?>" readonly>
+                                <input type="number" class="form-control" name="anio" value="<?= esc($vehiculo->anio) ?>" readonly>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label text-muted">Asientos / Plazas</label>
-                                <input type="number" class="form-control bg-light" name="asientos" value="<?= esc($vehiculo->asientos) ?>" readonly>
+                                <input type="number" class="form-control" name="asientos" value="<?= esc($vehiculo->asientos) ?>" readonly>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label text-muted">Motor</label>
-                                <input type="text" class="form-control bg-light" name="motor" value="<?= esc($vehiculo->motor) ?>" readonly>
+                                <input type="text" class="form-control" name="motor" value="<?= esc($vehiculo->motor) ?>" readonly>
                             </div>
                         </div>
 
@@ -55,7 +59,6 @@
                         <hr class="text-muted mb-4">
 
                         <div class="row mb-4">
-                            
                             <div class="col-md-5 mb-3">
                                 <label class="form-label text-muted">Imágenes Actuales:</label>
                                 
@@ -79,7 +82,7 @@
                                             <?php endforeach; ?>
                                         <?php else: ?>
                                             <div class="carousel-item active">
-                                                <div class="d-flex justify-content-center align-items-center bg-light text-muted" style="height: 220px;">
+                                                <div class="d-flex justify-content-center align-items-center text-muted" style="height: 220px;">
                                                     <span>Sin imágenes cargadas</span>
                                                 </div>
                                             </div>
@@ -109,7 +112,6 @@
                                     </small>
                                 </div>
                             </div>
-                            
                         </div>
 
                         <div class="d-flex justify-content-between">

@@ -1,0 +1,141 @@
+/* VARIABLES DE IDENTIDAD DE LA APLICACIÓN */
+:root {
+    --bg-main: #141619;
+    --card-bg: #1e2125;
+    --input-bg: #2b3035;
+    --input-readonly-bg: #1a1d20;
+    --brand-orange: #ff7600;
+    --brand-orange-hover: #e06800;
+    --text-muted-dark: #a0aab2;
+}
+
+/* Contenedor principal de la tarjeta */
+.card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+    overflow: hidden;
+}
+
+/* Cabecera de la tarjeta (Cambiamos el azul bg-primary por un tono oscuro refinado) */
+.card-header.bg-primary {
+    background-color: #121416 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 18px 24px !important;
+}
+
+.card-header h4 {
+    color: #ffffff !important;
+    font-weight: 700;
+}
+
+/* Cuerpo del formulario */
+.card-body {
+    background-color: var(--card-bg) !important;
+    padding: 30px !important;
+}
+
+/* ==========================================================================
+   ESTILOS DE FORMULARIOS (INPUTS Y LABELS)
+   ========================================================================== */
+
+/* Etiquetas de los inputs */
+.form-label {
+    color: #dee2e6 !important; /* Blanco legible por defecto */
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+/* Forzar que las clases text-muted en labels no se vuelvan invisibles */
+.form-label.text-muted {
+    color: var(--text-muted-dark) !important;
+}
+
+/* Inputs Editables */
+.form-control {
+    background-color: var(--input-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    padding: 10px 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--brand-orange) !important;
+    box-shadow: 0 0 8px rgba(255, 118, 0, 0.25) !important;
+}
+
+/* Inputs de solo lectura (Readonly / Bloqueados) */
+.form-control[readonly], 
+.form-control.bg-light[readonly] {
+    background-color: var(--input-readonly-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: #868e96 !important; /* Gris apagado para denotar que está bloqueado */
+    cursor: not-allowed;
+}
+
+/* Separadores horizontales */
+hr.text-muted {
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    opacity: 1;
+}
+
+/* ==========================================================================
+   GALERÍA, CAROUSEL Y ALERTAS
+   ========================================================================== */
+
+/* Carrusel de imágenes */
+.carousel {
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background-color: #121416;
+}
+
+/* Estado vacío del carrusel */
+.carousel .bg-light {
+    background-color: var(--input-readonly-bg) !important;
+    color: #6c757d !important;
+}
+
+/* Cartel de advertencia de cantidad de imágenes */
+.alert-warning {
+    background-color: rgba(255, 193, 7, 0.1) !important;
+    border: 1px solid rgba(255, 193, 7, 0.2) !important;
+    color: #ffda6a !important;
+    border-radius: 8px;
+}
+
+/* ==========================================================================
+   BOTONES DE ACCIÓN
+   ========================================================================== */
+
+/* Botón de actualizar (Usamos tu naranja de marca) */
+.btn-primary {
+    background-color: var(--brand-orange) !important;
+    border-color: var(--brand-orange) !important;
+    color: #ffffff !important;
+    padding: 10px 24px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--brand-orange-hover) !important;
+    border-color: var(--brand-orange-hover) !important;
+    box-shadow: 0 4px 12px rgba(255, 118, 0, 0.3);
+}
+
+/* Botón cancelar */
+.btn-secondary {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #dee2e6 !important;
+    padding: 10px 24px;
+    border-radius: 8px;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+}

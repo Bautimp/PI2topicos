@@ -1,0 +1,169 @@
+/* VARIABLES LOCALES ACTUALIZADAS */
+:root {
+    --card-bg: #1e2125;
+    --input-bg: #2b3035;
+    --brand-orange: #ff7600;       /* Tu naranja protagonista */
+    --brand-orange-hover: #e06800; /* Naranja un toque más oscuro para el hover */
+    --brand-blue-subtle: #00c6ff;  /* Azul solo para detalles e información */
+}
+
+/* Título principal del catálogo */
+.catalog-title {
+    color: #f8f9fa;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+/* Buscador Avanzado */
+.search-card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+.search-input-custom {
+    background-color: var(--input-bg) !important;
+    color: #f8f9fa !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px;
+}
+
+/* Al hacer foco en los inputs, ahora se iluminan en naranja */
+.search-input-custom:focus {
+    border-color: var(--brand-orange) !important;
+    box-shadow: 0 0 0 3px rgba(255, 118, 0, 0.25) !important;
+}
+
+/* Tarjetas de los Vehículos */
+.vehicle-card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* El hover de la tarjeta ahora acompaña al naranja */
+.vehicle-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 118, 0, 0.3) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Especificaciones técnicas del auto */
+.spec-list li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 6px 0;
+    color: #adb5bd;
+}
+.spec-list li strong {
+    color: #f8f9fa;
+}
+
+/* Modales en modo oscuro */
+.modal-content-dark {
+    background-color: var(--card-bg) !important;
+    color: #f8f9fa;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+}
+.modal-header-dark {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: #141619;
+}
+
+/* ==========================================================================
+   BOTONES Y ELEMENTOS DE ACCIÓN (CON LA NUEVA IDENTIDAD NARANJA)
+   ========================================================================== */
+
+/* Botón Principal Naranja Solido */
+.btn-brand-orange {
+    background-color: var(--brand-orange) !important;
+    border: none;
+    color: white !important;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.btn-brand-orange:hover {
+    background-color: var(--brand-orange-hover) !important;
+    color: white !important;
+}
+.btn-brand-orange:active {
+    transform: scale(0.98);
+}
+
+/* Botón Secundario (Outline) para cuando no inició sesión */
+.btn-outline-brand-blue {
+    border: 1.5px solid var(--brand-orange) !important;
+    color: var(--brand-orange) !important;
+    background: transparent !important;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+.btn-outline-brand-blue:hover {
+    background-color: var(--brand-orange) !important;
+    color: white !important;
+}
+
+/* El precio del vehículo pasa a un tono blanco/gris destacado o azul sutil */
+.card-price {
+    color: #f8f9fa; /* Evitamos meter otro color que compita con el naranja */
+    font-size: 1.3rem;
+}
+.card-price-number {
+    color: var(--brand-blue-subtle); /* El azul queda excelente y fino solo para números */
+}
+
+/* ==========================================================================
+   CALENDARIO FLATPICKR ADAPTADO AL NARANJA
+   ========================================================================== */
+.flatpickr-calendar {
+    z-index: 1060 !important;
+    background: #1e2125 !important;
+    border: 1px solid #343a40 !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important;
+}
+.flatpickr-calendar, .flatpickr-months .flatpickr-month, .flatpickr-weekday, .flatpickr-day {
+    color: #f8f9fa !important;
+    fill: #f8f9fa !important;
+}
+.flatpickr-day.disabled, .flatpickr-day.disabled:hover {
+    color: #495057 !important;
+    background: transparent !important;
+}
+/* Rangos seleccionados ahora son puramente naranjas */
+.flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, 
+.flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, 
+.flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, 
+.flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover {
+    background: var(--brand-orange) !important;
+    border-color: var(--brand-orange) !important;
+    color: white !important;
+}
+/* Fondo sutil para los días intermedios del rango */
+.flatpickr-day.inRange {
+    background: rgba(255, 118, 0, 0.15) !important;
+    box-shadow: none !important;
+}
+/* ==========================================================================
+   FIX: Visibilidad de los Placeholders en Modo Oscuro
+   ========================================================================== */
+
+/* Para navegadores modernos (Chrome, Safari, Edge, Opera) */
+.search-input-custom::placeholder {
+    color: #9ca3af !important; /* Un gris claro con buen contraste */
+    opacity: 1 !important;     /* Evita que el navegador le aplique transparencia de más */
+}
+
+/* Para Firefox */
+.search-input-custom::-moz-placeholder {
+    color: #9ca3af !important;
+    opacity: 1 !important;
+}
+
+/* Para Internet Explorer / Edge antiguo */
+.search-input-custom:-ms-input-placeholder {
+    color: #9ca3af !important;
+    opacity: 1 !important;
+}

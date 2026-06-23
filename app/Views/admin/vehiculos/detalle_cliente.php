@@ -1,9 +1,11 @@
 <div class="text-center mb-3">
-    <div class="display-6 text-secondary">👤</div>
+    <div class="display-6 client-avatar-icon">👤</div>
     <h4 class="fw-bold mb-0"><?= esc($cliente->nombre . ' ' . $cliente->apellido) ?></h4>
     <span class="badge bg-secondary mt-1">Ficha del Cliente</span>
 </div>
-<hr>
+
+<hr class="text-muted">
+
 <ul class="list-group list-group-flush mb-4">
     <li class="list-group-item">
         <strong>📞 Teléfono:</strong> 
@@ -18,7 +20,7 @@
 </ul>
 
 <div class="d-flex gap-2">
-    <button type="button" class="btn btn-outline-dark btn-volver-historial w-100 fw-bold">
+    <button type="button" class="btn btn-volver-historial w-100 fw-bold">
         ← Volver al Historial
     </button>
 </div>

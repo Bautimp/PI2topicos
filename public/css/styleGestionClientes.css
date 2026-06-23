@@ -1,0 +1,477 @@
+/* VARIABLES DE IDENTIDAD DE LA APLICACIÓN */
+:root {
+    --bg-main: #141619;
+    --card-bg: #1e2125;
+    --input-bg: #2b3035;
+    --brand-orange: #ff7600;
+    --brand-blue-subtle: #38bdf8;
+    --status-success: #198754;
+    --status-danger: #dc3545;
+    --text-muted-dark: #a0aab2;
+}
+
+/* ==========================================================================
+   ESTILOS GENERALES Y CABECERA
+   ========================================================================== */
+h2 {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.5px;
+}
+
+/* Alertas de Flashdata Custom */
+.alert-success {
+    background-color: rgba(25, 135, 84, 0.1) !important;
+    border: 1px solid rgba(25, 135, 84, 0.3) !important;
+    color: #75b798 !important;
+    border-radius: 8px;
+}
+
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+    border: 1px solid rgba(220, 53, 69, 0.3) !important;
+    color: #ea868f !important;
+    border-radius: 8px;
+}
+
+/* ==========================================================================
+   TARJETA Y TABLA PRINCIPAL DE CLIENTES
+   ========================================================================== */
+
+/* Contenedor de la tabla */
+.card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+    overflow: hidden;
+}
+
+.table {
+    background-color: transparent !important;
+    color: #dee2e6 !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Cabecera de la tabla */
+.table thead.table-dark th {
+    background-color: #121416 !important;
+    color: #adb5bd !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-uppercase: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 14px 12px !important;
+}
+
+/* Celdas del cuerpo */
+.table tbody td {
+    background-color: transparent !important;
+    color: #dee2e6 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 14px 12px !important;
+}
+
+/* Hover en filas activas */
+.table-hover tbody tr:not(.table-danger):hover td {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Destacar textos importantes */
+.table td strong {
+    color: #ffffff !important;
+}
+
+.table .text-muted {
+    color: var(--text-muted-dark) !important;
+}
+
+/* FIX: Estilo para Clientes Inactivos (Fila Desactivada) */
+.table tbody tr.table-danger td {
+    background-color: rgba(220, 53, 69, 0.04) !important; /* Rojo ultra sutil de fondo */
+    color: #727a82 !important; /* Texto apagado */
+}
+
+.table tbody tr.table-danger td strong {
+    color: #8a949d !important; /* Nombre apagado */
+}
+
+/* Badge Inactivo custom */
+.badge.bg-danger {
+    background-color: rgba(220, 53, 69, 0.15) !important;
+    color: #ff6b76 !important;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   BOTONES DE ACCIÓN (TABLA)
+   ========================================================================== */
+
+/* Botón Historial (Reloj) */
+.btn-historial {
+    color: var(--brand-blue-subtle) !important;
+    border-color: rgba(56, 189, 248, 0.3) !important;
+    background-color: rgba(56, 189, 248, 0.05) !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-historial:hover {
+    color: #ffffff !important;
+    background-color: var(--brand-blue-subtle) !important;
+    border-color: var(--brand-blue-subtle) !important;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+/* Botón Editar */
+.btn-primary {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #ffffff !important;
+    font-weight: 600;
+}
+.btn-primary:hover:not(.disabled) {
+    background-color: #0b5ed7 !important;
+    border-color: #0a58ca !important;
+}
+
+/* Botón Baja */
+.btn-outline-danger {
+    background-color: rgba(220, 53, 69, 0.05) !important;
+    border: 1px solid rgba(220, 53, 69, 0.3) !important;
+    color: #ea868f !important;
+    font-weight: 500;
+}
+.btn-outline-danger:hover {
+    background-color: var(--status-danger) !important;
+    border-color: var(--status-danger) !important;
+    color: #ffffff !important;
+}
+
+/* Evitar que los botones deshabilitados muestren cosas raras */
+.btn.disabled, .btn:disabled {
+    opacity: 0.4 !important;
+    background-color: #2b3035 !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    color: #6c757d !important;
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   MODAL DE HISTORIAL DEL CLIENTE
+   ========================================================================== */
+#modalHistorial .modal-content {
+    background-color: var(--card-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 14px !important;
+}
+
+#modalHistorial .modal-header {
+    background-color: #121416 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 16px 20px !important;
+}
+
+#modalHistorial .modal-title {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+/* Cruz de cierre blanca */
+#modalHistorial .btn-close-white {
+    filter: invert(1) grayscale(1) brightness(2);
+    opacity: 0.7;
+}
+#modalHistorial .btn-close-white:hover {
+    opacity: 1;
+}
+
+#modalHistorial .modal-body {
+    background-color: var(--card-bg) !important;
+    color: #dee2e6 !important;
+    padding: 24px !important;
+}
+
+#modalHistorial .modal-footer {
+    background-color: #121416 !important; /* Quitamos bg-light para integrarlo a la noche */
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 14px 20px !important;
+}
+
+/* Botón cerrar del footer */
+#modalHistorial .modal-footer .btn-secondary {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #dee2e6 !important;
+    padding: 8px 20px;
+}
+#modalHistorial .modal-footer .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+}
+
+/* Ajustes del Spinner de carga dinámica */
+#modalHistorial .spinner-border.text-primary {
+    color: var(--brand-orange) !important; /* Spinner color naranja de marca */
+}
+/* ==========================================================================
+   TABLA INTERNA DE HISTORIAL (DENTRO DEL MODAL)
+   ========================================================================== */
+
+/* Tabla del modal */
+#tabla-modal-historial {
+    background-color: transparent !important;
+    color: #dee2e6 !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Cabecera de la tabla de historial */
+#tabla-modal-historial thead th {
+    background-color: #121416 !important;
+    color: #a0aab2 !important;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-uppercase: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 12px 10px !important;
+}
+
+/* Celdas del historial */
+#tabla-modal-historial tbody td {
+    background-color: transparent !important;
+    color: #dee2e6 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 12px 10px !important;
+}
+
+/* Hover de las filas del historial */
+#tabla-modal-historial tbody tr:hover td {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Detalles específicos de las columnas */
+#tabla-modal-historial .id-codigo {
+    color: var(--brand-orange) !important; /* El ID resalta con tu naranja */
+    font-size: 0.9rem;
+}
+
+#tabla-modal-historial .nombre-vehiculo {
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+#tabla-modal-historial .texto-periodo {
+    color: #dee2e6 !important;
+    font-size: 0.88rem;
+}
+
+/* Botón de la Lupita (Buscar Vehículo) */
+#tabla-modal-historial .btn-ver-vehiculo {
+    color: var(--brand-blue-subtle) !important;
+    text-decoration: none !important;
+    transition: transform 0.2s ease, color 0.2s ease;
+    display: inline-block;
+}
+
+#tabla-modal-historial .btn-ver-vehiculo:hover {
+    color: #ffffff !important;
+    transform: scale(1.15);
+}
+
+/* Monto de dinero (Verde menta brillante para fondos oscuros) */
+#tabla-modal-historial .monto-total {
+    color: #75b798 !important; 
+    font-size: 0.95rem;
+}
+
+/* Vista sin historial anterior */
+.sin-historial {
+    color: #727a82 !important;
+    font-size: 0.95rem;
+}
+/* ==========================================================================
+   FICHA DE DETALLE DEL VEHÍCULO (DENTRO DEL MODAL)
+   ========================================================================== */
+
+/* Contenedor transparente dentro del cuerpo del modal */
+.card-detalle-vehiculo {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Botón de Volver al historial */
+.btn-volver-historial {
+    color: var(--brand-blue-subtle) !important;
+    border-color: rgba(56, 189, 248, 0.3) !important;
+    background-color: rgba(56, 189, 248, 0.04) !important;
+    font-weight: 500;
+    padding: 6px 14px !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-volver-historial:hover {
+    color: #ffffff !important;
+    background-color: var(--brand-blue-subtle) !important;
+    border-color: var(--brand-blue-subtle) !important;
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+}
+
+/* Etiquetas de los campos (Ej: MARCA Y MODELO) */
+.card-detalle-vehiculo .titulo-campo {
+    color: #a0aab2 !important; /* Gris claro suave */
+    font-size: 0.75rem !important;
+    letter-spacing: 0.8px;
+}
+
+/* Valores de los campos texto e ID */
+.card-detalle-vehiculo .valor-campo {
+    color: #ffffff !important;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Destacar el precio (Manejamos el éxito en modo oscuro) */
+.card-detalle-vehiculo .valor-precio {
+    color: #75b798 !important; /* Verde menta nítido */
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   BADGES DE ESTADO PERSONALIZADOS
+   ========================================================================== */
+
+/* Estado: Inactivo / Baja */
+.badge-estado-baja {
+    background-color: rgba(220, 53, 69, 0.15) !important;
+    color: #ff6b76 !important;
+    border: 1px solid rgba(220, 53, 69, 0.3) !important;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+}
+
+/* Estado: Disponible */
+.badge-estado-disponible {
+    background-color: rgba(25, 135, 84, 0.15) !important;
+    color: #75b798 !important;
+    border: 1px solid rgba(25, 135, 84, 0.3) !important;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+}
+
+/* Estado: Alquilado (Reemplaza al amarillo chillón molesto) */
+.badge-estado-alquilado {
+    background-color: rgba(255, 193, 7, 0.12) !important;
+    color: #ffda6a !important; /* Amarillo pastel suave legible */
+    border: 1px solid rgba(255, 193, 7, 0.3) !important;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+}
+/* ==========================================================================
+   FORMULARIO DE EDICIÓN DE CLIENTE (MODO OSCURO)
+   ========================================================================== */
+
+/* Cabecera de la tarjeta del formulario */
+.card-header.bg-dark {
+    background-color: #121416 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 16px 20px !important;
+}
+
+.card-header h4 {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 1.15rem;
+    letter-spacing: -0.3px;
+}
+
+/* Etiquetas del formulario */
+.form-label {
+    color: #a0aab2 !important; /* Gris claro suave */
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    text-uppercase: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+/* Cajas de texto e inputs (Sobreescribe el blanco nativo de Bootstrap) */
+.form-control {
+    background-color: var(--input-bg, #2b3035) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    padding: 10px 14px !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* Quitar las flechas nativas del input de tipo number (Teléfono) */
+.form-control::-webkit-outer-spin-button,
+.form-control::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.form-control[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Estado de Foco (Clickeado) en los inputs */
+.form-control:focus {
+    background-color: #32383e !important;
+    border-color: var(--brand-orange, #ff7600) !important; /* Brillo con tu naranja de marca */
+    box-shadow: 0 0 0 3px rgba(255, 118, 0, 0.2) !important;
+    color: #ffffff !important;
+}
+
+/* Campos requeridos o deshabilitados */
+.form-control:disabled {
+    background-color: #1e2125 !important;
+    color: #6c757d !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ==========================================================================
+   BOTONES DEL FORMULARIO
+   ========================================================================== */
+
+/* Botón Guardar Cambios (Verde sólido refinado) */
+.btn-success {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease;
+}
+
+.btn-success:hover {
+    background-color: #157347 !important;
+    border-color: #146c43 !important;
+    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.25) !important;
+}
+
+/* Botón Cancelar (Gris integrado a la noche) */
+.btn-secondary {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #dee2e6 !important;
+    font-weight: 500 !important;
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+}

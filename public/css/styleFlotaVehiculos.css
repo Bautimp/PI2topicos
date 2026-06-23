@@ -1,0 +1,397 @@
+/* VARIABLES DE IDENTIDAD DE LA APLICACIÓN */
+:root {
+    --bg-main: #141619;
+    --card-bg: #1e2125;
+    --input-bg: #2b3035;
+    --brand-orange: #ff7600;
+    --brand-orange-hover: #e06800;
+    --brand-blue-subtle: #00c6ff;
+    
+    /* Estados de administración */
+    --status-success: #198754;
+    --status-warning: #ffc107;
+    --status-danger: #dc3545;
+}
+
+/* Títulos del panel */
+h2 {
+    color: #f8f9fa !important;
+    font-weight: 800;
+}
+
+/* Tarjeta contenedora de la Tabla */
+.card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 14px !important;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ==========================================================================
+   ESTILOS FORZADOS PARA TABLA OSCURA (FIX TOTAL)
+   ========================================================================== */
+
+/* Forzamos a que la tabla y sus celdas tengan fondo oscuro de tarjeta */
+.table {
+    background-color: var(--card-bg) !important;
+    color: #dee2e6 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Quitamos cualquier fondo blanco heredado de Bootstrap en filas y celdas */
+.table th, .table td {
+    background-color: var(--card-bg) !important;
+    color: #dee2e6 !important; /* Gris claro por defecto para los datos comunes */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 16px 12px !important;
+}
+
+/* Cabecera de la tabla (Negra pura para resaltar) */
+.table thead th {
+    background-color: #121416 !important;
+    color: #adb5bd !important;
+    font-weight: 600;
+    text-uppercase: uppercase;
+    font-size: 0.82rem;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+/* TEXTOS INTERNOS: Nombre del vehículo en blanco puro */
+.table tbody td strong {
+    color: #ffffff !important;
+    display: inline-block;
+}
+
+/* Efecto hover en las filas (un destello sutil al pasar el mouse) */
+.table-hover tbody tr:hover td {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Fila para vehículos dados de BAJA (Roja sutil atenuada) */
+tr.table-danger.text-muted td {
+    background-color: rgba(220, 53, 69, 0.06) !important;
+    color: #868e96 !important;
+}
+tr.table-danger.text-muted td strong {
+    color: #868e96 !important;
+}
+
+/* ==========================================================================
+   NUEVO BOTÓN DE HISTORIAL (EL LIBRITO)
+   ========================================================================== */
+.btn-historial-custom {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #ff7600 !important; /* Tu naranja de marca para que el ícono RESALTE sí o sí */
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Al pasar el mouse por encima del librito */
+.btn-historial-custom:hover {
+    background: var(--brand-orange) !important;
+    border-color: var(--brand-orange) !important;
+    color: #ffffff !important; /* Se vuelve blanco al activarse */
+    box-shadow: 0 0 10px rgba(255, 118, 0, 0.4);
+}
+
+/* Asegurar que el tag <i> de Bootstrap Icons herede el color correctamente */
+.btn-historial-custom i {
+    color: inherit !important;
+    font-style: normal;
+    line-height: 1;
+}
+
+/* ==========================================================================
+   BADGES Y MODALES
+   ========================================================================== */
+.badge.bg-success { background-color: var(--status-success) !important; color: white !important; }
+.badge.bg-warning { background-color: var(--status-warning) !important; color: #141619 !important; }
+.badge.bg-danger  { background-color: var(--status-danger) !important; color: white !important; }
+
+/* Animación de la campanita de pendientes */
+.btn-ver-pendientes .badge {
+    animation: pulse-danger 2s infinite;
+}
+@keyframes pulse-danger {
+    0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(220, 53, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}
+
+/* Estructura de Modales */
+.modal-content {
+    background-color: var(--card-bg) !important;
+    color: #f8f9fa !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+.modal-header { border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
+.modal-footer { background-color: #15171a !important; border-top: 1px solid rgba(255, 255, 255, 0.05) !important; }
+
+/* ==========================================================================
+   COMPONENTES DINÁMICOS: FICHA DEL CLIENTE (MODAL)
+   ========================================================================== */
+
+/* Ajuste del contenedor de la cabecera del cliente */
+.text-center .display-6.text-secondary {
+    color: var(--brand-orange) !important; /* Tu naranja de marca para el avatar */
+    opacity: 0.85;
+}
+
+.text-center h4 {
+    color: #ffffff !important;
+}
+
+/* Forzar que el badge de "Ficha del Cliente" no sea gris apagado */
+.text-center .badge.bg-secondary {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #adb5bd !important;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Lista del grupo (List Group) - Modo Oscuro Forzado */
+.list-group-flush {
+    background-color: transparent !important;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.list-group-flush .list-group-item {
+    background-color: #1a1d20 !important; /* Un gris un poco más oscuro que el fondo del modal */
+    color: #dee2e6 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 14px 16px !important;
+}
+
+/* Evitar que el último elemento tenga borde inferior */
+.list-group-flush .list-group-item:last-child {
+    border-bottom: none !important;
+}
+
+/* Negritas dentro de la lista */
+.list-group-flush .list-group-item strong {
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+/* Enlace del Teléfono (Color celeste/azul sutil para link oscuro) */
+.list-group-flush .list-group-item a {
+    color: var(--brand-blue-subtle) !important;
+    transition: color 0.2s ease;
+}
+
+.list-group-flush .list-group-item a:hover {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+}
+
+/* Botón de volver (Cambiamos el btn-outline-dark nativo) */
+.btn-volver-historial {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #dee2e6 !important;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-volver-historial:hover {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+}
+/* ==========================================================================
+   TABLA DE HISTORIAL DE ALQUILERES (MODO OSCURO)
+   ========================================================================= */
+
+/* Estilos base de la tabla de historial */
+.table-responsive .table {
+    background-color: var(--card-bg) !important;
+    color: #dee2e6 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Cabecera forzada (sobreescribe .table-secondary) */
+.table-responsive .table thead,
+.table-responsive .table thead th,
+.table-responsive .table thead.table-secondary th {
+    background-color: #121416 !important;
+    color: #adb5bd !important;
+    font-weight: 600;
+    text-uppercase: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Celdas comunes del historial */
+.table-responsive .table td {
+    background-color: transparent !important; /* Deja ver el fondo de la fila */
+    color: #dee2e6 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 12px 14px !important;
+}
+
+/* ID del Alquiler en blanco puro */
+.table-responsive .table td.fw-bold {
+    color: #ffffff !important;
+}
+
+/* Forzar el intercalado oscuro (Sobreescribe el table-striped de Bootstrap) */
+.table-responsive .table-striped tbody tr:nth-of-type(odd) td {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Hover de las filas del historial */
+.table-responsive .table-hover tbody tr:hover td {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Monto total: el verde nativo resalta mucho en fondo oscuro, lo suavizamos */
+.table-responsive .table td.text-success {
+    color: #2ec4b6 !important; /* Un verde esmeralda/celeste que contrasta hermoso */
+}
+
+/* ==========================================================================
+   BOTÓN LUPA (VER CLIENTE)
+   ========================================================================== */
+.btn-ver-cliente-custom {
+    color: var(--brand-blue-subtle) !important; /* Tu color azul/celeste de marca */
+    text-decoration: none !important;
+    font-size: 1.1rem;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.btn-ver-cliente-custom:hover {
+    color: #ffffff !important;
+    transform: scale(1.15);
+}
+
+/* ==========================================================================
+   FIX: Caja de "No registra alquileres" visible y legible
+   ========================================================================== */
+.table-responsive + .text-center.text-muted.py-3,
+.text-center.text-muted.py-3,
+.text-center.text-muted.py-4 {
+    color: #f8f9fa !important; /* Blanco nube para que se lea perfectamente */
+    background-color: rgba(255, 255, 255, 0.04) !important; /* Fondo gris traslúcido */
+    border: 1px dashed rgba(255, 255, 255, 0.15) !important; /* Borde punteado suave */
+    border-radius: 8px !important;
+    padding: 2rem 1rem !important; /* Más espacio interno para que respire */
+    margin: 15px 0 !important;
+    display: block !important;
+}
+
+/* Forzar que el ícono de advertencia (si lo pusiste) sea naranja de marca */
+.text-center.text-muted.py-4 i,
+.text-center.text-muted.py-3 i {
+    color: var(--brand-orange) !important;
+    margin-bottom: 10px;
+    font-size: 1.8rem !important;
+    display: inline-block;
+}
+/* ==========================================================================
+   TABLA DE SOLICITUDES PENDIENTES (DENTRO DEL MODAL)
+   ========================================================================== */
+
+/* Tabla base */
+#contenedor-pendientes .table {
+    background-color: transparent !important;
+    color: #dee2e6 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Cabecera (Sobreescribe table-light) */
+#contenedor-pendientes .table thead,
+#contenedor-pendientes .table thead th,
+#contenedor-pendientes .table thead.table-light th {
+    background-color: #121416 !important;
+    color: #adb5bd !important;
+    font-weight: 600;
+    text-uppercase: uppercase;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.12) !important;
+    padding: 12px 10px !important;
+}
+
+/* Celdas comunes */
+#contenedor-pendientes .table td {
+    background-color: transparent !important;
+    color: #dee2e6 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 12px 10px !important;
+}
+
+/* Hover de las filas de solicitudes */
+#contenedor-pendientes .table-hover tbody tr:hover td {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Nombre del cliente en blanco destacado */
+#contenedor-pendientes .table td strong {
+    color: #ffffff !important;
+}
+
+/* Subtextos en gris claro */
+#contenedor-pendientes .text-muted,
+#contenedor-pendientes .small.text-muted {
+    color: #a0aab2 !important;
+}
+
+/* FIX del Monto Total (Sobreescribe text-dark) */
+#contenedor-pendientes .text-end.fw-bold,
+#contenedor-pendientes .table td.text-dark {
+    color: #ffffff !important;
+}
+
+/* ==========================================================================
+   BOTONES DE ACCIÓN DEL MODAL
+   ========================================================================== */
+
+/* Botón Aprobar (Verde sólido refinado) */
+#contenedor-pendientes .btn-success {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+    color: #ffffff !important;
+    transition: all 0.2s ease;
+}
+#contenedor-pendientes .btn-success:hover {
+    background-color: #157347 !important;
+    border-color: #146c43 !important;
+    box-shadow: 0 4px 10px rgba(25, 135, 84, 0.25);
+}
+
+/* Botón Rechazar (Cambiamos btn-outline-danger para que contraste en negro) */
+#contenedor-pendientes .btn-outline-danger {
+    background-color: rgba(220, 53, 69, 0.08) !important;
+    border: 1px solid rgba(220, 53, 69, 0.4) !important;
+    color: #ea868f !important; /* Rojo pastel/suave para modo oscuro */
+    transition: all 0.2s ease;
+}
+#contenedor-pendientes .btn-outline-danger:hover {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.25);
+}
+
+/* ==========================================================================
+   ESTADO COMPLETO (SIN PENDIENTES)
+   ========================================================================== */
+#contenedor-pendientes .alert-success {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    border: 1px dashed rgba(25, 135, 84, 0.4) !important;
+    color: #75b798 !important; /* Verde menta suave legible */
+    padding: 24px !important;
+    border-radius: 10px !important;
+}

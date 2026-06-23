@@ -1,0 +1,84 @@
+/* VARIABLES COMPARTIDAS CON TU MARCA */
+:root {
+    --card-bg: #1e2125;
+    --brand-orange: #ff7600;
+    --brand-orange-hover: #e06800;
+    --brand-blue-subtle: #00c6ff;
+}
+
+/* Título de la sección */
+.section-title {
+    color: #f8f9fa;
+    font-weight: 800;
+}
+
+/* Tarjetas de Reservas en Modo Oscuro */
+.reserve-card {
+    background-color: var(--card-bg) !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reserve-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Modificadores de bordes según estados (para que no sean tan chillones) */
+.reserve-card.border-warning { border-left: 5px solid #ffc107 !important; }
+.reserve-card.border-success { border-left: 5px solid #198754 !important; }
+.reserve-card.border-danger  { border-left: 5px solid #dc3545 !important; }
+.reserve-card.border-secondary { border-left: 5px solid #6c757d !important; }
+
+/* Separadores internos legibles sobre fondo oscuro */
+.border-custom-x {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Textos destacados */
+.vehicle-name {
+    color: #f8f9fa !important;
+}
+
+.date-highlight {
+    color: var(--brand-blue-subtle) !important;
+}
+
+.monto-highlight {
+    color: var(--brand-orange) !important;
+}
+
+/* Botón "Alquilar otro vehículo" adaptado al estilo naranja */
+.btn-brand-orange-outline {
+    border: 1.5px solid var(--brand-orange) !important;
+    color: var(--brand-orange) !important;
+    background: transparent !important;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+.btn-brand-orange-outline:hover {
+    background-color: var(--brand-orange) !important;
+    color: white !important;
+}
+
+/* Contenedor para cuando no hay reservas cargadas */
+.empty-state-card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Botón sólido naranja */
+.btn-brand-orange {
+    background-color: var(--brand-orange) !important;
+    border: none;
+    color: white !important;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+.btn-brand-orange:hover {
+    background-color: var(--brand-orange-hover) !important;
+    color: white !important;
+}

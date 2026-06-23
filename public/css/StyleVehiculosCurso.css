@@ -1,0 +1,228 @@
+/* ==========================================================================
+   PANEL: VEHÍCULOS EN CURSO (MODO OSCURO COHERENTE)
+   ========================================================================== */
+
+/* Títulos y Subtítulos principales */
+h2.fw-bold.text-dark {
+    color: #ffffff !important;
+    font-size: 1.6rem;
+    letter-spacing: -0.5px;
+}
+
+.text-muted {
+    color: #9aa5b1 !important;
+}
+
+/* Counter superior (X en la calle) - Estilo Píldora de tu marca */
+.badge.bg-primary {
+    background-color: rgba(56, 189, 248, 0.1) !important;
+    color: #38bdf8 !important;
+    border: 1px solid rgba(56, 189, 248, 0.25) !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    border-radius: 20px;
+}
+
+/* Alertas de Mensajes del Sistema */
+.alert-success {
+    background-color: #1c322a !important;
+    border: 1px solid rgba(117, 183, 152, 0.2) !important;
+    color: #75b798 !important;
+    border-radius: 8px;
+}
+
+/* ==========================================================================
+   ESTRUCTURA DE LA TABLA DE CONTROL
+   ========================================================================== */
+
+/* Tarjeta contenedora de la tabla */
+.card {
+    background-color: #1e222b !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+/* Forzar estilos sobre la tabla */
+.table {
+    margin-bottom: 0 !important;
+    background-color: #1e222b !important;
+    color: #dee2e6 !important;
+}
+
+/* Encabezados de columnas (thead) */
+.table thead.table-dark th {
+    background-color: #161920 !important;
+    color: #9aa5b1 !important;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-uppercase: uppercase;
+    letter-spacing: 0.8px;
+    padding: 14px 16px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Filas comunes de la tabla */
+.table tbody tr td {
+    padding: 16px !important;
+    background-color: #1e222b !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+    color: #dee2e6 !important;
+}
+
+/* Hover de las filas estándar */
+.table-hover tbody tr:hover td {
+    background-color: #242934 !important;
+}
+
+/* --- FILA CRÍTICA: REQUIERE ATENCIÓN / ATRASADO --- */
+/* Un tinte rojizo integrado a la oscuridad, sin romper la estética */
+.table tbody tr.table-danger td {
+    background-color: rgba(220, 53, 69, 0.06) !important;
+    border-bottom: 1px solid rgba(220, 53, 69, 0.15) !important;
+}
+
+.table-hover tbody tr.table-danger:hover td {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+/* Links internos (Ver perfil completo) */
+.btn-link {
+    color: #38bdf8 !important;
+    font-weight: 500;
+    font-size: 0.85rem;
+    transition: color 0.15s ease;
+}
+
+.btn-link:hover {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+}
+
+/* Títulos internos de celdas */
+.table tbody tr td .fw-bold {
+    color: #ffffff !important;
+}
+
+/* Corrección de textos oscuros heredados en las fechas */
+.table tr td .text-dark, 
+.table tr td .text-dark strong {
+    color: #ffffff !important;
+}
+
+/* ==========================================================================
+   BADGES DE ESTADO (CALIBRADOS)
+   ========================================================================== */
+
+/* ¡Atrasado! */
+.badge.bg-danger {
+    background-color: rgba(220, 53, 69, 0.15) !important;
+    color: #ff6b76 !important;
+    border: 1px solid rgba(220, 53, 69, 0.3) !important;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+/* Devuelve Hoy */
+.badge.bg-warning {
+    background-color: rgba(255, 193, 7, 0.12) !important;
+    color: #ffda6a !important;
+    border: 1px solid rgba(255, 193, 7, 0.25) !important;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+/* Aún no inicia */
+.badge.bg-secondary {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: #9aa5b1 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 6px;
+}
+
+/* ==========================================================================
+   BOTÓN DE ACCIÓN: REGISTRAR DEVOLUCIÓN
+   ========================================================================== */
+
+.btn-primary {
+    background-color: #ff7600 !important; /* Tu naranja distintivo */
+    border-color: #ff7600 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    font-size: 0.85rem;
+    padding: 6px 16px !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: #e06700 !important;
+    border-color: #e06700 !important;
+    box-shadow: 0 4px 12px rgba(255, 118, 0, 0.3) !important;
+}
+
+/* Botón deshabilitado (No iniciado todavía) */
+.btn-primary:disabled, 
+.btn-primary.opacity-50 {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+    color: #4e5764 !important;
+    opacity: 1 !important;
+    cursor: not-allowed;
+    box-shadow: none !important;
+}
+
+/* ==========================================================================
+   MODAL DE FICHA DE CLIENTE
+   ========================================================================== */
+
+.modal-content {
+    background-color: #1e222b !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+}
+
+.modal-header.bg-dark {
+    background-color: #161920 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.modal-header .modal-title {
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+.modal-body h4 {
+    color: #ffffff !important;
+}
+
+/* Listas internas del modal */
+.list-group-item {
+    background-color: transparent !important;
+    color: #dee2e6 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 12px 4px !important;
+}
+
+.list-group-item strong {
+    color: #9aa5b1 !important;
+    font-weight: 500;
+}
+
+/* Botón de cierre inferior */
+.modal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.modal-footer .btn-secondary {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #dee2e6 !important;
+    font-weight: 500;
+    border-radius: 6px;
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+}
