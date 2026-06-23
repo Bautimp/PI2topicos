@@ -28,7 +28,9 @@ class VehiculoController extends BaseController
         $fechaHoy = date('Y-m-d');
         $alquileresVencidos = $alquilerModel->getAlquileresVencidos($fechaHoy);
 
-        $busqueda = $this->request->getGet('busqueda');
+        $busquedaRaw = $this->request->getGet('busqueda');
+        $busqueda = ($busquedaRaw !== null) ? trim($busquedaRaw) : null;
+        
         $categoriaFiltro = $this->request->getGet('categoria');
 
         $autos = $vehiculoModel->getVehiculosCatalogo($busqueda, $categoriaFiltro);
