@@ -34,16 +34,24 @@ class VehiculoModel extends Model
     // Obtiene el catálogo aplicando los filtros de búsqueda y categoría
     public function getVehiculosCatalogo($busqueda = null, $categoriaFiltro = null)
     {
-        $this->where('esActivo', 1)->where('disponibilidad !=', 'NO_DISPONIBLE');
+        // 1. Base: Solo vehículos activos (alta lógica) y que no estén en el taller
+        $this->where('esActivo', 1)
+             ->where('disponibilidad !=', 'NO_DISPONIBLE');
 
+        // 2. Si hay filtro de categoría, lo agregamos a la consulta
         if (!empty($categoriaFiltro)) {
-            return $this->where('categoria', $categoriaFiltro);
+            $this->where('categoria', $categoriaFiltro);
         }
 
+        // 3. Si hay búsqueda por texto, lo agregamos encapsulado
         if (!empty($busqueda)) {
-            return $this->groupStart()->like('marca', $busqueda)->orLike('modelo', $busqueda)->groupEnd();
+            $this->groupStart()
+                 ->like('marca', $busqueda)
+                 ->orLike('modelo', $busqueda)
+                 ->groupEnd();
         }
 
+        // 4. Finalmente, ejecutamos la consulta completa y devolvemos los resultados
         return $this->findAll();
     }
 

@@ -25,7 +25,6 @@ class VehiculoController extends BaseController
 
 
 
-        $fechaHoy = date('Y-m-d');
         $alquileresVencidos = $alquilerModel->getAlquileresVencidos($fechaHoy);
 
         $busquedaRaw = $this->request->getGet('busqueda');
@@ -42,7 +41,7 @@ class VehiculoController extends BaseController
                           ->groupEnd();
         }
 
-        $autos = $vehiculoModel->findAll(); 
+        $autos = $vehiculoModel->where('disponibilidad !=', 'NO_DISPONIBLE')->find(); 
         
         // 5. Adjuntamos imágenes y fechas a cada auto
         foreach ($autos as $auto) {
