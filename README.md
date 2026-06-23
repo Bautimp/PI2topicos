@@ -25,3 +25,46 @@ Plataforma web desarrollada en **CodeIgniter 4** para la administración integra
    git clone <url-del-repositorio>
    cd pi2topicos
    composer install
+   Configurar el entorno:
+
+        Renombra el archivo env a .env.
+
+        Cambia el entorno a desarrollo: CI_ENVIRONMENT = development
+
+        Configura las credenciales de tu base de datos local en el apartado database.default.
+
+    Ejecutar Migraciones y Seeders:
+    Prepara la estructura de la base de datos y cárgala con datos de prueba (vehículos, administrador y cliente predeterminado):
+    Bash
+
+    php spark migrate
+    php spark db:seed RentacarSeeder
+
+    Levantar el servidor local:
+    Bash
+
+    php spark serve
+
+    Accede a http://localhost:8080 para iniciar sesión.
+
+🔐 Accesos por defecto (Seeder)
+
+    Administrador: admin@mycar.com | Clave: admin123
+
+    Cliente: cliente@gmail.com | Clave: cliente123
+
+Desarrollado como proyecto de integración.
+
+
+---
+
+### 2. Análisis de Errores y Código sin uso
+
+Revisando minuciosamente los extractos que enviaste (Migración, Seeder, Modelos, Rutas y Controladores base), he encontrado algunos detalles arquitectónicos y funcionales que debes ajustar:
+
+#### ❌ 1. Ruta de Reservas Pendientes faltante (`Routes.php`)
+En tu archivo de rutas, has definido los métodos para aprobar, rechazar y listar los vehículos activos en la calle, pero **falta la ruta principal para ver las solicitudes pendientes**.
+* **El problema:** El administrador no tiene cómo llegar a la lista para aprobar los autos por primera vez.
+* **Solución:** Agrega esta línea dentro del grupo `admin` en `Routes.php`:
+  ```php
+  $routes->get('alquileres', 'AlquilerController::listarPendientes');
