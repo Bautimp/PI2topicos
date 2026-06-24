@@ -59,7 +59,6 @@ class AlquilerController extends BaseController
     }
 
     // === VISTAS ADMIN ===
-
     public function rechazarReserva($id_alquiler)
     {
         $alquilerModel = new \App\Models\AlquilerModel();

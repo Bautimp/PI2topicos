@@ -43,7 +43,6 @@ class VehiculoController extends BaseController
 
         $autos = $vehiculoModel->where('disponibilidad !=', 'NO_DISPONIBLE')->find(); 
         
-        // 5. Adjuntamos imágenes y fechas a cada auto
         foreach ($autos as $auto) {
             $auto->imagenes = $imagenModel->obtenerPorVehiculo($auto->id);
             $auto->fechasOcupadas = json_encode($alquilerModel->obtenerFechasOcupadas($auto->id));
@@ -51,7 +50,6 @@ class VehiculoController extends BaseController
         
         $datos['vehiculos'] = $autos;
         
-        // 6. Enviamos a la vista la lista de categorías y los valores buscados para mantener el estado
         $datos['categorias'] = $vehiculoModel->obtenerCategoriasUnicas();
         $datos['busquedaActual'] = $busqueda;
         $datos['categoriaActual'] = $categoriaFiltro;
