@@ -34,14 +34,7 @@ class VehiculoController extends BaseController
 
         $autos = $vehiculoModel->getVehiculosCatalogo($busqueda, $categoriaFiltro);
 
-        if (!empty($busqueda)) {
-            $vehiculoModel->groupStart()
-                          ->like('marca', $busqueda)
-                          ->orLike('modelo', $busqueda)
-                          ->groupEnd();
-        }
-
-        $autos = $vehiculoModel->where('disponibilidad !=', 'NO_DISPONIBLE')->find(); 
+        
         
         foreach ($autos as $auto) {
             $auto->imagenes = $imagenModel->obtenerPorVehiculo($auto->id);
